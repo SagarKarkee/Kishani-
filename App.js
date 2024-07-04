@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Welcome to Kishani App.</Text>
+      <Text>hello mula ko sak</Text>
       <StatusBar style="auto" />
     </View>
   );
