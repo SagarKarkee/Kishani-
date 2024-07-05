@@ -6,6 +6,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Welcome to Kishani App.</Text>
       <Text>hello</Text>
+      <Text>subai jabako vako hora vako ho bhana chai inform gara la </Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -14,7 +15,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    backgroundColor: 'violet',
     alignItems: 'center',
     justifyContent: 'center',
   },
