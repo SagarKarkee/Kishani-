@@ -9,7 +9,7 @@ const Signup = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = () => {
-    if (email === '' || phoneNumber === '' || password === '' || confirmPassword === '') {
+    if (phoneNumber === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -18,8 +18,9 @@ const Signup = ({ navigation }) => {
       return;
     }
     // Perform signup action here
-    Alert.alert('Success', 'Account created successfully');
-    navigation.navigate('Login'); // Replace 'Login' with your target screen
+   
+    navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
+   
   };
 
   return (

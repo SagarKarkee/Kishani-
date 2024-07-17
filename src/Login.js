@@ -9,13 +9,13 @@ const LoginScreen = ({ navigation }) => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {
-    if (email === '' || password === '' || phoneNumber === '') {
+    if (phoneNumber === '' || password === '' ) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
     // Perform login action here
     // For example, you can navigate to the next screen:
-    navigation.navigate('HomeScreen'); // Replace 'HomeScreen' with your target screen
+    navigation.navigate('Dashboard'); // Replace 'HomeScreen' with your target screen
   };
 
   return (
