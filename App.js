@@ -11,7 +11,7 @@ import Notes from './src/Notes'; // Adjust the import according to your file str
 import Message from './src/Message'; // Adjust the import according to your file structure
 import Profile from './src/Profile'; // Adjust the import according to your file structure
 import { Ionicons } from '@expo/vector-icons'; // or another icon library
-import ForgotPasswordScreen from './ForgotPasswordScreen';
+import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
