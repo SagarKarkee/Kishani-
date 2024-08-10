@@ -12,6 +12,8 @@ import Message from './src/Message'; // Adjust the import according to your file
 import Profile from './src/Profile'; // Adjust the import according to your file structure
 import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
+import AddProduct from './src/AddProduct';
+import SelectVegetable from './src/SelectVegetable.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +63,8 @@ export default function App() {
         <Stack.Screen name="Notes" component={Notes} />
         <Stack.Screen name="Message" component={Message} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="AddProduct" component={AddProduct} />
+        <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
       </Stack.Navigator>
     </NavigationContainer>
   );
