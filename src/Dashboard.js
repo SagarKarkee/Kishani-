@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Dashboard = ({ navigation }) => {
@@ -14,9 +14,50 @@ const Dashboard = ({ navigation }) => {
           <Icon name="notifications-outline" size={30} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
+
+      {/* Add Product Section */}
+      <View style={styles.addProductSection}>
+        <Text style={styles.businessTitle}>Start your business right now</Text>
+        <Text style={styles.addProductText}>Add a New Product</Text>
+        <TouchableOpacity 
+          style={styles.addButton} 
+          onPress={() => navigation.navigate('AddProduct')} // Replace 'AddProduct' with the actual screen name
+        >
+          <Text style={styles.addButtonText}>+ Add Product</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Education Section */}
+      <View style={styles.educationSection}>
+        <Text style={styles.educationTitle}>Education</Text>
+        <View style={styles.educationBoxes}>
+          <TouchableOpacity 
+            style={styles.educationBox} 
+            onPress={() => navigation.navigate('Cultivation')} // Replace 'Cultivation' with the actual screen name
+          >
+            <Image 
+              source={{ uri: '' }} // Replace with your image URL
+              style={styles.educationImage}
+            />
+            <Text style={styles.educationText}>Cultivation Process</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.educationBox} 
+            onPress={() => navigation.navigate('CropDiseases')} // Replace 'CropDiseases' with the actual screen name
+          >
+            <Image 
+              source={{ uri: 'https://example.com/crop-diseases-image.jpg' }} // Replace with your image URL
+              style={styles.educationImage}
+            />
+            <Text style={styles.educationText}>Crop Diseases Solutions</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <View style={styles.content}>
         {/* Your content goes here */}
       </View>
+      
       <View style={styles.navButtons}>
         <TouchableOpacity 
           style={styles.navButton}
@@ -79,6 +120,72 @@ const styles = StyleSheet.create({
   },
   notificationIcon: {
     marginLeft: 20,
+  },
+  addProductSection: {
+    padding: 20,
+    backgroundColor: '#E8EAF6',
+    borderRadius: 10,
+    margin: 20,
+    alignItems: 'center',
+  },
+  businessTitle: {
+    fontSize: 18,
+    color: '#6200EE',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  addProductText: {
+    fontSize: 16,
+    color: '#6200EE',
+    marginBottom: 20,
+  },
+  addButton: {
+    backgroundColor: '#6200EE',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  addButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  educationSection: {
+    padding: 20,
+    backgroundColor: '#E8F5E9',
+    borderRadius: 10,
+    margin: 20,
+  },
+  educationTitle: {
+    fontSize: 18,
+    color: '#388E3C',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  educationBoxes: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  educationBox: {
+    width: '48%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    overflow: 'hidden',
+    elevation: 2,
+    marginBottom: 10,
+    alignItems: 'center',
+    padding: 10,
+  },
+  educationImage: {
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  educationText: {
+    fontSize: 16,
+    color: '#388E3C',
+    textAlign: 'center',
   },
   content: {
     flex: 1,
