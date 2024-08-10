@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     padding: 20,
-    backgroundColor: '#6200EE',
+    backgroundColor: '#43B76A',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -130,17 +130,17 @@ const styles = StyleSheet.create({
   },
   businessTitle: {
     fontSize: 18,
-    color: '#6200EE',
+    color: '#000000',
     fontWeight: 'bold',
     marginBottom: 10,
   },
   addProductText: {
     fontSize: 16,
-    color: '#6200EE',
+    color: '#000000',
     marginBottom: 20,
   },
   addButton: {
-    backgroundColor: '#6200EE',
+    backgroundColor: '#247A0E',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
