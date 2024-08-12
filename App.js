@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
 import SelectVegetable from './src/SelectVegetable.js';
+import AccountTypeScreen from './src/AccountTypeScreen.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,6 +56,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="GetStarted">
         <Stack.Screen name="GetStarted" component={GetStarted} />
+        <Stack.Screen namer="AccountTypeScreen" component={AccountTypeScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="PersonelDetails" component={PersonelDetails} />
