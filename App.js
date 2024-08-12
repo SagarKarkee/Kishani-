@@ -17,6 +17,7 @@ import SelectVegetable from './src/SelectVegetable.js';
 import AccountTypeScreen from './src/AccountTypeScreen.js';
 import BLoginScreen from './Buyers/Blogin.js';
 import BSignup from './Buyers/Bsignup.js';
+import BPersonalDetailsForm from './Buyers/BpersonalDetails.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -71,6 +72,7 @@ export default function App() {
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="Blogin" component={BLoginScreen} />
         <Stack.Screen name="Bsignup" component={BSignup} />
+        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

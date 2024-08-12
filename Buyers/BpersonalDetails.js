@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Pressable, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const PersonalDetailsForm = ({ navigation }) => {
+const BPersonalDetailsForm = ({ navigation }) => {
   const [imageUri, setImageUri] = useState(null);
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  // const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+//   const [email, setEmail] = useState('');
+const [phoneNumber, setPhoneNumber] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -40,7 +40,7 @@ const PersonalDetailsForm = ({ navigation }) => {
 
   const handleLoginNavigation = () => {
     setModalVisible(false);
-    navigation.navigate('Login'); // Ensure you have a route named 'Login'
+    navigation.navigate('Blogin'); // Ensure you have a route named 'Login'
   };
 
   return (
@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PersonalDetailsForm;
+export default BPersonalDetailsForm;

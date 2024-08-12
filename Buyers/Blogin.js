@@ -9,7 +9,7 @@ const BLoginScreen = ({ navigation }) => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {
-    if (phoneNumber === '' || password === '' ) {
+    if (email === '' || password === '' ) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -22,12 +22,20 @@ const BLoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Phone Number"
         keyboardType="phone-pad"
         value={phoneNumber}
         onChangeText={setPhoneNumber}
+      /> */}
+
+      <TextInput
+         style={styles.input}
+         placeholder="Email"
+         value={email}
+         onChangeText={setEmail}
+        //  keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
