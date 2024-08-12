@@ -9,7 +9,7 @@ export default function AccountTypeScreen({ navigation }) {
       <View style={styles.optionContainer}>
         <TouchableOpacity 
           style={styles.option} 
-          onPress={() => navigation.navigate('FarmerSignUp')}>
+          onPress={() => navigation.navigate('Login')}>
           <Image 
             source={require('./../assets/farmers.png')} // replace with your image path
             style={styles.image} 
@@ -19,7 +19,7 @@ export default function AccountTypeScreen({ navigation }) {
 
         <TouchableOpacity 
           style={styles.option} 
-          onPress={() => navigation.navigate('BuyerSignUp')}>
+          onPress={() => navigation.navigate('Signup')}>
           <Image 
             source={require('./../assets/buyers.png')} // replace with your image path
             style={styles.image} 
