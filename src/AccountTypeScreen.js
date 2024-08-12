@@ -19,7 +19,7 @@ export default function AccountTypeScreen({ navigation }) {
 
         <TouchableOpacity 
           style={styles.option} 
-          onPress={() => navigation.navigate('Signup')}>
+          onPress={() => navigation.navigate('Blogin')}>
           <Image 
             source={require('./../assets/buyers.png')} // replace with your image path
             style={styles.image} 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4CAF50', // Green background color
+    backgroundColor: '#43B76A', // Green background color
   },
   title: {
     fontSize: 20,

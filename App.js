@@ -15,6 +15,7 @@ import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
 import SelectVegetable from './src/SelectVegetable.js';
 import AccountTypeScreen from './src/AccountTypeScreen.js';
+import BLoginScreen from './Buyers/Blogin.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
+        <Stack.Screen name="Blogin" component={BLoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

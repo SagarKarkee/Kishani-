@@ -30,7 +30,7 @@ const Signup = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        keyboardType="email@gmail.com"
+        keyboardType="phone-pad"
         value={email}
         onChangeText={setEmail}
       />
