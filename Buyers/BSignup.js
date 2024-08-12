@@ -58,7 +58,7 @@ const BSignup = ({ navigation }) => {
       <Button mode="contained" onPress={handleSignup} style={styles.button}>
         <Text style={styles.buttonText}>Signup</Text>
       </Button>
-      <TouchableOpacity onPress={() => navigation.navigate('BLogin')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Blogin')}>
         <Text style={styles.link}>Already have an account? Log In</Text>
       </TouchableOpacity>
     </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor:'#43B76A'
+    backgroundColor:'#FF0000'
   },
   title: {
     fontSize: 24,

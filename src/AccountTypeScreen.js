@@ -19,7 +19,7 @@ export default function AccountTypeScreen({ navigation }) {
 
         <TouchableOpacity 
           style={styles.option} 
-          onPress={() => navigation.navigate('BLogin')}>
+          onPress={() => navigation.navigate('Blogin')}>
           <Image 
             source={require('./../assets/buyers.png')} // replace with your image path
             style={styles.image} 
