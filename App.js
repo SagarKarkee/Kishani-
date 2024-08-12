@@ -14,6 +14,11 @@ import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
 import SelectVegetable from './src/SelectVegetable.js';
+import AccountTypeScreen from './src/AccountTypeScreen.js';
+import BLoginScreen from './Buyers/Blogin.js';
+import BSignup from './Buyers/Bsignup.js';
+import BPersonalDetailsForm from './Buyers/BpersonalDetails.js';
+import BForgotPasswordScreen from './Buyers/BforgetPassword.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,6 +60,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="GetStarted">
         <Stack.Screen name="GetStarted" component={GetStarted} />
+        <Stack.Screen name="AccountTypeScreen" component={AccountTypeScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="PersonelDetails" component={PersonelDetails} />
@@ -65,6 +71,10 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
+        <Stack.Screen name="Blogin" component={BLoginScreen} />
+        <Stack.Screen name="Bsignup" component={BSignup} />
+        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm}/>
+        <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

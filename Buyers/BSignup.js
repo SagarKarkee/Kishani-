@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const Signup = ({ navigation }) => {
+const BSignup = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  // const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = () => {
-    if (email === '' || password === '' || confirmPassword === '') {
+    if (email === ''  || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return; 
     }
@@ -19,7 +18,7 @@ const Signup = ({ navigation }) => {
     }
     // Perform signup action here
    
-    navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
+   navigation.navigate('BpersonalDetails'); // Navigate to the PersonelDetails screen
    
   };
 
@@ -28,19 +27,13 @@ const Signup = ({ navigation }) => {
       <Text style={styles.title}>Signup</Text>
       
       <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+         style={styles.input}
+         placeholder="Email"
+         value={email}
+         onChangeText={setEmail}
+         keyboardType="email-address"
       />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      /> */}
+     
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -58,7 +51,7 @@ const Signup = ({ navigation }) => {
       <Button mode="contained" onPress={handleSignup} style={styles.button}>
         <Text style={styles.buttonText}>Signup</Text>
       </Button>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Blogin')}>
         <Text style={styles.link}>Already have an account? Log In</Text>
       </TouchableOpacity>
     </View>
@@ -70,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#43B76A'
+    backgroundColor:'#FF0000'
   },
   title: {
     fontSize: 24,
@@ -105,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signup;
+export default BSignup;
