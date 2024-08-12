@@ -4,12 +4,12 @@ import { Button } from 'react-native-paper';
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  // const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = () => {
-    if (email === '' ||phoneNumber === '' || password === '' || confirmPassword === '') {
+    if (email === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return; 
     }
@@ -34,13 +34,13 @@ const Signup = ({ navigation }) => {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Phone Number"
         keyboardType="phone-pad"
         value={phoneNumber}
         onChangeText={setPhoneNumber}
-      />
+      /> */}
       <TextInput
         style={styles.input}
         placeholder="Password"

@@ -52,7 +52,7 @@ const BLoginScreen = ({ navigation }) => {
           />
           <Text style={styles.rememberMeText}>Remember Me</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('BforgetPassword')}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>

@@ -21,7 +21,7 @@ const PersonalDetailsForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Validation logic
-    if (!fullName || !address || !email || imageUri) {
+    if (!fullName || !address || !phoneNumber || imageUri) {
       Alert.alert('Error', 'All fields must be filled out.');
       return;
     }
@@ -30,7 +30,7 @@ const PersonalDetailsForm = ({ navigation }) => {
     console.log('Full Name:', fullName);
     console.log('Address:', address);
     // console.log('Email:', email);
-    console.log('Phone number:', phonenumber);
+    console.log('Phone number:', phoneNumber);
     console.log('Image URI:', imageUri);
     
     // Simulate saving the data
