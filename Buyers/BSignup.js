@@ -19,7 +19,7 @@ const BSignup = ({ navigation }) => {
     }
     // Perform signup action here
    
-    navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
+   // navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
    
   };
 
@@ -28,19 +28,19 @@ const BSignup = ({ navigation }) => {
       <Text style={styles.title}>Signup</Text>
       
       <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="phone-pad"
-        value={email}
-        onChangeText={setEmail}
+         style={styles.input}
+         placeholder="Email"
+         value={email}
+         onChangeText={setEmail}
+        //  keyboardType="email-address"
       />
-      {/* <TextInput
+       <TextInput
         style={styles.input}
         placeholder="Phone Number"
         keyboardType="phone-pad"
         value={phoneNumber}
         onChangeText={setPhoneNumber}
-      /> */}
+      /> 
       <TextInput
         style={styles.input}
         placeholder="Password"
