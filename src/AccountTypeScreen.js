@@ -11,7 +11,7 @@ export default function AccountTypeScreen({ navigation }) {
           style={styles.option} 
           onPress={() => navigation.navigate('FarmerSignUp')}>
           <Image 
-            source={require('./assets/tomato.jpg')} // replace with your image path
+            source={require('./../assets/farmers.png')} // replace with your image path
             style={styles.image} 
           />
           <Text style={styles.optionText}>FARMER</Text>
@@ -21,7 +21,7 @@ export default function AccountTypeScreen({ navigation }) {
           style={styles.option} 
           onPress={() => navigation.navigate('BuyerSignUp')}>
           <Image 
-            source={require('./assets/radish.jpeg')} // replace with your image path
+            source={require('./../assets/buyers.png')} // replace with your image path
             style={styles.image} 
           />
           <Text style={styles.optionText}>BUYER</Text>
