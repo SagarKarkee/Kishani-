@@ -51,7 +51,7 @@ const BLoginScreen = ({ navigation }) => {
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </Button>
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+      <TouchableOpacity onPress={() => navigation.navigate('BSignup')}>
         <Text style={styles.link}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
