@@ -9,9 +9,9 @@ const Signup = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = () => {
-    if (phoneNumber === '' || password === '' || confirmPassword === '') {
+    if (email === '' ||phoneNumber === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
-      return;
+      return; 
     }
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
@@ -27,6 +27,13 @@ const Signup = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Signup</Text>
       
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        keyboardType="email@gmail.com"
+        value={email}
+        onChangeText={setEmail}
+      />
       <TextInput
         style={styles.input}
         placeholder="Phone Number"
