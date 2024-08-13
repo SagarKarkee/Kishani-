@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#FF0000'
+    backgroundColor: '#0000'
   },
   title: {
     fontSize: 24,
