@@ -19,6 +19,7 @@ import BLoginScreen from './Buyers/Blogin.js';
 import BSignup from './Buyers/Bsignup.js';
 import BPersonalDetailsForm from './Buyers/BpersonalDetails.js';
 import BForgotPasswordScreen from './Buyers/BforgetPassword.js';
+import BDashboard from './Buyers/BDashboard.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -75,6 +76,7 @@ export default function App() {
         <Stack.Screen name="Bsignup" component={BSignup} />
         <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm}/>
         <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen}/>
+        <Stack.Screen name='BDashboard' component={BDashboard}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
