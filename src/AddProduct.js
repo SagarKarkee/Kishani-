@@ -10,7 +10,8 @@ const AddProduct = ({ navigation, route }) => {
   const [price, setPrice] = useState('');
   const [date, setDate] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [productDetails, setProductDetails] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
     if (route.params?.selectedVegetable) {
@@ -31,7 +32,7 @@ const AddProduct = ({ navigation, route }) => {
   };
 
   const handleConfirm = (selectedDate) => {
-    setDate(moment(selectedDate).format('YYYY-MM-DD')); // Format the date as needed
+    setDate(moment(selectedDate).format('YYYY-MM-DD'));
     hideDatePicker();
   };
 
@@ -41,13 +42,58 @@ const AddProduct = ({ navigation, route }) => {
       return;
     }
 
-    setProductDetails({
+    const newProduct = {
       productName,
       quantity,
       price,
       date,
-      imageUri: 'https://example.com/product-image.jpg' // Replace with actual image URI
-    });
+      imageUri: 'https://example.com/product-image.jpg', // Replace with actual image URI
+    };
+
+    if (editingIndex !== null) {
+      const updatedProducts = [...products];
+      updatedProducts[editingIndex] = newProduct;
+      setProducts(updatedProducts);
+      setEditingIndex(null);
+    } else {
+      setProducts([...products, newProduct]);
+    }
+
+    // Clear input fields after adding the product
+    setProductName('');
+    setQuantity('');
+    setPrice('');
+    setDate('');
+  };
+
+  const handleEdit = (index) => {
+    const product = products[index];
+    setProductName(product.productName);
+    setQuantity(product.quantity);
+    setPrice(product.price);
+    setDate(product.date);
+    setEditingIndex(index);
+  };
+
+  const handleDelete = (index) => {
+    Alert.alert(
+      'Confirm Delete',
+      'Are you sure you want to delete this product?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            const updatedProducts = products.filter((_, i) => i !== index);
+            setProducts(updatedProducts);
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
@@ -84,16 +130,28 @@ const AddProduct = ({ navigation, route }) => {
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
+        <Text style={styles.buttonText}>{editingIndex !== null ? 'Update Product' : 'Add Product'}</Text>
       </TouchableOpacity>
-      {productDetails && (
+      {products.length > 0 && (
         <View style={styles.detailsContainer}>
           <Text style={styles.detailsTitle}>Product Details:</Text>
-          <Text style={styles.detailsText}>Name: {productDetails.productName}</Text>
-          <Text style={styles.detailsText}>Quantity: {productDetails.quantity}</Text>
-          <Text style={styles.detailsText}>Price: {productDetails.price}</Text>
-          <Text style={styles.detailsText}>Available Date: {productDetails.date}</Text>
-          <Image source={{ uri: productDetails.imageUri }} style={styles.image} />
+          {products.map((product, index) => (
+            <View key={index} style={styles.productDetails}>
+              <Text style={styles.detailsText}>Name: {product.productName}</Text>
+              <Text style={styles.detailsText}>Quantity: {product.quantity}</Text>
+              <Text style={styles.detailsText}>Price: {product.price}</Text>
+              <Text style={styles.detailsText}>Available Date: {product.date}</Text>
+              <Image source={{ uri: product.imageUri }} style={styles.image} />
+              <View style={styles.actionButtons}>
+                <TouchableOpacity onPress={() => handleEdit(index)} style={styles.editButton}>
+                  <Icon name="edit" size={25} color="#000" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleDelete(index)} style={styles.deleteButton}>
+                  <Icon name="delete" size={25} color="#D11A2A" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
         </View>
       )}
       <DateTimePickerModal
@@ -137,7 +195,7 @@ const styles = StyleSheet.create({
   product: {
     height: 40,
     paddingHorizontal: 10,
-    flex: 1, // Adjust to fill remaining space
+    flex: 1,
   },
   input: {
     height: 40,
@@ -146,11 +204,11 @@ const styles = StyleSheet.create({
     borderColor: '#DDDDDD',
     borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 10, // Add margin to space out inputs
+    marginBottom: 10,
   },
   dateText: {
-    lineHeight: 40, // Center the text vertically
-    color: '#000', // Text color for the date input
+    lineHeight: 40,
+    color: '#000',
   },
   iconButton: {
     paddingHorizontal: 10,
@@ -179,16 +237,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  detailsText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    marginTop: 10,
+  productDetails: {
+    marginBottom: 15,
+    padding: 10,
     borderRadius: 5,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    backgroundColor: '#F9F9F9',
   },
+  detailsText: {
+    fontSize: 15,
+    marginBottom: 5,
+    
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+  },
+  editButton: {
+    marginRight: 15,
+  },
+  deleteButton: {},
 });
 
 export default AddProduct;
