@@ -109,29 +109,29 @@ const Notes = ({ navigation }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('Dashboard')} // Navigate to Dashboard
         >
-          <Icon name="home-outline" size={25} color="#6200EE" />
+          <Icon name="home-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Notes')} // Current screen, no navigation needed
         >
-          <Icon name="document-text-outline" size={25} color="#6200EE" />
+          <Icon name="document-text-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Notes</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Message')} // Navigate to Message
         >
-          <Icon name="chatbox-ellipses-outline" size={25} color="#6200EE" />
+          <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Profile')} // Navigate to Profile
         >
-          <Icon name="person-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Profile</Text>
+          <Icon name="person-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Profile</Text> 
         </TouchableOpacity>
       </View>
 
@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#E1DED',
   },
-
   content: {
     flex: 1,
     padding: 20,

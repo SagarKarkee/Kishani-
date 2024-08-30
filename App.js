@@ -14,6 +14,8 @@ import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
 import SelectVegetable from './src/SelectVegetable.js';
+import CropDiseases from './src/CropDiseases.js';
+import Cultivation from './src/Cultivation.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +67,8 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
+        <Stack.Screen name="CropDiseases" component={CropDiseases} />
+        <Stack.Screen name="Cultivation" component={Cultivation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
