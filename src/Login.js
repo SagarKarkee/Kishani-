@@ -4,30 +4,35 @@ import { Button, Checkbox } from 'react-native-paper';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {
-    if (phoneNumber === '' || password === '' ) {
+    if (email === '' || password === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
+
+    if (!rememberMe) {
+      Alert.alert('Error', 'Please tick "Remember Me" to proceed');
+      return;
+    }
+
     // Perform login action here
-    // For example, you can navigate to the next screen:
-    navigation.navigate('Dashboard'); // Replace 'HomeScreen' with your target screen
+    navigation.navigate('Dashboard'); // Replace 'Dashboard' with your target screen
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
+
       <TextInput
         style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -63,14 +68,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#43B76A'
+    backgroundColor: '#43B76A',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
-    color: 'black'
+    color: 'black',
   },
   input: {
     height: 50,
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
     backgroundColor: '#DFDFDF',
-    color: 'black'
+    color: 'black',
   },
   rememberForgotContainer: {
     flexDirection: 'row',
@@ -101,12 +106,12 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize:20,
+    fontSize: 20,
   },
   link: {
     marginTop: 16,
