@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Linking, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; // Importing MaterialIcons for article icons
 
 // Function to extract YouTube video ID from URL
 const extractVideoId = (url) => {
@@ -32,7 +33,14 @@ const Cultivation = () => {
     );
   };
 
-  const renderResourceLink = (url, title, thumbnail) => (
+  const renderArticleLink = (url, title) => (
+    <TouchableOpacity onPress={() => openLink(url)} style={styles.articleContainer}>
+      <MaterialIcons name="article" size={40} color="#43B76A" style={styles.articleIcon} />
+      <Text style={styles.linkText}>{title}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderWebsiteLink = (url, title, thumbnail) => (
     <TouchableOpacity onPress={() => openLink(url)} style={styles.linkContainer}>
       {thumbnail ? (
         <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
@@ -84,20 +92,17 @@ const Cultivation = () => {
 
         {/* Articles */}
         <Text style={styles.subheading}>Articles</Text>
-        {renderResourceLink(
+        {renderArticleLink(
           'https://www.agriculture.com/farming/basics-of-crop-cultivation',
-          'The Basics of Crop Cultivation',
-          'https://example.com/article-thumbnail1.jpg' // Replace with actual thumbnail URL
+          'The Basics of Crop Cultivation'
         )}
-        {renderResourceLink(
+        {renderArticleLink(
           'https://www.fao.org/agriculture/cropcultivationguide',
-          'Guide to Successful Crop Cultivation',
-          'https://example.com/article-thumbnail2.jpg' // Replace with actual thumbnail URL
+          'Guide to Successful Crop Cultivation'
         )}
-        {renderResourceLink(
+        {renderArticleLink(
           'https://www.nrcs.usda.gov/soil-health-importance-in-cultivation',
-          'Soil Health and Its Importance in Crop Cultivation',
-          'https://example.com/article-thumbnail3.jpg' // Replace with actual thumbnail URL
+          'Soil Health and Its Importance in Crop Cultivation'
         )}
 
         {/* YouTube Videos */}
@@ -113,26 +118,25 @@ const Cultivation = () => {
             source={{ uri: 'https://i.ytimg.com/vi/xOk2gdG9iaU/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDg6NEn1t1SbKQ4gf1ljdya9gcKrQ' }} // Replace with actual playlist thumbnail
             style={styles.thumbnail}
           />
-          <Text style={styles.linkText}>Cultivation of Crops TutorialsPoint · Playlist
-</Text>
+          <Text style={styles.linkText}>Cultivation of Crops TutorialsPoint · Playlist</Text>
         </TouchableOpacity>
 
         {/* Websites */}
         <Text style={styles.subheading}>Websites</Text>
-        {renderResourceLink(
-          'https://www.fao.org/home/en',
-          'FAO - Food and Agriculture Organization',
-          'https://example.com/website-thumbnail1.jpg' // Replace with actual thumbnail URL
+        {renderWebsiteLink(
+          'https://www.accessagriculture.org/',
+          'Access Agriculture',
+          'https://www.accessagriculture.org/sites/default/files/AA%20main%20logo%20no%20URL%20copy.png' // Replace with actual thumbnail URL
         )}
-        {renderResourceLink(
+        {renderWebsiteLink(
           'https://www.growveg.com/',
           'GrowVeg',
-          'https://example.com/website-thumbnail2.jpg' // Replace with actual thumbnail URL
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5jAuisZGOsmONrQa7BlkGxd9nPMrkTD4bbA&s' // Replace with actual thumbnail URL
         )}
-        {renderResourceLink(
+        {renderWebsiteLink(
           'https://www.agrifarming.in/',
           'AgriFarming',
-          'https://example.com/website-thumbnail3.jpg' // Replace with actual thumbnail URL
+          'https://lh3.googleusercontent.com/gc2Iae6ydSrao0ICOcTCElZbCtWEEiOnXiTz8srxqOT77jtFmghODPGdaNN8BKOJOOJpqbXg_JYXMygE16sPw3k=h200' // Replace with actual thumbnail URL
         )}
       </View>
     </ScrollView>
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    marginTop:20 ,
+    marginTop: 20,
     color: '#43B76A',
   },
   section: {
@@ -177,6 +181,14 @@ const styles = StyleSheet.create({
   },
   linkContainer: {
     marginBottom: 10,
+  },
+  articleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  articleIcon: {
+    marginRight: 10,
   },
   thumbnail: {
     width: '100%',
