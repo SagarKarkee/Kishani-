@@ -107,31 +107,32 @@ const Notes = ({ navigation }) => {
       <View style={styles.navButtons}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Dashboard')} // Navigate to Dashboard
+          onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
         >
           <Icon name="home-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Home</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold',}}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Notes')} // Current screen, no navigation needed
+          onPress={() => navigation.navigate('Notes')} // Change 'Notes' to the correct screen name
         >
           <Icon name="document-text-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Notes</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Notes</Text>
+
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Message')} // Navigate to Message
+          onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
         >
           <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Message</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')} // Navigate to Profile
+          onPress={() => navigation.navigate('Profile')} // Change 'Profile' to the correct screen name
         >
           <Icon name="person-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Profile</Text> 
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Profile</Text>
         </TouchableOpacity>
       </View>
 
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   navButtonText: {
     marginTop: 5,
     color: '#6200EE',
-    fontSize: 14,
+    fontSize: 1,
   },
 });
 
