@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('./User'); // Import User model
 
-// const bcrypt = require('.bcryptjs');
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv'); // Import dotenv package
 const connectDB = require('./connection'); // Import database connection function
 const cors = require('cors');
