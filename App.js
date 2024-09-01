@@ -2,24 +2,27 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GetStarted from './src/GetStarted'; // Adjust the import according to your file structure
-import Login from './src/Login'; // Adjust the import according to your file structure
-import Signup from './src/Signup'; // Adjust the import according to your file structure
-import PersonelDetails from './src/PersonelDetails'; // Adjust the import according to your file structure
-import Dashboard from './src/Dashboard'; // Adjust the import according to your file structure
-import Notes from './src/Notes'; // Adjust the import according to your file structure
-import Message from './src/Message'; // Adjust the import according to your file structure
-import Profile from './src/Profile'; // Adjust the import according to your file structure
-import { Ionicons } from '@expo/vector-icons'; // or another icon library
+import { Ionicons } from '@expo/vector-icons';
+
+// Import screens
+import GetStarted from './src/GetStarted';
+import Login from './src/Login';
+import Signup from './src/Signup';
+import PersonelDetails from './src/PersonelDetails';
+import Dashboard from './src/Dashboard';
+import Notes from './src/Notes';
+import Message from './src/Message';
+import Profile from './src/Profile';
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
-import SelectVegetable from './src/SelectVegetable.js';
-import AccountTypeScreen from './src/AccountTypeScreen.js';
-import BLoginScreen from './Buyers/Blogin.js';
-import BSignup from './Buyers/Bsignup.js';
-import BPersonalDetailsForm from './Buyers/BpersonalDetails.js';
-import BForgotPasswordScreen from './Buyers/BforgetPassword.js';
-import BDashboard from './Buyers/BDashboard.js';
+import SelectVegetable from './src/SelectVegetable';
+import AccountTypeScreen from './src/AccountTypeScreen';
+import BLoginScreen from './Buyers/Blogin';
+import BSignup from './Buyers/BSignup';
+import BPersonalDetailsForm from './Buyers/BpersonalDetails';
+import BForgotPasswordScreen from './Buyers/BforgetPassword';
+import BDashboard from './Buyers/BDashboard';
+import VegetableDetails from './Buyers/VegetableDetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,7 +44,6 @@ function MainTabNavigator() {
             iconName = focused ? 'person' : 'person-outline';
           }
 
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
@@ -74,9 +76,10 @@ export default function App() {
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="Blogin" component={BLoginScreen} />
         <Stack.Screen name="Bsignup" component={BSignup} />
-        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm}/>
-        <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen}/>
-        <Stack.Screen name='BDashboard' component={BDashboard}/>
+        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm} />
+        <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
+        <Stack.Screen name="BDashboard" component={BDashboard} />
+        <Stack.Screen name="VegetableDetails" component={VegetableDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
