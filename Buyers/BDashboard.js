@@ -19,41 +19,41 @@ const imageMap = {
 };
 
 const products = [
-  { 
-    id: '1', 
-    name: 'Cauliflower', 
-    price: 'Rs 30/kg', 
-    imageUrl: imageMap['1'], 
-    availableDate: '2024-09-05', 
-    farmerName: 'John Doe', 
-    phoneNumber: '123-456-7890' 
+  {
+    id: '1',
+    name: 'Cauliflower',
+    price: 'Rs 30/kg',
+    imageUrl: imageMap['1'],
+    availableDate: '2024-09-05',
+    farmerName: 'John Doe',
+    phoneNumber: '123-456-7890'
   },
-  { 
-    id: '2', 
-    name: 'Tomato', 
-    price: 'Rs 40/kg', 
-    imageUrl: imageMap['2'], 
-    availableDate: '2024-09-06', 
-    farmerName: 'Jane Smith', 
-    phoneNumber: '098-765-4321' 
+  {
+    id: '2',
+    name: 'Tomato',
+    price: 'Rs 40/kg',
+    imageUrl: imageMap['2'],
+    availableDate: '2024-09-06',
+    farmerName: 'Jane Smith',
+    phoneNumber: '098-765-4321'
   },
-  { 
-    id: '3', 
-    name: 'Brinjal', 
-    price: 'Rs 80/kg', 
-    imageUrl: imageMap['3'], 
-    availableDate: '2024-09-07', 
-    farmerName: 'Emily Brown', 
-    phoneNumber: '111-222-3333' 
+  {
+    id: '3',
+    name: 'Brinjal',
+    price: 'Rs 80/kg',
+    imageUrl: imageMap['3'],
+    availableDate: '2024-09-07',
+    farmerName: 'Emily Brown',
+    phoneNumber: '111-222-3333'
   },
-  { 
-    id: '4', 
-    name: 'Potato', 
-    price: 'Rs 60/kg', 
-    imageUrl: imageMap['4'], 
-    availableDate: '2024-09-08', 
-    farmerName: 'Michael Green', 
-    phoneNumber: '444-555-6666' 
+  {
+    id: '4',
+    name: 'Potato',
+    price: 'Rs 60/kg',
+    imageUrl: imageMap['4'],
+    availableDate: '2024-09-08',
+    farmerName: 'Michael Green',
+    phoneNumber: '444-555-6666'
   },
 ];
 
@@ -80,8 +80,8 @@ const Header = () => {
 
 // Product Card Component
 const ProductCard = ({ product, navigation }) => (
-  <TouchableOpacity 
-    style={styles.productCard} 
+  <TouchableOpacity
+    style={styles.productCard}
     onPress={() => navigation.navigate('VegetableDetails', { product })}
   >
     <Image source={product.imageUrl} style={styles.productImage} />
@@ -132,6 +132,39 @@ const InfoSection = () => (
     />
   </View>
 );
+//bottom Nav component
+const BottomNav = () => (
+  <View style={styles.navButtons}>
+    <TouchableOpacity
+      style={styles.navButton}
+      onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
+    >
+      <Icon name="home-outline" size={25} color="#6200EE" />
+      <Text style={styles.navButtonText}>Home</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.navButton}
+      onPress={() => navigation.navigate('Bnotes')} // Change 'Notes' to the correct screen name
+    >
+      <Icon name="document-text-outline" size={25} color="#6200EE" />
+      <Text style={styles.navButtonText}>Notes</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.navButton}
+      onPress={() => navigation.navigate('Bmessage')} // Change 'Message' to the correct screen name
+    >
+      <Icon name="chatbox-ellipses-outline" size={25} color="#6200EE" />
+      <Text style={styles.navButtonText}>Message</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.navButton}
+      onPress={() => navigation.navigate('Bprofile')} // Change 'Profile' to the correct screen name
+    >
+      <Icon name="person-outline" size={25} color="#6200EE" />
+      <Text style={styles.navButtonText}>Profile</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 // Main Dashboard Screen
 const BDashboard = ({ navigation }) => {
@@ -141,6 +174,7 @@ const BDashboard = ({ navigation }) => {
         <Header />
         <ProductList navigation={navigation} />
         <InfoSection />
+        <BottomNav />
       </ScrollView>
     </SafeAreaView>
   );
@@ -184,7 +218,7 @@ const styles = StyleSheet.create({
   productList: {
     paddingBottom: 0,
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 0,
   },
   row: {
     justifyContent: 'space-between',
@@ -260,6 +294,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     width: 250,
+  },
+  //Bottom Nav
+  navButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+  },
+  navButton: {
+    alignItems: 'center',
+  },
+  navButtonText: {
+    marginTop: 5,
+    color: '#6200EE',
+    fontSize: 14,
   },
 });
 

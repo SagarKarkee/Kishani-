@@ -23,6 +23,9 @@ import BPersonalDetailsForm from './Buyers/BpersonalDetails';
 import BForgotPasswordScreen from './Buyers/BforgetPassword';
 import BDashboard from './Buyers/BDashboard';
 import VegetableDetails from './Buyers/VegetableDetails';
+import Bnotes from './Buyers/Bnotes';
+import Bmessage from './Buyers/Bmessage';
+import Bprofile from './Buyers/Bprofile';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,6 +83,11 @@ export default function App() {
         <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
         <Stack.Screen name="BDashboard" component={BDashboard} />
         <Stack.Screen name="VegetableDetails" component={VegetableDetails} />
+        <Stack.Screen name="Bnotes" component={Bnotes}/>
+        <Stack.Screen name="Bmessage" component={Bmessage}/>
+        <Stack.Screen name="Bprofile" component={Bprofile}/>
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );
