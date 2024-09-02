@@ -137,7 +137,7 @@ const BottomNav = () => (
   <View style={styles.navButtons}>
     <TouchableOpacity
       style={styles.navButton}
-      onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
+      onPress={() => navigation.navigate('BDashboard')} // Change 'Dashboard' to the correct screen name if different
     >
       <Icon name="home-outline" size={25} color="#6200EE" />
       <Text style={styles.navButtonText}>Home</Text>
