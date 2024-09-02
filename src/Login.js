@@ -4,30 +4,52 @@ import { Button, Checkbox } from 'react-native-paper';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-
-  const handleLogin = () => {
+  
+  
+  
+  const handleLogin = async () => {
     if (phoneNumber === '' || password === '' ) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
     // Perform login action here
-    // For example, you can navigate to the next screen:
-    navigation.navigate('Dashboard'); // Replace 'HomeScreen' with your target screen
+    try {
+      const response = await fetch('http://localhost:8081/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber,
+          password,
+        }),
+      });
+  
+      if (response.ok) {
+        Alert.alert('Success', 'Logged in successfully');
+        navigation.navigate('Dashboard');
+      } else {
+        const data = await response.json();
+        Alert.alert('Error', data.message || 'Invalid credentials');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to connect to the server');
+    }
+    
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
+
       <TextInput
         style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -63,14 +85,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#43B76A'
+    backgroundColor: '#43B76A',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
-    color: 'black'
+    color: 'black',
   },
   input: {
     height: 50,
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
     backgroundColor: '#DFDFDF',
-    color: 'black'
+    color: 'black',
   },
   rememberForgotContainer: {
     flexDirection: 'row',
@@ -101,12 +123,12 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize:20,
+    fontSize: 20,
   },
   link: {
     marginTop: 16,

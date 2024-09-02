@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('./User'); // Import User model
 
-// const bcrypt = require('.bcryptjs');
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv'); // Import dotenv package
 const connectDB = require('./connection'); // Import database connection function
 const cors = require('cors');
@@ -61,7 +61,7 @@ app.post('/login', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
