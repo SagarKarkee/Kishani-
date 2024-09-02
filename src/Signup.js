@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Signup = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  // const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
+  
   const handleSignup = async () => {
     if (email === '' || phoneNumber === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
@@ -30,10 +33,10 @@ const Signup = ({ navigation }) => {
           password,
         }),
       });
-
+  
       if (response.ok) {
         Alert.alert('Success', 'Account created successfully');
-        navigation.navigate('PersonelDetails');
+        navigation.navigate('Login');
       } else {
         const data = await response.json();
         Alert.alert('Error', data.message || 'An error occurred during signup');
@@ -45,36 +48,64 @@ const Signup = ({ navigation }) => {
     // navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
    
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Signup</Text>
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Phone Number"
+          keyboardType="phone-pad"
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={!passwordVisible}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => setPasswordVisible(!passwordVisible)}
+        >
+          <Icon
+            name={passwordVisible ? 'eye-off' : 'eye'}
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password"
+          secureTextEntry={!confirmPasswordVisible}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+        >
+          <Icon
+            name={confirmPasswordVisible ? 'eye-off' : 'eye'}
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
+
       <Button mode="contained" onPress={handleSignup} style={styles.button}>
         <Text style={styles.buttonText}>Signup</Text>
       </Button>
+
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Already have an account? Log In</Text>
       </TouchableOpacity>
@@ -96,15 +127,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black'
   },
+  inputContainer: {
+    position: 'relative',
+    marginBottom: 16,
+  },
   input: {
     height: 50,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingRight: 40, // Add padding to the right to make space for the icon
     backgroundColor: '#DFDFDF',
-    color: 'black'
+    color: 'black',
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
+    top: 13,
   },
   button: {
     marginTop: 16,
@@ -113,7 +153,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize:18,
+    fontSize: 18,
   },
   link: {
     marginTop: 16,
