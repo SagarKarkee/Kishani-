@@ -75,7 +75,7 @@ export default function App() {
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="Blogin" component={BLoginScreen} />
-        <Stack.Screen name="Bsignup" component={BSignup} />
+        <Stack.Screen name="BSignup" component={BSignup} />
         <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm} />
         <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
         <Stack.Screen name="BDashboard" component={BDashboard} />
