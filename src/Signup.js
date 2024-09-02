@@ -19,7 +19,7 @@ const Signup = ({ navigation }) => {
     }
     // Perform signup action here
     try {
-      const response = await fetch('http://your-server-url/signup', {
+      const response = await fetch('http://localhost:8081/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
