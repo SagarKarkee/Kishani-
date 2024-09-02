@@ -8,18 +8,41 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
-    if (email === '' || password === '' || confirmPassword === '') {
+  const handleSignup = async () => {
+    if (email === '' || phoneNumber === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
-      return; 
+      return;
     }
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
       return;
     }
     // Perform signup action here
-   
-    navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
+    try {
+      const response = await fetch('http://your-server-url/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          phoneNumber,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        Alert.alert('Success', 'Account created successfully');
+        navigation.navigate('PersonelDetails');
+      } else {
+        const data = await response.json();
+        Alert.alert('Error', data.message || 'An error occurred during signup');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to connect to the server');
+    }
+  
+    // navigation.navigate('PersonelDetails'); // Navigate to the PersonelDetails screen
    
   };
 
@@ -34,13 +57,7 @@ const Signup = ({ navigation }) => {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      /> */}
+      
       <TextInput
         style={styles.input}
         placeholder="Password"

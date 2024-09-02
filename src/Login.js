@@ -8,14 +8,36 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (phoneNumber === '' || password === '' ) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
     // Perform login action here
+    try {
+      const response = await fetch('http://localhost:5500/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        Alert.alert('Success', 'Logged in successfully');
+        navigation.navigate('Dashboard');
+      } else {
+        const data = await response.json();
+        Alert.alert('Error', data.message || 'Invalid credentials');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to connect to the server');
+    }
     // For example, you can navigate to the next screen:
-    navigation.navigate('Dashboard'); // Replace 'HomeScreen' with your target screen
+    // navigation.navigate('Dashboard'); // Replace 'HomeScreen' with your target screen
   };
 
   return (
