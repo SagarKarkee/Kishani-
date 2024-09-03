@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button, Checkbox } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     if (email === '' || password === '') {
@@ -34,18 +36,25 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setEmail}
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Icon name={showPassword ? "eye-off" : "eye"} size={24} color="black" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.rememberForgotContainer}>
         <View style={styles.rememberMeContainer}>
           <Checkbox
             status={rememberMe ? 'checked' : 'unchecked'}
             onPress={() => setRememberMe(!rememberMe)}
+            color="black" // Set the tick color to black
+            uncheckedColor="black" // Set the checkbox border color to black when unchecked
           />
           <Text style={styles.rememberMeText}>Remember Me</Text>
         </View>
@@ -85,6 +94,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
     backgroundColor: '#DFDFDF',
+    color: 'black',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    backgroundColor: '#DFDFDF',
+  },
+  passwordInput: {
+    flex: 1,
+    height: 50,
     color: 'black',
   },
   rememberForgotContainer: {

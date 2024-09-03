@@ -4,14 +4,15 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Signup = ({ navigation }) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const handleSignup = () => {
-    if (phoneNumber === '' || password === '' || confirmPassword === '') {
+    if (fullName === '' || email === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -29,10 +30,19 @@ const Signup = ({ navigation }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Phone Number"
-          keyboardType="phone-pad"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
+          placeholder="Full Name"
+          value={fullName}
+          onChangeText={setFullName}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
       </View>
 
