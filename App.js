@@ -16,6 +16,16 @@ import AddProduct from './src/AddProduct';
 import SelectVegetable from './src/SelectVegetable.js';
 import CropDiseases from './src/CropDiseases.js';
 import Cultivation from './src/Cultivation.js';
+import BDashboard from './Buyers/BDashboard.js';
+import BForgotPasswordScreen from './Buyers/BforgetPassword.js';
+import BLoginScreen from './Buyers/Blogin.js';
+import Bmessage from './Buyers/Bmessage.js';
+import Bnote from './Buyers/Bnotes.js';
+import B_personal from './Buyers/BpersonalDetails.js';
+import B_profile from './Buyers/Bprofile.js';
+import B_Signup from './Buyers/BSignup.js';
+import B_vegetableDetails from './Buyers/BvegetableDetails.js';
+import Account_Type from './src/Accounttype.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,6 +79,17 @@ export default function App() {
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="CropDiseases" component={CropDiseases} />
         <Stack.Screen name="Cultivation" component={Cultivation} />
+        <Stack.Screen name="Accounttype" component={Account_Type} />
+        <Stack.Screen name="BDashboard" component={BDashboard} />
+        <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
+        <Stack.Screen name="Blogin" component={BLoginScreen} />
+        <Stack.Screen name="Bmessage" component={Bmessage} />
+        <Stack.Screen name="Bnotes" component={Bnote} />
+        <Stack.Screen name="BpersonalDetails" component={B_personal} />
+        <Stack.Screen name="Bprofile" component={B_profile} />
+        <Stack.Screen name="BSignup" component={B_Signup} />
+        <Stack.Screen name="BvegetablesDetails" component={B_vegetableDetails} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

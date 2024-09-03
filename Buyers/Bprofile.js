@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Bprofile = () => {
+const B_profile = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Profile Screen</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Bprofile;
+export default B_profile;

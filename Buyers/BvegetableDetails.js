@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-const VegetableDetails = ({ route }) => {
+const B_vegetableDetails = ({ route }) => {
   const { product } = route.params;
 
   return (
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VegetableDetails;
+export default B_vegetableDetails;

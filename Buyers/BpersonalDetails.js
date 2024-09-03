@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Pressable, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const BpersonalDetailsForm = ({ navigation }) => {
+const B_personal = ({ navigation }) => {
     const [imageUri, setImageUri] = useState(null);
     const [fullName, setFullName] = useState('');
     const [address, setAddress] = useState('');
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BpersonalDetailsForm;
+export default B_personal;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Modal, Button, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Bnotes = ({ navigation }) => {
+const Bnote = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [note, setNote] = useState('');
@@ -303,4 +303,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Bnotes;
+export default Bnote;

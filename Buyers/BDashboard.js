@@ -8,8 +8,8 @@ import cauliflowerImg from './../assets/cauliflower.jpeg';
 import tomatoImg from './../assets/tomato.jpg';
 import brinjalImg from './../assets/brinjal.jpg';
 import potatoImg from './../assets/potato.jpg';
-import cultivationImg from './../assets/tomato-1.png';
-import diseasesImg from './../assets/tomato-2.png';
+import cultivationImg from './../assets/tomato.jpg';
+import diseasesImg from './../assets/tomato.jpg';
 
 const imageMap = {
   '1': cauliflowerImg,
@@ -63,7 +63,7 @@ const Header = () => {
     <View style={styles.header}>
       <View style={styles.headerText}>
         <Image
-          source={require('./../assets/buyers.png')}
+          source={require('./../assets/b.jpeg')}
           style={styles.profileImage}
         />
         <View>

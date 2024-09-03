@@ -7,7 +7,7 @@ const GetStarted = () => {
 
   const handleGetStarted = () => {
     // Navigate to the next screen
-    navigation.navigate('Login'); // Change 'NextScreen' to your actual screen name
+    navigation.navigate('Accounttype'); // Change 'NextScreen' to your actual screen name
   };
 
   return (

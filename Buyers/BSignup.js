@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const BSignup = ({ navigation }) => {
+const B_Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BSignup;
+export default B_Signup;
