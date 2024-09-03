@@ -2,36 +2,20 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-
-// Import screens
-import GetStarted from './src/GetStarted';
-import Login from './src/Login';
-import Signup from './src/Signup';
-import PersonelDetails from './src/PersonelDetails';
-import Dashboard from './src/Dashboard';
-import Notes from './src/Notes';
-import Message from './src/Message';
-import Profile from './src/Profile';
+import GetStarted from './src/GetStarted'; // Adjust the import according to your file structure
+import Login from './src/Login'; // Adjust the import according to your file structure
+import Signup from './src/Signup'; // Adjust the import according to your file structure
+import PersonelDetails from './src/PersonelDetails'; // Adjust the import according to your file structure
+import Dashboard from './src/Dashboard'; // Adjust the import according to your file structure
+import Notes from './src/Notes'; // Adjust the import according to your file structure
+import Message from './src/Message'; // Adjust the import according to your file structure
+import Profile from './src/Profile'; // Adjust the import according to your file structure
+import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
-
 import SelectVegetable from './src/SelectVegetable.js';
 import CropDiseases from './src/CropDiseases.js';
 import Cultivation from './src/Cultivation.js';
-
-import SelectVegetable from './src/SelectVegetable';
-import AccountTypeScreen from './src/AccountTypeScreen';
-import BLoginScreen from './Buyers/Blogin';
-import BSignup from './Buyers/BSignup';
-import BPersonalDetailsForm from './Buyers/BpersonalDetails';
-import BForgotPasswordScreen from './Buyers/BforgetPassword';
-import BDashboard from './Buyers/BDashboard';
-import VegetableDetails from './Buyers/VegetableDetails';
-import Bnotes from './Buyers/Bnotes';
-import Bmessage from './Buyers/Bmessage';
-import Bprofile from './Buyers/Bprofile';
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,6 +37,7 @@ function MainTabNavigator() {
             iconName = focused ? 'person' : 'person-outline';
           }
 
+          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
@@ -72,7 +57,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="GetStarted">
         <Stack.Screen name="GetStarted" component={GetStarted} />
-        <Stack.Screen name="AccountTypeScreen" component={AccountTypeScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="PersonelDetails" component={PersonelDetails} />
@@ -83,22 +67,8 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
-
         <Stack.Screen name="CropDiseases" component={CropDiseases} />
         <Stack.Screen name="Cultivation" component={Cultivation} />
-
-        <Stack.Screen name="Blogin" component={BLoginScreen} />
-        <Stack.Screen name="BSignup" component={BSignup} />
-        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm} />
-        <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
-        <Stack.Screen name="BDashboard" component={BDashboard} />
-        <Stack.Screen name="VegetableDetails" component={VegetableDetails} />
-        <Stack.Screen name="Bnotes" component={Bnotes}/>
-        <Stack.Screen name="Bmessage" component={Bmessage}/>
-        <Stack.Screen name="Bprofile" component={Bprofile}/>
-
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );
