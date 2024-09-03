@@ -24,7 +24,7 @@ import Bnote from './Buyers/Bnotes.js';
 import B_personal from './Buyers/BpersonalDetails.js';
 import B_profile from './Buyers/Bprofile.js';
 import B_Signup from './Buyers/BSignup.js';
-import B_vegetableDetails from './Buyers/BvegetableDetails.js';
+import B_vegetableDetails from './Buyers/VegetableDetails.js';
 import Account_Type from './src/Accounttype.js';
 
 const Stack = createStackNavigator();
@@ -88,7 +88,7 @@ export default function App() {
         <Stack.Screen name="BpersonalDetails" component={B_personal} />
         <Stack.Screen name="Bprofile" component={B_profile} />
         <Stack.Screen name="BSignup" component={B_Signup} />
-        <Stack.Screen name="BvegetablesDetails" component={B_vegetableDetails} />
+        <Stack.Screen name="VegetableDetails" component={B_vegetableDetails} />
 
       </Stack.Navigator>
     </NavigationContainer>
