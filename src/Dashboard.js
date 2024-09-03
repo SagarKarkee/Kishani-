@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+// Import local images
+import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
+import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
+
 const Dashboard = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -36,7 +40,7 @@ const Dashboard = ({ navigation }) => {
             onPress={() => navigation.navigate('Cultivation')} // Replace 'Cultivation' with the actual screen name
           >
             <Image 
-              source={{ uri: '' }} // Replace with your image URL
+              source={cultivationImage} // Use the imported image
               style={styles.educationImage}
             />
             <Text style={styles.educationText}>Cultivation Process</Text>
@@ -46,7 +50,7 @@ const Dashboard = ({ navigation }) => {
             onPress={() => navigation.navigate('CropDiseases')} // Replace 'CropDiseases' with the actual screen name
           >
             <Image 
-              source={{ uri: 'https://example.com/crop-diseases-image.jpg' }} // Replace with your image URL
+              source={cropDiseasesImage} // Use the imported image
               style={styles.educationImage}
             />
             <Text style={styles.educationText}>Crop Diseases Solutions</Text>
@@ -63,29 +67,30 @@ const Dashboard = ({ navigation }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
         >
-          <Icon name="home-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Home</Text>
+          <Icon name="home-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold',}}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Notes')} // Change 'Notes' to the correct screen name
         >
-          <Icon name="document-text-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Notes</Text>
+          <Icon name="document-text-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Notes</Text>
+
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
         >
-          <Icon name="chatbox-ellipses-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Message</Text>
+          <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
           onPress={() => navigation.navigate('Profile')} // Change 'Profile' to the correct screen name
         >
-          <Icon name="person-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Profile</Text>
+          <Icon name="person-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Profile</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -149,6 +154,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
   },
+
   educationSection: {
     padding: 20,
     backgroundColor: '#E8F5E9',
