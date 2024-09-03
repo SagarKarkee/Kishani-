@@ -6,8 +6,7 @@ const PersonalDetailsForm = ({ navigation }) => {
   const [imageUri, setImageUri] = useState(null);
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  // const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,7 +20,7 @@ const PersonalDetailsForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Validation logic
-    if (!fullName || !address || !phoneNumber || imageUri) {
+    if (!fullName || !address || !email || imageUri) {
       Alert.alert('Error', 'All fields must be filled out.');
       return;
     }
@@ -29,8 +28,7 @@ const PersonalDetailsForm = ({ navigation }) => {
     // Handle the form submission logic here
     console.log('Full Name:', fullName);
     console.log('Address:', address);
-    // console.log('Email:', email);
-    console.log('Phone number:', phoneNumber);
+    console.log('Email:', email);
     console.log('Image URI:', imageUri);
     
     // Simulate saving the data
@@ -71,21 +69,14 @@ const PersonalDetailsForm = ({ navigation }) => {
         onChangeText={setAddress}
       />
       
-      {/* <TextInput
+      <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-       */}
-       <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      /> 
+      
       <Button title="Save" onPress={handleSubmit} />
       
       <Modal
