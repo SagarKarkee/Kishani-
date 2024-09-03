@@ -19,7 +19,8 @@ import SelectVegetable from './src/SelectVegetable';
 import AccountTypeScreen from './src/AccountTypeScreen';
 import BLoginScreen from './Buyers/Blogin';
 import BSignup from './Buyers/BSignup';
-import BPersonalDetailsForm from './Buyers/BpersonalDetails';
+import BpersonalDetails from './Buyers/BpersonalDetails';
+
 import BForgotPasswordScreen from './Buyers/BforgetPassword';
 import BDashboard from './Buyers/BDashboard';
 import VegetableDetails from './Buyers/VegetableDetails';
@@ -79,7 +80,7 @@ export default function App() {
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="Blogin" component={BLoginScreen} />
         <Stack.Screen name="BSignup" component={BSignup} />
-        <Stack.Screen name="BpersonalDetails" component={BPersonalDetailsForm} />
+        <Stack.Screen name="BpersonalDetails" component={BpersonalDetails} />
         <Stack.Screen name="BforgetPassword" component={BForgotPasswordScreen} />
         <Stack.Screen name="BDashboard" component={BDashboard} />
         <Stack.Screen name="VegetableDetails" component={VegetableDetails} />
