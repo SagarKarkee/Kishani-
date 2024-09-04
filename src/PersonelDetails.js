@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Pressable, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 const PersonalDetailsForm = ({ navigation }) => {
   const [imageUri, setImageUri] = useState(null);
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [isSaved, setIsSaved] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const pickImage = () => {
     launchImageLibrary({ mediaType: 'photo' }, (response) => {
@@ -20,7 +18,7 @@ const PersonalDetailsForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Validation logic
-    if (!fullName || !address || !email || imageUri) {
+    if (!fullName || !address || !phoneNumber) {
       Alert.alert('Error', 'All fields must be filled out.');
       return;
     }
@@ -28,17 +26,11 @@ const PersonalDetailsForm = ({ navigation }) => {
     // Handle the form submission logic here
     console.log('Full Name:', fullName);
     console.log('Address:', address);
-    console.log('Email:', email);
+    console.log('Phone Number:', phoneNumber);
     console.log('Image URI:', imageUri);
-    
-    // Simulate saving the data
-    setIsSaved(true);
-    setModalVisible(true);
-  };
 
-  const handleLoginNavigation = () => {
-    setModalVisible(false);
-    navigation.navigate('Login'); // Ensure you have a route named 'Login'
+    // Navigate back to Profile screen
+    navigation.navigate('Profile');
   };
 
   return (
@@ -71,27 +63,13 @@ const PersonalDetailsForm = ({ navigation }) => {
       
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="phone-pad"
       />
       
       <Button title="Save" onPress={handleSubmit} />
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.successMessage}>Your account is successfully created.</Text>
-            <Button title="Go to Login" onPress={handleLoginNavigation} />
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -138,28 +116,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
-  },
-  successContainer: {
-    alignItems: 'center',
-  },
-  successMessage: {
-    fontSize: 18,
-    color: 'green',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
   },
 });
 
