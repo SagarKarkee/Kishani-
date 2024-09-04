@@ -49,7 +49,7 @@ const Profile = ({ navigation, route }) => {
 
       {/* Logout Section */}
       <TouchableOpacity style={styles.sectionButton} onPress={handleLogout}>
-        <Icon name="log-out-outline" size={25} color="#43B76A" />
+        <Icon name="log-out-outline" size={25} color="#FF6347" />
         <Text style={styles.sectionButtonText}>Logout</Text>
       </TouchableOpacity>
 
