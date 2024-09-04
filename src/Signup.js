@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
+
 
 const Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -11,7 +13,7 @@ const Signup = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (fullName === '' || email === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
@@ -20,7 +22,18 @@ const Signup = ({ navigation }) => {
       Alert.alert('Error', 'Passwords do not match');
       return;
     }
-    navigation.navigate('Login');
+
+    try {
+      const response = await axios.post('http://localhost:8081/signup', {
+        fullName,
+        email,
+        password,
+      });
+      Alert.alert('Success', 'User registered successfully');
+      navigation.navigate('Login');
+    } catch (error) {
+      Alert.alert('Error', error.response?.data?.message || 'Registration failed');
+    }
   };
 
   return (

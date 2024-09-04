@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { Button, Checkbox } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,20 +10,46 @@ const LoginScreen = ({ navigation }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
+  useEffect(() => {
+    // Load saved credentials if 'Remember Me' was checked
+    const loadCredentials = async () => {
+      const savedEmail = await AsyncStorage.getItem('email');
+      const savedPassword = await AsyncStorage.getItem('password');
+      if (savedEmail && savedPassword) {
+        setEmail(savedEmail);
+        setPassword(savedPassword);
+        setRememberMe(true);
+      }
+    };
+    loadCredentials();
+  }, []);
+
+  const handleLogin = async () => {
     if (email === '' || password === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
-    if (!rememberMe) {
-      Alert.alert('Error', 'Please tick "Remember Me" to proceed');
-      return;
+    try {
+      const response = await axios.post('http://localhost:8081/login', {
+        email,
+        password,
+      });
+      if (response.status === 200) {
+        if (rememberMe) {
+          await AsyncStorage.setItem('email', email);
+          await AsyncStorage.setItem('password', password);
+        } else {
+          await AsyncStorage.removeItem('email');
+          await AsyncStorage.removeItem('password');
+        }
+        navigation.navigate('Dashboard');
+      }
+    } catch (error) {
+      Alert.alert('Error', error.response?.data?.message || 'Login failed');
     }
-
-    // Perform login action here
-    navigation.navigate('Dashboard'); // Replace 'Dashboard' with your target screen
   };
+  
 
   return (
     <View style={styles.container}>
