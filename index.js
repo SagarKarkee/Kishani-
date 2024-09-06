@@ -16,34 +16,31 @@ connectDB();
 
 // User Signup for Farmers
 app.post('/signup', async (req, res) => {
+    console.log(req.body); // Log the incoming request data
+  
     const { fullName, email, password } = req.body;
-
+  
     try {
-        // Check if user already exists by email
-        const userExists = await FarmersLogin.findOne({ email });
-        if (userExists) {
-            return res.status(400).json({ message: "User already exists" });
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Create new user
-        const newFarmer = new FarmersLogin({
-            fullName,
-            email,
-            password: hashedPassword,
-        });
-
-        // Save user to Farmers.LoginCredentials collection
-        await newFarmer.save();
-
-        res.status(201).json({ message: "User created successfully" });
+      const userExists = await FarmersLogin.findOne({ email });
+      if (userExists) {
+        return res.status(400).json({ message: "User already exists" });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const newFarmer = new FarmersLogin({
+        fullName,
+        email,
+        password: hashedPassword,
+      });
+  
+      await newFarmer.save();
+      res.status(201).json({ message: "User created successfully" });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
+      console.error("Signup error: ", error); // Log the error
+      res.status(500).json({ message: "Server error" });
     }
-});
+  });
+  
 
 // User Login (for Farmers)
 app.post('/login', async (req, res) => {
