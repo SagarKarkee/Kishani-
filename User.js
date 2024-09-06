@@ -1,3 +1,4 @@
+// server/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -16,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['farmer', 'buyer'],
+    enum: ['farmer', 'buyer'], // Farmer or buyer
     default: 'farmer',
   },
 });

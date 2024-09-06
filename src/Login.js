@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { Checkbox } from 'react-native-paper'; // Import Checkbox
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -31,10 +32,12 @@ const LoginScreen = ({ navigation }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8081/login', {
+      // Update this with your computer's IP if you're using a physical device
+      const response = await axios.post('http://192.168.1.100:8081/login', {
         email,
         password,
       });
+
       if (response.status === 200) {
         if (rememberMe) {
           await AsyncStorage.setItem('email', email);
@@ -43,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
           await AsyncStorage.removeItem('email');
           await AsyncStorage.removeItem('password');
         }
-        navigation.navigate('Dashboard');
+        navigation.navigate('Dashboard'); // Navigates to the Dashboard after login
       }
     } catch (error) {
       Alert.alert('Error', error.response?.data?.message || 'Login failed');

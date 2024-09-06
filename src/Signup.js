@@ -24,7 +24,7 @@ const Signup = ({ navigation }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8081/signup', {
+      const response = await axios.post('http://localhost:8081/signup', { // Replace with your IP
         fullName,
         email,
         password,
