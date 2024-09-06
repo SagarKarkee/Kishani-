@@ -1,7 +1,7 @@
-// server/User.js
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+// Define schema for Farmers login credentials
+const FarmersLoginSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
@@ -17,11 +17,11 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['farmer', 'buyer'], // Farmer or buyer
     default: 'farmer',
   },
 });
 
-const User = mongoose.model('User', userSchema);
+// Create the model
+const FarmersLogin = mongoose.model('FarmersLogin', FarmersLoginSchema, 'Farmers.LoginCredentials');
 
-module.exports = User;
+module.exports = FarmersLogin;

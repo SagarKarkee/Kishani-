@@ -1,13 +1,12 @@
 //index.js
 const express = require('express');
-const User = require('./User');
+const User = require('./FarmersLogin');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const connectDB = require('./connection');
 const cors = require('cors');
 
-dotenv.config(); 
-
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -20,8 +19,8 @@ app.post('/signup', async (req, res) => {
     const { fullName, email, password } = req.body;
 
     try {
-        // Check if user already exists
-        const userExists = await User.findOne({ email });
+        // Check if user already exists by email
+        const userExists = await FarmersLogin.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: "User already exists" });
         }
@@ -30,28 +29,29 @@ app.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         // Create new user
-        const newUser = new User({
+        const newFarmer = new FarmersLogin({
             fullName,
             email,
             password: hashedPassword,
-            role: 'farmer', // Sign up as farmer
         });
 
-        await newUser.save();
+        // Save user to Farmers.LoginCredentials collection
+        await newFarmer.save();
 
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "User created successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Error registering user", error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
     }
 });
 
-// User Login
+// User Login (for Farmers)
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
         // Find the user by email
-        const user = await User.findOne({ email, role: 'farmer' });
+        const user = await FarmersLogin.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: "User not found" });
         }
@@ -64,7 +64,8 @@ app.post('/login', async (req, res) => {
 
         res.status(200).json({ message: "Logged in successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Error logging in", error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
     }
 });
 
