@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-// import { API_URL } from 'dotenv';
+import { API_URL } from 'dotenv';
 
 
 const Signup = ({ navigation }) => {
@@ -14,7 +14,7 @@ const Signup = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const API_URL = "http://localhost:8081";
+  
 
   const handleSignup = async () => {
     if (fullName === '' || email === '' || password === '' || confirmPassword === '') {
