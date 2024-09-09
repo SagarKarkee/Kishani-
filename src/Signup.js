@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+import { API_URL } from 'dotenv';
 
 
 const Signup = ({ navigation }) => {
@@ -22,16 +23,20 @@ const Signup = ({ navigation }) => {
       Alert.alert('Error', 'Passwords do not match');
       return;
     }
-
+  
     try {
-      const response = await axios.post('http://192.168.1.236:5500/signup', { // Replace with your IP
+      console.log('Attempting to sign up with:', { fullName, email });
+      const response = await axios.post(`${API_URL}/signup`, {
         fullName,
         email,
         password,
       });
+      console.log('Signup response:', response.data);
       Alert.alert('Success', 'User registered successfully');
       navigation.navigate('Login');
     } catch (error) {
+      console.error('Signup error:', error);
+      console.error('Error response:', error.response?.data);
       Alert.alert('Error', error.response?.data?.message || 'Registration failed');
     }
   };

@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
     }
     // Perform login action here
     try {
-      const response = await fetch('http://192.168.1.236:5500/login', {
+      const response = await fetch('http://localhost:8081/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

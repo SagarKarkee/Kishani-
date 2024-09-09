@@ -7,12 +7,14 @@ const connectDB = require('./connection');
 const cors = require('cors');
 
 dotenv.config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
 connectDB();
+
 
 // User Signup for Farmers
 app.post('/signup', async (req, res) => {
@@ -40,7 +42,7 @@ app.post('/signup', async (req, res) => {
 
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
-        console.error(error);
+        console.error('Signup error:', error);
         res.status(500).json({ message: "Server error" });
     }
 });

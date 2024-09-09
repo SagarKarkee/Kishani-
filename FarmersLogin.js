@@ -15,13 +15,9 @@ const FarmersLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    default: 'farmer',
-  },
 });
 
 // Create the model
-const FarmersLogin = mongoose.model('FarmersLogin', FarmersLoginSchema, 'Farmers.LoginCredentials');
+const FarmersLogin = mongoose.model('FarmersLogin', FarmersLoginSchema, 'LoginCredentials'); // Collection will be "LoginCredentials"
 
 module.exports = FarmersLogin;
