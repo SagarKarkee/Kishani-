@@ -18,6 +18,6 @@ const FarmersLoginSchema = new mongoose.Schema({
 });
 
 // Create the model
-const FarmersLogin = mongoose.model('FarmersLogin', FarmersLoginSchema, 'LoginCredentials'); // Collection will be "LoginCredentials"
+const FarmersLogin = mongoose.model('FarmersLogin', FarmersLoginSchema, 'LoginCredentials');
 
 module.exports = FarmersLogin;

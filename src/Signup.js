@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-import { API_URL } from 'dotenv';
+// import { API_URL } from 'dotenv';
 
 
 const Signup = ({ navigation }) => {
@@ -13,6 +13,8 @@ const Signup = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const API_URL = "http://localhost:8081";
 
   const handleSignup = async () => {
     if (fullName === '' || email === '' || password === '' || confirmPassword === '') {
@@ -31,7 +33,7 @@ const Signup = ({ navigation }) => {
         email,
         password,
       });
-      console.log('Signup response:', response.data);
+      console.log('Signup response:', response.data);  // Log the response
       Alert.alert('Success', 'User registered successfully');
       navigation.navigate('Login');
     } catch (error) {
@@ -40,6 +42,7 @@ const Signup = ({ navigation }) => {
       Alert.alert('Error', error.response?.data?.message || 'Registration failed');
     }
   };
+
 
   return (
     <View style={styles.container}>

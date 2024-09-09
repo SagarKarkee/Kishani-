@@ -1,6 +1,5 @@
-//index.js
 const express = require('express');
-const User = require('./FarmersLogin');
+const FarmersLogin = require('./FarmersLogin');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const connectDB = require('./connection');
@@ -15,15 +14,17 @@ app.use(express.json());
 // Connect to MongoDB
 connectDB();
 
-
 // User Signup for Farmers
 app.post('/signup', async (req, res) => {
+    console.log('Received signup request:', req.body);  // Log the request body
+
     const { fullName, email, password } = req.body;
 
     try {
         // Check if user already exists by email
         const userExists = await FarmersLogin.findOne({ email });
         if (userExists) {
+            console.log('User already exists:', email);
             return res.status(400).json({ message: "User already exists" });
         }
 
@@ -38,12 +39,13 @@ app.post('/signup', async (req, res) => {
         });
 
         // Save user to Farmers.LoginCredentials collection
-        await newFarmer.save();
-
+        const savedFarmer = await newFarmer.save();
+        console.log('New farmer created:', savedFarmer);
+    
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
         console.error('Signup error:', error);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 });
 
