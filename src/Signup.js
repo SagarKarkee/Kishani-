@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-import { API_URL } from 'dotenv';
+import { API_URL } from '@env';
+
 
 
 const Signup = ({ navigation }) => {
