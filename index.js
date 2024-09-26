@@ -17,7 +17,9 @@ connectDB();
 const FarmersLogin = require('./FarmersLogin');
 
 app.post('/signup', async (req, res) => {
-    console.log('Received signup request:', req.body);
+    console.log('Signup route hit');
+    console.log('Request body:', req.body);
+    
 
     const { fullName, email, password } = req.body;
 
