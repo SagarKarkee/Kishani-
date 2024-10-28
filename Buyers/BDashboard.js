@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   navButtonText: {
     marginTop: 5,
     color: '#6200EE',
-    fontSize: 14,
+    fontSize: 15,
   },
 });
 
