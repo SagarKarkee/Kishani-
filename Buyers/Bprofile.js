@@ -9,7 +9,7 @@ const Profile = ({ navigation, route }) => {
     // Perform any logout logic here, such as clearing tokens or user data
     // For example, AsyncStorage.clear(), if you're using AsyncStorage to store the session
     // Then navigate to the Login screen
-    navigation.replace('Login'); // Use replace to prevent going back to the Profile screen
+    navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
   };
 
   return (
