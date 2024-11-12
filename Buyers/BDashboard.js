@@ -133,8 +133,8 @@ const InfoSection = ({ navigation }) => (
   // Main Dashboard Screen
   const BDashboard = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Header />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <ProductList navigation={navigation} />
         <InfoSection navigation={navigation}/>
       </ScrollView>
