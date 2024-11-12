@@ -75,169 +75,236 @@ const InfoCard = ({ title, imageUrl }) => (
 );
 
 // Info Section Component
-const InfoSection = () => (
-  <View style={styles.infoSection}>
-    <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
-    <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
+const InfoSection = ({ navigation }) => (
+  // <View style={styles.infoSection}>
+  //   <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
+  //   <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
+  // </View>
+
+  <View style={styles.educationSection}>
+    <Text style={styles.educationTitle}>Education</Text>
+    <View style={styles.educationBoxes}>
+      <TouchableOpacity
+        style={styles.educationBox}
+        onPress={() => navigation.navigate('Bcultivation')} // Replace 'Cultivation' with the actual screen name
+      >
+        <Image
+          source={tomatoImg} // Use the imported image
+          style={styles.educationImage}
+        />
+        <Text style={styles.educationText}>Cultivation Process</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.educationBox}
+        onPress={() => navigation.navigate('Bcropsdiseases')} // Replace 'CropDiseases' with the actual screen name
+      >
+        <Image
+          source={tomatoImg} // Use the imported image
+          style={styles.educationImage}
+        />
+        <Text style={styles.educationText}>Crop Diseases Solutions</Text>
+      </TouchableOpacity>
+    </View>
   </View>
 );
 
-// Bottom Navigation Component
-const BottomNav = ({ navigation }) => (
-  <View style={styles.fixedNavButtons}>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('BDashboard')}>
-      <Icon name="home-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Home</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bnotes')}>
-      <Icon name="document-text-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Notes</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
-      <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Message</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
-      <Icon name="person-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Profile</Text>
-    </TouchableOpacity>
-  </View>
-);
+  // Bottom Navigation Component
+  const BottomNav = ({ navigation }) => (
+    <View style={styles.fixedNavButtons}>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('BDashboard')}>
+        <Icon name="home-outline" size={25} color="#43B76A" />
+        <Text style={styles.navButtonText}>Home</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bnotes')}>
+        <Icon name="document-text-outline" size={25} color="#43B76A" />
+        <Text style={styles.navButtonText}>Notes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
+        <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
+        <Text style={styles.navButtonText}>Message</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
+        <Icon name="person-outline" size={25} color="#43B76A" />
+        <Text style={styles.navButtonText}>Profile</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
-// Main Dashboard Screen
-const BDashboard = ({ navigation }) => (
-  <SafeAreaView style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollContent}>
-      <Header />
-      <ProductList navigation={navigation} />
-      <InfoSection />
-    </ScrollView>
-    <BottomNav navigation={navigation} />
-  </SafeAreaView>
-);
+  // Main Dashboard Screen
+  const BDashboard = ({ navigation }) => (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Header />
+        <ProductList navigation={navigation} />
+        <InfoSection navigation={navigation}/>
+      </ScrollView>
+      <BottomNav navigation={navigation} />
+    </SafeAreaView>
+  );
 
-// Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  scrollContent: {
-    paddingBottom: 100, // Space for the bottom navigation
-  },
-  header: {
-    width: '100%',
-    padding: 20,
-    backgroundColor: '#43B76A',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 20,
-    marginTop: 40,
-    marginBottom: 10,
-  },
-  headerText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  greeting: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  welcomeText: {
-    fontSize: 16,
-    color: '#666',
-  },
-  productList: {
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-  },
-  row: {
-    justifyContent: 'space-between',
-  },
-  productCard: {
-    flex: 1,
-    margin: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-    elevation: 2,
-  },
-  productImage: {
-    width: 120, // Fixed width for the image
-    height: 120, // Fixed height for the image
-    borderRadius: 10,
-    resizeMode: 'cover',
-    marginBottom: 10,
-  },
-  productName: {
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  productPrice: {
-    fontSize: 12,
-    color: '#888',
-  },
-  addButton: {
-    marginTop: 10,
-    backgroundColor: '#43B76A',
-    padding: 8,
-    borderRadius: 5,
-  },
-  addButtonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  infoSection: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  infoCard: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10, // Reduced margin to avoid too much space
-    elevation: 2,
-  },
-  infoImage: {
-    width: 100, // Fixed width for the info card image
-    height: 100, // Fixed height for the info card image
-    borderRadius: 10,
-    resizeMode: 'cover',
-    marginRight: 20,
-  },
-  infoTextContainer: {
-    flex: 1, // Ensures text takes up remaining space
-    justifyContent: 'center',
-  },
-  infoTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5, // Adds some space between title and description
-  },
-  fixedNavButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  navButton: {
-    alignItems: 'center',
-  },
-  navButtonText: {
-    fontSize: 12,
-    color: '#43B76A',
-  },
-});
+  // Styles
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#f0f0f0',
+    },
+    scrollContent: {
+      paddingBottom: 100, // Space for the bottom navigation
+    },
+    header: {
+      width: '100%',
+      padding: 20,
+      backgroundColor: '#43B76A',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: 20,
+      marginTop: 40,
+      marginBottom: 10,
+    },
+    headerText: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profileImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      marginRight: 10,
+    },
+    greeting: {
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    welcomeText: {
+      fontSize: 16,
+      color: '#666',
+    },
+    productList: {
+      paddingBottom: 20,
+      paddingHorizontal: 20,
+    },
+    row: {
+      justifyContent: 'space-between',
+    },
+    productCard: {
+      flex: 1,
+      margin: 10,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      padding: 10,
+      alignItems: 'center',
+      elevation: 2,
+    },
+    productImage: {
+      width: 120, // Fixed width for the image
+      height: 120, // Fixed height for the image
+      borderRadius: 10,
+      resizeMode: 'cover',
+      marginBottom: 10,
+    },
+    productName: {
+      fontWeight: 'bold',
+      fontSize: 14,
+    },
+    productPrice: {
+      fontSize: 12,
+      color: '#888',
+    },
+    addButton: {
+      marginTop: 10,
+      backgroundColor: '#43B76A',
+      padding: 8,
+      borderRadius: 5,
+    },
+    addButtonText: {
+      color: '#fff',
+      fontSize: 18,
+    },
+    // infoSection: {
+    //   paddingHorizontal: 20,
+    //   marginTop: 20,
+    // },
+    // infoCard: {
+    //   flexDirection: 'row',
+    //   backgroundColor: '#fff',
+    //   borderRadius: 10,
+    //   padding: 10,
+    //   marginBottom: 10, // Reduced margin to avoid too much space
+    //   elevation: 2,
+    // },
+    // infoImage: {
+    //   width: 100, // Fixed width for the info card image
+    //   height: 100, // Fixed height for the info card image
+    //   borderRadius: 10,
+    //   resizeMode: 'cover',
+    //   marginRight: 20,
+    // },
+    // infoTextContainer: {
+    //   flex: 1, // Ensures text takes up remaining space
+    //   justifyContent: 'center',
+    // },
+    // infoTitle: {
+    //   fontWeight: 'bold',
+    //   fontSize: 16,
+    //   marginBottom: 5, // Adds some space between title and description
+    // },
 
-export default BDashboard;
+    educationSection: {
+      padding: 20,
+      backgroundColor: '#E8F5E9',
+      borderRadius: 10,
+      margin: 20,
+    },
+    educationTitle: {
+      fontSize: 18,
+      color: '#388E3C',
+      fontWeight: 'bold',
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    educationBoxes: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    educationBox: {
+      width: '48%',
+      backgroundColor: '#FFFFFF',
+      borderRadius: 10,
+      overflow: 'hidden',
+      elevation: 2,
+      marginBottom: 10,
+      alignItems: 'center',
+      padding: 10,
+    },
+    educationImage: {
+      width: '100%',
+      height: 100,
+      borderRadius: 10,
+      marginBottom: 10,
+    },
+    educationText: {
+      fontSize: 16,
+      color: '#388E3C',
+      textAlign: 'center',
+    },
+
+
+    fixedNavButtons: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: 15,
+      backgroundColor: '#fff',
+      borderTopWidth: 1,
+      borderTopColor: '#ccc',
+    },
+    navButton: {
+      alignItems: 'center',
+    },
+    navButtonText: {
+      fontSize: 12,
+      color: '#43B76A',
+    },
+  });
+
+  export default BDashboard;
