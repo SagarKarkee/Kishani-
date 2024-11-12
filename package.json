@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "start-server": "node index.js"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",
@@ -40,7 +41,7 @@
     "react-native-screens": "3.31.1",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.10",
-    "react-native-webview": "^13.12.0",
+    "react-native-webview": "^13.8.6",
     "use-latest-callback": "^0.2.1"
   },
   "devDependencies": {

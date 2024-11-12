@@ -26,6 +26,8 @@ import B_profile from './Buyers/Bprofile.js';
 import B_Signup from './Buyers/BSignup.js';
 import B_vegetableDetails from './Buyers/VegetableDetails.js';
 import Account_Type from './src/Accounttype.js';
+import Bcultivation from './Buyers/Bcultivation.js';
+import Bcropdiseases from './Buyers/Bcropsdiseases.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +91,8 @@ export default function App() {
         <Stack.Screen name="Bprofile" component={B_profile} />
         <Stack.Screen name="BSignup" component={B_Signup} />
         <Stack.Screen name="VegetableDetails" component={B_vegetableDetails} />
+        <Stack.Screen name="Bcultivation" component={Bcultivation}/>
+        <Stack.Screen name="Bcropsdiseases" component={Bcropdiseases}/>
 
       </Stack.Navigator>
     </NavigationContainer>
