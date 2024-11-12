@@ -93,11 +93,11 @@ const BottomNav = ({ navigation }) => (
       <Icon name="document-text-outline" size={25} color="#43B76A" />
       <Text style={styles.navButtonText}>Notes</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Message')}>
+    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
       <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
       <Text style={styles.navButtonText}>Message</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
+    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
       <Icon name="person-outline" size={25} color="#43B76A" />
       <Text style={styles.navButtonText}>Profile</Text>
     </TouchableOpacity>
