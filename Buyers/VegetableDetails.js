@@ -1,9 +1,15 @@
 // VegetableDetails.js
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image ,TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const B_vegetableDetails = ({ route }) => {
   const { product } = route.params;
+
+  const BuyNow = () => {
+    // Navigate to the next screen
+    navigation.navigate('BDashboard'); // Change 'NextScreen' to your actual screen name
+  };
 
   return (
     <View style={styles.container}>
@@ -13,6 +19,10 @@ const B_vegetableDetails = ({ route }) => {
       <Text style={styles.productInfo}>Available Date: {product.availableDate}</Text>
       <Text style={styles.productInfo}>Farmer Name: {product.farmerName}</Text>
       <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
+
+      <TouchableOpacity style={styles.button} onPress={BuyNow}>
+        <Text style={styles.buttonText}>Buy Now</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: 30,
     borderRadius: 75,
-    marginTop:40,
+    marginTop: 40,
   },
   productName: {
     fontSize: 24,
@@ -46,6 +56,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     marginBottom: 10,
+  },
+
+  button: {
+    backgroundColor: '#fff',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
