@@ -124,8 +124,8 @@ const Notes = ({ navigation }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('Bmessage')} // Change 'Message' to the correct screen name
         >
-          <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Message</Text>
+          <Icon name="book-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Education</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}

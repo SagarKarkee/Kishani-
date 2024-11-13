@@ -147,14 +147,15 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: '#F5FCFF',
+    marginTop: 30,
   },
   title: {
-    fontSize: 24,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
     marginTop: 20,
-    color: '#43B76A',
+    color: 'black',
   },
   section: {
     marginBottom: 20,

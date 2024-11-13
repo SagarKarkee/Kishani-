@@ -73,8 +73,8 @@ const Profile = ({ navigation, route }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('Bmessage')}
         >
-          <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Message</Text>
+          <Icon name="book-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Education</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}

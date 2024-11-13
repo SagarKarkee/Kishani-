@@ -1,30 +1,34 @@
 // VegetableDetails.js
 import React from 'react';
-import { View, Text, StyleSheet, Image ,TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const B_vegetableDetails = ({ route }) => {
   const { product } = route.params;
+  const navigation = useNavigation();
 
   const BuyNow = () => {
     // Navigate to the next screen
     navigation.navigate('BDashboard'); // Change 'NextScreen' to your actual screen name
+
   };
 
-  return (
-    <View style={styles.container}>
-      <Image source={product.imageUrl} style={styles.productImage} />
-      <Text style={styles.productName}>{product.name}</Text>
-      <Text style={styles.productPrice}>{product.price}</Text>
-      <Text style={styles.productInfo}>Available Date: {product.availableDate}</Text>
-      <Text style={styles.productInfo}>Farmer Name: {product.farmerName}</Text>
-      <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
 
-      <TouchableOpacity style={styles.button} onPress={BuyNow}>
-        <Text style={styles.buttonText}>Buy Now</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    return (
+      <View style={styles.container}>
+        <Image source={product.imageUrl} style={styles.productImage} />
+        <Text style={styles.productName}>{product.name}</Text>
+        <Text style={styles.productPrice}>{product.price}</Text>
+        <Text style={styles.productInfo}>Available Date: {product.availableDate}</Text>
+        <Text style={styles.productInfo}>Farmer Name: {product.farmerName}</Text>
+        <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
+
+        <TouchableOpacity style={styles.button} onPress={BuyNow}>
+          <Text style={styles.buttonText}>Buy Now</Text>
+        </TouchableOpacity>
+
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({

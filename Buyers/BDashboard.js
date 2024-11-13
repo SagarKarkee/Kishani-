@@ -7,14 +7,20 @@ import cauliflowerImg from './../assets/cauliflower.jpeg';
 import tomatoImg from './../assets/tomato.jpg';
 import brinjalImg from './../assets/brinjal.jpg';
 import potatoImg from './../assets/potato.jpg';
+import chillyImg from './../assets/chilly-1.jpeg';
+import onionImg from './../assets/onion.jpg';
 import cultivationImg from './../assets/tomato.jpg';
 import diseasesImg from './../assets/tomato.jpg';
+
 
 const imageMap = {
   '1': cauliflowerImg,
   '2': tomatoImg,
   '3': brinjalImg,
   '4': potatoImg,
+  '5': chillyImg,
+  '6': onionImg,
+
 };
 
 const products = [
@@ -22,15 +28,16 @@ const products = [
   { id: '2', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
   { id: '3', name: 'Brinjal', price: 'Rs 80/kg', imageUrl: imageMap['3'], availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
   { id: '4', name: 'Potato', price: 'Rs 60/kg', imageUrl: imageMap['4'], availableDate: '2024-09-08', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
+  { id: '5', name: 'Chilly', price: 'Rs 60/kg', imageUrl: imageMap['5'], availableDate: '2024-09-08', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
+  { id: '6', name: 'Onion', price: 'Rs 60/kg', imageUrl: imageMap['6'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
 ];
-
 // Header Component
 const Header = () => (
   <View style={styles.header}>
     <View style={styles.headerText}>
       <Image source={require('./../assets/b.jpeg')} style={styles.profileImage} />
       <View>
-        <Text style={styles.greeting}>Hi Aasis! 👋</Text>
+        <Text style={styles.greeting}>Hi Sagar! 👋</Text>
         <Text style={styles.welcomeText}>Welcome to KISHANI App</Text>
       </View>
     </View>
@@ -65,19 +72,22 @@ const ProductList = ({ navigation }) => (
 );
 
 // Info Card Component (Subtitle Removed)
-const InfoCard = ({ title, imageUrl }) => (
-  <View style={styles.infoCard}>
-    <Image source={imageUrl} style={styles.infoImage} />
-    <View style={styles.infoTextContainer}>
-      <Text style={styles.infoTitle}>{title}</Text>
-    </View>
-  </View>
-);
+// const InfoCard = ({ title, imageUrl }) => (
+//   <View style={styles.infoCard}>
+//     <Image source={imageUrl} style={styles.infoImage} />
+//     <View style={styles.infoTextContainer}>
+//       <Text style={styles.infoTitle}>{title}</Text>
+//     </View>
+//   </View>
+// );
 
 // Info Section Component
 const InfoSection = ({ navigation }) => (
+  
+
   // <View style={styles.infoSection}>
   //   <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
+
   //   <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
   // </View>
 
@@ -120,8 +130,8 @@ const BottomNav = ({ navigation }) => (
       <Text style={styles.navButtonText}>Notes</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
-      <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Message</Text>
+      <Icon name="book-outline" size={25} color="#43B76A" />
+      <Text style={styles.navButtonText}>Education</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
       <Icon name="person-outline" size={25} color="#43B76A" />
@@ -251,10 +261,12 @@ const styles = StyleSheet.create({
   // },
 
   educationSection: {
-    padding: 20,
     backgroundColor: '#E8F5E9',
     borderRadius: 10,
+    padding: 20,
     margin: 20,
+    // paddingHorizontal: 20,
+    // marginTop: 20,
   },
   educationTitle: {
     fontSize: 18,
