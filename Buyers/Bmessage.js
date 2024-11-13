@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Bmessage = () => {
+const Message = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Message Screen</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Bmessage;
+export default Message;
