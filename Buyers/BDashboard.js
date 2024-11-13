@@ -9,8 +9,8 @@ import brinjalImg from './../assets/brinjal.jpg';
 import potatoImg from './../assets/potato.jpg';
 import chillyImg from './../assets/chilly-1.jpeg';
 import onionImg from './../assets/onion.jpg';
-import cultivationImg from './../assets/tomato.jpg';
-import diseasesImg from './../assets/tomato.jpg';
+import cultivationImg from './../assets/Cul-1.jpeg';
+import diseasesImg from './../assets/dis.jpeg';
 
 
 const imageMap = {
@@ -99,7 +99,7 @@ const InfoSection = ({ navigation }) => (
         onPress={() => navigation.navigate('Bcultivation')} // Replace 'Cultivation' with the actual screen name
       >
         <Image
-          source={tomatoImg} // Use the imported image
+          source={cultivationImg} // Use the imported image
           style={styles.educationImage}
         />
         <Text style={styles.educationText}>Cultivation Process</Text>
@@ -109,7 +109,7 @@ const InfoSection = ({ navigation }) => (
         onPress={() => navigation.navigate('Bcropsdiseases')} // Replace 'CropDiseases' with the actual screen name
       >
         <Image
-          source={tomatoImg} // Use the imported image
+          source={diseasesImg} // Use the imported image
           style={styles.educationImage}
         />
         <Text style={styles.educationText}>Crop Diseases Solutions</Text>
