@@ -1,34 +1,33 @@
 // VegetableDetails.js
 import React from 'react';
-import { View, Text, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const B_vegetableDetails = ({ route }) => {
   const { product } = route.params;
   const navigation = useNavigation();
 
-  const BuyNow = () => {
-    // Navigate to the next screen
-    navigation.navigate('BDashboard'); // Change 'NextScreen' to your actual screen name
+  return (
+    <View style={styles.container}>
+      {/* Back Icon */}
+      <TouchableOpacity style={styles.backIcon} onPress={() => navigation.goBack()}>
+        <Icon name="arrow-back" size={30} color="#000" />
+      </TouchableOpacity>
 
-  };
+      <Image source={product.imageUrl} style={styles.productImage} />
+      <Text style={styles.productName}>{product.name}</Text>
+      <Text style={styles.productPrice}>{product.price}</Text>
+      <Text style={styles.productInfo}>Available Date: {product.availableDate}</Text>
+      <Text style={styles.productInfo}>Farmer Name: {product.farmerName}</Text>
+      <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
 
-
-    return (
-      <View style={styles.container}>
-        <Image source={product.imageUrl} style={styles.productImage} />
-        <Text style={styles.productName}>{product.name}</Text>
-        <Text style={styles.productPrice}>{product.price}</Text>
-        <Text style={styles.productInfo}>Available Date: {product.availableDate}</Text>
-        <Text style={styles.productInfo}>Farmer Name: {product.farmerName}</Text>
-        <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
-
-        <TouchableOpacity style={styles.button} onPress={BuyNow}>
-          <Text style={styles.buttonText}>Buy Now</Text>
-        </TouchableOpacity>
-
-      </View>
-    );
+      {/* Buy Now Button (Non-functional) */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Buy Now</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -37,6 +36,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f0f0f0',
+  },
+  backIcon: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 1,
   },
   productImage: {
     width: 150,
@@ -61,15 +66,15 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 10,
   },
-
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#43B76A',
     paddingVertical: 15,
     paddingHorizontal: 40,
     borderRadius: 30,
+    marginTop: 20,
   },
   buttonText: {
-    color: 'black',
+    color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
