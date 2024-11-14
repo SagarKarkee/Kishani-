@@ -4,6 +4,9 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import API_URL from '../config';
+
+
+
 const B_Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,6 +33,7 @@ const B_Signup = ({ navigation }) => {
         fullName,
         email,
         password,
+        confirmPassword,
       });
       console.log('Signup response:', response.data);  // Log the response
       Alert.alert('Success', 'User registered successfully');
