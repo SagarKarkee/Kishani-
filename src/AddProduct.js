@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView,
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
 
-const AddProduct = ({ navigation, route }) => {
+const AddProduct = ({ route }) => {
   const [productName, setProductName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
@@ -12,6 +13,8 @@ const AddProduct = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [products, setProducts] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (route.params?.selectedVegetable) {
@@ -98,6 +101,11 @@ const AddProduct = ({ navigation, route }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Icon name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Add Your Crops</Text>
       <View style={styles.inputContainer}>
         <View style={styles.inputWithIcon}>
@@ -170,12 +178,19 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#F5FCFF',
   },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
+    padding: 10,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    marginTop: 15,
+    marginTop: 50, // Adjust for the back button
   },
   inputContainer: {
     backgroundColor: '#43B76A',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Linking, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Importing MaterialIcons for article icons
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 // Function to extract YouTube video ID from URL
 const extractVideoId = (url) => {
@@ -13,6 +14,8 @@ const extractVideoId = (url) => {
 const getThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
 const Cultivation = () => {
+  const navigation = useNavigation();
+
   const openLink = (url) => {
     Linking.openURL(url);
   };
@@ -53,6 +56,11 @@ const Cultivation = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Back Icon */}
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <MaterialIcons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Cultivation Process</Text>
 
       {/* Introduction */}
@@ -147,6 +155,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: '#F5FCFF',
+  },
+  backButton: {
+    marginBottom: 10,
+    padding: 10,
   },
   title: {
     fontSize: 24,
