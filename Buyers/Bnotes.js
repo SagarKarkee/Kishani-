@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Modal, Button, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Bnote = ({ navigation }) => {
+const Notes = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [note, setNote] = useState('');
@@ -107,31 +107,32 @@ const Bnote = ({ navigation }) => {
       <View style={styles.navButtons}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Dashboard')} // Navigate to Dashboard
+          onPress={() => navigation.navigate('BDashboard')} // Change 'BDashboard' to the correct screen name if different
         >
-          <Icon name="home-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Home</Text>
+          <Icon name="home-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold',}}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Notes')} // Current screen, no navigation needed
+          onPress={() => navigation.navigate('Bnotes')} // Change 'Notes' to the correct screen name
         >
-          <Icon name="document-text-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Notes</Text>
+          <Icon name="document-text-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Notes</Text>
+
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Message')} // Navigate to Message
+          onPress={() => navigation.navigate('Bmessage')} // Change 'Message' to the correct screen name
         >
-          <Icon name="chatbox-ellipses-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Message</Text>
+          <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')} // Navigate to Profile
+          onPress={() => navigation.navigate('Bprofile')} // Change 'Profile' to the correct screen name
         >
-          <Icon name="person-outline" size={25} color="#6200EE" />
-          <Text style={styles.navButtonText}>Profile</Text>
+          <Icon name="person-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Profile</Text>
         </TouchableOpacity>
       </View>
 
@@ -214,7 +215,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#E1DED',
   },
-
   content: {
     flex: 1,
     padding: 20,
@@ -299,8 +299,8 @@ const styles = StyleSheet.create({
   navButtonText: {
     marginTop: 5,
     color: '#6200EE',
-    fontSize: 14,
+    fontSize: 1,
   },
 });
 
-export default Bnote;
+export default Notes;
