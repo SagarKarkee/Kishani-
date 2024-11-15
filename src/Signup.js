@@ -3,10 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-import API_URL from '../config';
 
 
-
+const API_URL = 'http://192.168.1.81:5000';
 
 const Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -15,7 +14,7 @@ const Signup = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   
 
   const handleSignup = async () => {
@@ -29,19 +28,30 @@ const Signup = ({ navigation }) => {
     }
   
     try {
+      setLoading(true);
       console.log('Attempting to sign up with:', { fullName, email });
       const response = await axios.post(`${API_URL}/signup`, {
         fullName,
         email,
         password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
-      console.log('Signup response:', response.data);  // Log the response
-      Alert.alert('Success', 'User registered successfully');
-      navigation.navigate('Login');
+      console.log('Backend response:', response.data);
+
+      if (response.status === 201) {
+        Alert.alert('Success', 'User registered successfully');
+        navigation.navigate('Login');
+      } else {
+        Alert.alert('Error', 'Registration failed');
+      }
     } catch (error) {
       console.error('Signup error:', error);
-      console.error('Error response:', error.response?.data);
       Alert.alert('Error', error.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,6 +60,7 @@ const Signup = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Signup</Text>
 
+      {/* Full Name Input */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -59,6 +70,7 @@ const Signup = ({ navigation }) => {
         />
       </View>
 
+      {/* Email Input */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -69,6 +81,7 @@ const Signup = ({ navigation }) => {
         />
       </View>
 
+      {/* Password Input */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -89,6 +102,7 @@ const Signup = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
+      {/* Confirm Password Input */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -109,10 +123,18 @@ const Signup = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={handleSignup} style={styles.button}>
+      {/* Signup Button */}
+      <Button
+        mode="contained"
+        onPress={handleSignup}
+        style={styles.button}
+        loading={loading}
+        disabled={loading}
+      >
         <Text style={styles.buttonText}>Signup</Text>
       </Button>
 
+      {/* Navigation to Login Screen if user already has an account */}
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Already have an account? Log In</Text>
       </TouchableOpacity>
@@ -125,14 +147,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#43B76A'
+    backgroundColor: '#43B76A',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
-    color: 'black'
+    color: 'black',
   },
   inputContainer: {
     position: 'relative',
@@ -144,7 +166,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 16,
-    paddingRight: 40, // Add padding to the right to make space for the icon
+    paddingRight: 40,
     backgroundColor: '#DFDFDF',
     color: 'black',
   },
@@ -155,7 +177,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonText: {
     color: 'black',
