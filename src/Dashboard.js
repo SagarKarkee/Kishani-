@@ -7,6 +7,9 @@ import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
 const Dashboard = ({ navigation }) => {
+
+  
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
