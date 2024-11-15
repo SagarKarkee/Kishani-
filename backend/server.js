@@ -11,20 +11,30 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-const uri = "mongodb+srv://aasisshrestha9898:fK67jzRl8umr2qSs@kishani-app.tm2bt.mongodb.net/?retryWrites=true&w=majority&appName=Kishani-App";
+const uri = "mongodb+srv://aasisshrestha9898:fK67jzRl8umr2qSs@kishani-app.tm2bt.mongodb.net/farmerdb?retryWrites=true&w=majority&appName=Kishani-App";
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("MongoDB connected"))
+  .then(() => console.log("MongoDB connected to farmerdb"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// User Schema
+// User Schema for Signup (stored under 'signup' collection in 'farmerdb')
 const userSchema = new mongoose.Schema({
   fullName: String,
   email: String,
   password: String,
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("signup", userSchema); // Explicitly mention 'signup' as the collection name
+
+// Login History Schema (stored under 'loginHistory' collection in 'farmerdb')
+const loginHistorySchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'signup' },
+  loginTime: { type: Date, default: Date.now },
+  isSuccess: Boolean,
+  ipAddress: String,  // Optional: if you want to store IP address
+});
+
+const LoginHistory = mongoose.model("loginHistory", loginHistorySchema);
 
 // Signup Route
 app.post("/signup", async (req, res) => {
@@ -58,11 +68,27 @@ app.post("/login", async (req, res) => {
   // Check if the user exists in the database
   const user = await User.findOne({ email });
   if (!user) {
+    // Save failed login attempt
+    const loginHistory = new LoginHistory({
+      userId: null,  // No user found, save null or leave empty
+      isSuccess: false,
+      ipAddress: req.ip,
+    });
+    await loginHistory.save();
+
     return res.status(400).json({ message: "User not found" });
   }
 
   // Compare the provided password with the stored hashed password
   const isMatch = await bcrypt.compare(password, user.password);
+
+  // Save login attempt (successful or failed)
+  const loginHistory = new LoginHistory({
+    userId: user._id,
+    isSuccess: isMatch,
+    ipAddress: req.ip,  // You can use 'req.ip' to get the client's IP address
+  });
+  await loginHistory.save();
 
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid credentials" });
