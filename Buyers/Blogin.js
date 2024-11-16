@@ -4,38 +4,51 @@ import { Button, Checkbox } from 'react-native-paper';
 
 const BLoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = () => {
-    if (email === '' || password === '' ) {
+  const handleLogin = async () => {
+    if (email === '' || password === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-    // Perform login action here
-    // For example, you can navigate to the next screen:
-    navigation.navigate('BDashboard'); // Replace 'HomeScreen' with your target screen
+  
+    try {
+      const response = await fetch('http://192.168.1.81:5000/blogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        Alert.alert('Success', 'Login successful');
+        // Navigate to the buyer's dashboard and pass user details
+        navigation.navigate('BDashboard');
+      } else {
+        // Handle errors returned by the server
+        Alert.alert('Error', data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again later.');
+    }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      /> */}
-
+    
       <TextInput
          style={styles.input}
          placeholder="Email"
          value={email}
          onChangeText={setEmail}
-        //  keyboardType="email-address"
+        
       />
       <TextInput
         style={styles.input}
