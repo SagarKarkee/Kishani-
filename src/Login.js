@@ -30,15 +30,16 @@ const LoginScreen = ({ navigation }) => {
         }),
       });
   
+      const data = await response.json(); // Only call json once
+  
       if (response.ok) {
         Alert.alert('Success', 'Logged in successfully');
         if (rememberMe) {
           await AsyncStorage.setItem('userEmail', email);
           await AsyncStorage.setItem('userPassword', password);
         }
-        navigation.navigate('Dashboard');
+        navigation.navigate('Dashboard', { user: data.user.fullName }); // Pass the username here
       } else {
-        const data = await response.json();
         Alert.alert('Error', data.message || 'Invalid credentials');
       }
     } catch (error) {
@@ -46,6 +47,7 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Failed to connect to the server');
     }
   };
+  
 
   useEffect(() => {
     const loadCredentials = async () => {

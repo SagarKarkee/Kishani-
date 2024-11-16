@@ -83,14 +83,6 @@ const ProductList = ({ navigation }) => (
 
 // Info Section Component
 const InfoSection = ({ navigation }) => (
-  
-
-  // <View style={styles.infoSection}>
-  //   <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
-
-  //   <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
-  // </View>
-
   <View style={styles.educationSection}>
     <Text style={styles.educationTitle}>Education</Text>
     <View style={styles.educationBoxes}>
@@ -130,8 +122,8 @@ const BottomNav = ({ navigation }) => (
       <Text style={styles.navButtonText}>Notes</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
-      <Icon name="book-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Education</Text>
+      <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
+      <Text style={styles.navButtonText}>Message</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
       <Icon name="person-outline" size={25} color="#43B76A" />
@@ -143,11 +135,21 @@ const BottomNav = ({ navigation }) => (
 // Main Dashboard Screen
 const BDashboard = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
+    {/* Removed ScrollView wrapping around FlatList */}
     <Header />
+    {/* Only wrap non-list elements in ScrollView */}
     <ScrollView contentContainerStyle={styles.scrollContent}>
-      <ProductList navigation={navigation} />
       <InfoSection navigation={navigation} />
     </ScrollView>
+    {/* FlatList is now outside of the ScrollView */}
+    <FlatList
+      data={products}
+      renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+      contentContainerStyle={styles.productList}
+    />
     <BottomNav navigation={navigation} />
   </SafeAreaView>
 );
@@ -231,42 +233,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
   },
-  // infoSection: {
-  //   paddingHorizontal: 20,
-  //   marginTop: 20,
-  // },
-  // infoCard: {
-  //   flexDirection: 'row',
-  //   backgroundColor: '#fff',
-  //   borderRadius: 10,
-  //   padding: 10,
-  //   marginBottom: 10, // Reduced margin to avoid too much space
-  //   elevation: 2,
-  // },
-  // infoImage: {
-  //   width: 100, // Fixed width for the info card image
-  //   height: 100, // Fixed height for the info card image
-  //   borderRadius: 10,
-  //   resizeMode: 'cover',
-  //   marginRight: 20,
-  // },
-  // infoTextContainer: {
-  //   flex: 1, // Ensures text takes up remaining space
-  //   justifyContent: 'center',
-  // },
-  // infoTitle: {
-  //   fontWeight: 'bold',
-  //   fontSize: 16,
-  //   marginBottom: 5, // Adds some space between title and description
-  // },
-
   educationSection: {
+    padding: 20,
     backgroundColor: '#E8F5E9',
     borderRadius: 10,
-    padding: 20,
     margin: 20,
-    // paddingHorizontal: 20,
-    // marginTop: 20,
   },
   educationTitle: {
     fontSize: 18,
@@ -280,44 +251,63 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   educationBox: {
-    width: '48%',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    overflow: 'hidden',
-    elevation: 2,
-    marginBottom: 10,
+    flex: 1,
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginHorizontal: 5,
+    elevation: 3,
   },
   educationImage: {
-    width: '100%',
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 10,
     marginBottom: 10,
   },
   educationText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#388E3C',
-    textAlign: 'center',
   },
-
-
-  fixedNavButtons: {
+  infoCard: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15,
+    marginBottom: 20,
+    padding: 10,
     backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    borderRadius: 10,
+    elevation: 3,
+  },
+  infoImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginRight: 20,
+  },
+  infoTextContainer: {
+    justifyContent: 'center',
+  },
+  infoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  fixedNavButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    elevation: 5,
   },
   navButton: {
     alignItems: 'center',
   },
   navButtonText: {
-    marginTop: 5,
-    color: '#000000',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 12,
+    color: '#43B76A',
   },
 });
 

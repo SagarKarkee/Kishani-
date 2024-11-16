@@ -6,15 +6,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
-const Dashboard = ({ navigation }) => {
-
+const Dashboard = ({ route, navigation }) => {
+  
+  const userName = route.params?.user || 'User';
   
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Welcome [User's Name]👋!</Text>
+          <Text style={styles.headerText}>Welcome {userName}👋!</Text>
           <Text style={styles.subHeaderText}>Welcome to KISHANI APP</Text>
         </View>
         <TouchableOpacity style={styles.notificationIcon}>

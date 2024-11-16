@@ -6,8 +6,9 @@ import axios from 'axios';
 // import API_URL from '../config';
 
 
+const API_URL = 'http://192.168.1.81:5000';
 
-const B_Signup = ({ navigation }) => {
+const BSignup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +30,7 @@ const B_Signup = ({ navigation }) => {
   
     try {
       console.log('Attempting to sign up with:', { fullName, email });
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await axios.post(`${API_URL}/bsignup`, {
         fullName,
         email,
         password,
@@ -37,7 +38,7 @@ const B_Signup = ({ navigation }) => {
       });
       console.log('Signup response:', response.data);  // Log the response
       Alert.alert('Success', 'User registered successfully');
-      navigation.navigate('Login');
+      navigation.navigate('Blogin');
     } catch (error) {
       console.error('Signup error:', error);
       console.error('Error response:', error.response?.data);
