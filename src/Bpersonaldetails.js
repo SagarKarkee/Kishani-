@@ -6,9 +6,9 @@ const B_personal = ({ navigation }) => {
     const [imageUri, setImageUri] = useState(null);
     const [fullName, setFullName] = useState('');
     const [address, setAddress] = useState('');
+    // const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [citizenshipNumber, setCitizenshipNumber] = useState('');
-
     const [isSaved, setIsSaved] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,8 +31,8 @@ const B_personal = ({ navigation }) => {
         console.log('Full Name:', fullName);
         console.log('Address:', address);
         console.log('Phone number:', phoneNumber);
-        console.log('Citizenship number:', citizenshipNumber);
         console.log('Image URI:', imageUri);
+        console.log('Citizenship number:', citizenshipNumber)
 
         // Simulate saving the data
         setIsSaved(true);
@@ -41,7 +41,7 @@ const B_personal = ({ navigation }) => {
 
     const handleLoginNavigation = () => {
         setModalVisible(false);
-        navigation.navigate('Bprofile'); // Ensure you have a route named 'Login'
+        navigation.navigate('Blogin'); // Ensure you have a route named 'Login'
     };
 
     return (
@@ -72,13 +72,6 @@ const B_personal = ({ navigation }) => {
                 onChangeText={setAddress}
             />
 
-            <TextInput
-                style={styles.input}
-                placeholder="Citizenship Number"
-                value={citizenshipNumber}
-                onChangeText={setCitizenshipNumber}
-               keyboardType="phone-pad"
-            />
 
             <TextInput
                 style={styles.input}
@@ -86,6 +79,12 @@ const B_personal = ({ navigation }) => {
                 keyboardType="phone-pad"
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="Citizenship Number"
+            value='Number'
+            onChangeText={setCitizenshipNumber}
             />
             <Button title="Save" onPress={handleSubmit} />
 
@@ -98,7 +97,7 @@ const B_personal = ({ navigation }) => {
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.successMessage}>Your account is successfully Update.</Text>
-                        <Button title="Go Back to Profile" onPress={handleLoginNavigation} />
+                        <Button title="Go to Profile" onPress={handleLoginNavigation} />
                     </View>
                 </View>
             </Modal>
@@ -110,19 +109,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#43B76A'
+        backgroundColor: '#43B76A',
+
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 50,
         textAlign: 'center',
-        marginTop: 30,
+        marginTop: 20,
     },
     imagePicker: {
         alignItems: 'center',
         marginBottom: 40,
-        marginTop:-30,
     },
     placeholder: {
         width: 150,

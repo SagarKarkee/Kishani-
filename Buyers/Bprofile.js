@@ -26,7 +26,7 @@ const Profile = ({ navigation, route }) => {
       {/* Profile Information Section */}
       <TouchableOpacity 
         style={styles.profileInfoSection}
-        onPress={() => navigation.navigate('PersonelDetails')}
+        onPress={() => navigation.navigate('BpersonalDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
         <View style={styles.profileInfoTextContainer}>
