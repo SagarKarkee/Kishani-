@@ -169,4 +169,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default B_Signup;
+export default BSignup;
