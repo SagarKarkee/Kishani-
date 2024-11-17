@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   },
   educationTitle: {
     fontSize: 18,
-    color: '#388E3C',
+    color: 'black',
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   },
   educationText: {
     fontSize: 14,
-    color: '#388E3C',
+    color: 'black',
   },
   // infoCard: {
   //   flexDirection: 'row',
