@@ -24,19 +24,16 @@ const Profile = ({ navigation, route }) => {
       </View>
 
       {/* Profile Information Section */}
-      <TouchableOpacity 
-        style={styles.profileInfoSection}
+      <TouchableOpacity style={styles.sectionButton}
         onPress={() => navigation.navigate('BpersonalDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
-        <View style={styles.profileInfoTextContainer}>
-          <Text style={styles.profileInfoTitle}>Personal Information</Text>
-        </View>
-        <Icon name="chevron-forward-outline" size={25} color="#43B76A" />
+          <Text style={styles.sectionButtonText}>Personal Information</Text>
       </TouchableOpacity>
 
       {/* Settings Section */}
-      <TouchableOpacity style={styles.sectionButton}>
+      <TouchableOpacity style={styles.sectionButton}
+        onPress={() => navigation.navigate('BpersonalDetails')}>
         <Icon name="settings-outline" size={25} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
@@ -55,28 +52,28 @@ const Profile = ({ navigation, route }) => {
 
       {/* Navigation Bar */}
       <View style={styles.navButtons}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('BDashboard')}
         >
           <Icon name="home-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bnotes')}
         >
           <Icon name="document-text-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Notes</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bmessage')}
         >
           <Icon name="book-outline" size={25} color="#43B76A" />
           <Text style={styles.navButtonText}>Education</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bprofile')}
         >
@@ -99,29 +96,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     paddingVertical: 10,
-    marginTop: 20,
+    marginTop: 60,
+    // marginBottom: -200,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
-  },
-  profileInfoSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    paddingHorizontal: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
-    paddingVertical: 10,
-  },
-  profileInfoTextContainer: {
-    flex: 1,
-    marginLeft: 15,
-  },
-  profileInfoTitle: {
-    fontSize: 18,
-    color: '#000000',
   },
   sectionButton: {
     flexDirection: 'row',
@@ -131,6 +112,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
     paddingVertical: 10,
+    marginTop: -190,
   },
   sectionButtonText: {
     marginLeft: 15,
