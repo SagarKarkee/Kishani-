@@ -9,37 +9,53 @@ import diseasesImg from './../assets/dis.jpeg';
 
 // Header Component
 const Header = () => (
-  
-      <View>
-        <Text style={styles.eduction}>Education Section</Text>
-      </View>
-   
+
+  <View>
+    <Text style={styles.eduction}>Education Section</Text>
+  </View>
+
 );
-
-
-
 
 //Info Card Component (Subtitle Removed)
-const InfoCard = ({ title, imageUrl }) => (
-  <View style={styles.infoCard}>
-    <Image source={imageUrl} style={styles.infoImage} />
-    <View style={styles.infoTextContainer}>
-      <Text style={styles.infoTitle}>{title}</Text>
-    </View>
-  </View>
-);
+// const InfoCard = ({ title, imageUrl }) => (
+//   <View style={styles.infoCard}>
+//     <Image source={imageUrl} style={styles.infoImage} />
+//     <View style={styles.infoTextContainer}>
+//       <Text style={styles.infoTitle}>{title}</Text>
+//     </View>
+//   </View>
+// );
 
 // Info Section Component
 const InfoSection = ({ navigation }) => (
-  
+  // <View style={styles.infoSection}>
+  //   <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
 
-  <View style={styles.infoSection}>
-    <InfoCard title="Cultivation Process" imageUrl={cultivationImg} />
+  //   <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
+  // </View>
 
-    <InfoCard title="Crops Diseases Solution" imageUrl={diseasesImg} />
+  <View style={styles.educationBoxes}>
+    <TouchableOpacity
+      style={styles.educationBox}
+      onPress={() => navigation.navigate('Bcultivation')} // Replace 'Cultivation' with the actual screen name
+    >
+      <Image
+        source={cultivationImg} // Use the imported image
+        style={styles.educationImage}
+      />
+      <Text style={styles.educationText}>Cultivation Process</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.educationBox}
+      onPress={() => navigation.navigate('Bcropsdiseases')} // Replace 'CropDiseases' with the actual screen name
+    >
+      <Image
+        source={diseasesImg} // Use the imported image
+        style={styles.educationImage}
+      />
+      <Text style={styles.educationText}>Crop Diseases Solutions</Text>
+    </TouchableOpacity>
   </View>
-
-
 );
 
 // Bottom Navigation Component
@@ -84,13 +100,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 100, // Space for the bottom navigation
   },
-  
-  headerText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  
- 
+  // heading deducation
   eduction: {
     fontSize: 34,
     fontWeight: 'bold',
@@ -99,13 +109,8 @@ const styles = StyleSheet.create({
     marginTop: 60,
     color: 'black',
   },
-
- 
-  infoSection: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  infoCard: {
+ //main Education section
+  educationBox: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -113,22 +118,49 @@ const styles = StyleSheet.create({
     marginBottom: 10, // Reduced margin to avoid too much space
     elevation: 2,
   },
-  infoImage: {
-    width: 100, // Fixed width for the info card image
-    height: 100, // Fixed height for the info card image
+  educationImage: {
+    width: 100,
+    height: 100,
     borderRadius: 10,
-    resizeMode: 'cover',
-    marginRight: 20,
+    marginBottom: 10,
+
   },
-  infoTextContainer: {
-    flex: 1, // Ensures text takes up remaining space
-    justifyContent: 'center',
-  },
-  infoTitle: {
+  educationText: {
+    fontSize: 20,
+    color: 'black',
     fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5, // Adds some space between title and description
+    marginTop: 9,
+    marginLeft: 9,
   },
+
+  // infoSection: {
+  //   paddingHorizontal: 20,
+  //   marginTop: 20,
+  // },
+  // infoCard: {
+  //   flexDirection: 'row',
+  //   backgroundColor: '#fff',
+  //   borderRadius: 10,
+  //   padding: 10,
+  //   marginBottom: 10, // Reduced margin to avoid too much space
+  //   elevation: 2,
+  // },
+  // infoImage: {
+  //   width: 100, // Fixed width for the info card image
+  //   height: 100, // Fixed height for the info card image
+  //   borderRadius: 10,
+  //   resizeMode: 'cover',
+  //   marginRight: 20,
+  // },
+  // infoTextContainer: {
+  //   flex: 1, // Ensures text takes up remaining space
+  //   justifyContent: 'center',
+  // },
+  // infoTitle: {
+  //   fontWeight: 'bold',
+  //   fontSize: 16,
+  //   marginBottom: 5, // Adds some space between title and description
+  // },
 
 
   fixedNavButtons: {
