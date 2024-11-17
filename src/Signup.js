@@ -4,8 +4,8 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 
-
-const API_URL = 'http://192.168.1.81:5000';
+const API_URL="http://192.168.1.68:5000";
+// const API_URL = 'http://192.168.1.81:5000';
 
 const Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');

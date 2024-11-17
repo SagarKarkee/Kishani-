@@ -122,8 +122,8 @@ const BottomNav = ({ navigation }) => (
       <Text style={styles.navButtonText}>Notes</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bmessage')}>
-      <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Message</Text>
+      <Icon name="book-outline" size={25} color="#43B76A" />
+      <Text style={styles.navButtonText}>Education</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Bprofile')}>
       <Icon name="person-outline" size={25} color="#43B76A" />
@@ -132,24 +132,43 @@ const BottomNav = ({ navigation }) => (
   </View>
 );
 
+
+ // Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
+
+
 // Main Dashboard Screen
+// const BDashboard = ({ navigation }) => (
+//   <SafeAreaView style={styles.container}>
+//     {/* Removed ScrollView wrapping around FlatList */}
+//     <Header />
+//     {/* Only wrap non-list elements in ScrollView */}
+//     <ScrollView contentContainerStyle={styles.scrollContent}>
+//       <InfoSection navigation={navigation} />
+//     </ScrollView>
+//     {/* FlatList is now outside of the ScrollView */}
+//     <FlatList
+//       data={products}
+//       renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
+//       keyExtractor={(item) => item.id}
+//       numColumns={2}
+//       columnWrapperStyle={styles.row}
+//       contentContainerStyle={styles.productList}
+//     />
+//     <BottomNav navigation={navigation} />
+//   </SafeAreaView>
+// );
+
+
+
+// YO cHAI OLD wALA
+
 const BDashboard = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
-    {/* Removed ScrollView wrapping around FlatList */}
     <Header />
-    {/* Only wrap non-list elements in ScrollView */}
     <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ProductList navigation={navigation}/>
       <InfoSection navigation={navigation} />
     </ScrollView>
-    {/* FlatList is now outside of the ScrollView */}
-    <FlatList
-      data={products}
-      renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
-      keyExtractor={(item) => item.id}
-      numColumns={2}
-      columnWrapperStyle={styles.row}
-      contentContainerStyle={styles.productList}
-    />
     <BottomNav navigation={navigation} />
   </SafeAreaView>
 );
@@ -241,7 +260,7 @@ const styles = StyleSheet.create({
   },
   educationTitle: {
     fontSize: 18,
-    color: '#388E3C',
+    color: 'black',
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
@@ -267,29 +286,29 @@ const styles = StyleSheet.create({
   },
   educationText: {
     fontSize: 14,
-    color: '#388E3C',
+    color: 'black',
   },
-  infoCard: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    elevation: 3,
-  },
-  infoImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    marginRight: 20,
-  },
-  infoTextContainer: {
-    justifyContent: 'center',
-  },
-  infoTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  // infoCard: {
+  //   flexDirection: 'row',
+  //   marginBottom: 20,
+  //   padding: 10,
+  //   backgroundColor: '#fff',
+  //   borderRadius: 10,
+  //   elevation: 3,
+  // },
+  // infoImage: {
+  //   width: 100,
+  //   height: 100,
+  //   borderRadius: 10,
+  //   marginRight: 20,
+  // },
+  // infoTextContainer: {
+  //   justifyContent: 'center',
+  // },
+  // infoTitle: {
+  //   fontSize: 16,
+  //   fontWeight: 'bold',
+  // },
   fixedNavButtons: {
     position: 'absolute',
     bottom: 0,
@@ -306,8 +325,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navButtonText: {
-    fontSize: 12,
-    color: '#43B76A',
+    marginTop: 5,
+    color: '#000000',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
