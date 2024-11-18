@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 
   },
   educationText: {
-    fontSize: 20,
+    fontSize: 15,
     color: 'black',
     fontWeight: 'bold',
     marginTop: 9,
