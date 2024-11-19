@@ -9,6 +9,17 @@ import brinjalImg from './../assets/brinjal.jpg';
 import potatoImg from './../assets/potato.jpg';
 import chillyImg from './../assets/chilly-1.jpeg';
 import onionImg from './../assets/onion.jpg';
+import carrotImg from './../assets/carrot-1.jpeg';
+import cabbageImg from './../assets/cabbage.jpeg';
+import capssicumImg from './../assets/capssicum.jpeg';
+import CarrotImg from './../assets/carrot.jpg';
+import ChillyImg from './../assets/chilly.jpg';
+import cucumberImg from './../assets/cucumber.jpeg';
+import greenchillyImg from './../assets/greenchilly.jpeg';
+import radishImg from './../assets/radish-1.jpeg';
+
+
+
 import cultivationImg from './../assets/Cul-1.jpeg';
 import diseasesImg from './../assets/dis.jpeg';
 
@@ -20,6 +31,14 @@ const imageMap = {
   '4': potatoImg,
   '5': chillyImg,
   '6': onionImg,
+  '7': carrotImg,
+  '8': cabbageImg,
+  '9': capssicumImg,
+  '10':  CarrotImg,
+  '11': ChillyImg,
+  '12': cucumberImg,
+  '13': greenchillyImg,
+  '14': radishImg,
 
 };
 
@@ -27,9 +46,18 @@ const products = [
   { id: '1', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
   { id: '2', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
   { id: '3', name: 'Brinjal', price: 'Rs 80/kg', imageUrl: imageMap['3'], availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
-  { id: '4', name: 'Potato', price: 'Rs 60/kg', imageUrl: imageMap['4'], availableDate: '2024-09-08', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
-  { id: '5', name: 'Chilly', price: 'Rs 60/kg', imageUrl: imageMap['5'], availableDate: '2024-09-08', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
-  { id: '6', name: 'Onion', price: 'Rs 60/kg', imageUrl: imageMap['6'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '4', name: 'Potato', price: 'Rs 70/kg', imageUrl: imageMap['4'], availableDate: '2024-09-02', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
+  { id: '5', name: 'Chilly', price: 'Rs 90/kg', imageUrl: imageMap['5'], availableDate: '2024-09-03', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
+  { id: '6', name: 'Onion', price: 'Rs 30/kg', imageUrl: imageMap['6'], availableDate: '2024-09-04', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '7', name: 'carrot', price: 'Rs 20/kg', imageUrl: imageMap['7'], availableDate: '2024-09-05', farmerName: 'Black', phoneNumber: '444-555-6666' },
+  { id: '8', name: 'cabbage', price: 'Rs 90/kg', imageUrl: imageMap['8'], availableDate: '2024-09-01', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '9', name: 'capssicum', price: 'Rs 40/kg', imageUrl: imageMap['9'], availableDate: '2024-09-09', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '10', name: 'Carrot', price: 'Rs 30/kg', imageUrl: imageMap['10'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '11', name: 'Chilly', price: 'Rs 20/kg', imageUrl: imageMap['11'], availableDate: '2024-09-07', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '12', name: 'cucumber', price: 'Rs 100/kg', imageUrl: imageMap['12'], availableDate: '2024-09-06', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '13', name: 'greenchilly', price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '14', name: 'radish', price: 'Rs 90/kg', imageUrl: imageMap['14'], availableDate: '2024-09-03', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+
 ];
 // Header Component
 const Header = () => (
