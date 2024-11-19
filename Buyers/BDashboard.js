@@ -34,7 +34,7 @@ const imageMap = {
   '7': carrotImg,
   '8': cabbageImg,
   '9': capssicumImg,
-  '10':  CarrotImg,
+  '10': CarrotImg,
   '11': ChillyImg,
   '12': cucumberImg,
   '13': greenchillyImg,
@@ -101,9 +101,10 @@ const ProductCard = ({ product, navigation }) => (
     <Image source={product.imageUrl} style={styles.productImage} />
     <Text style={styles.productName}>{product.name}</Text>
     <Text style={styles.productPrice}>{product.price}</Text>
-    <TouchableOpacity style={styles.addButton}>
+    <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('VegetableDetails', { product })}>
       <Text style={styles.addButtonText}>+</Text>
     </TouchableOpacity>
+
   </TouchableOpacity>
 );
 
@@ -181,7 +182,7 @@ const BottomNav = ({ navigation }) => (
 );
 
 
- // Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
+// Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
 
 
 // Main Dashboard Screen
@@ -214,7 +215,7 @@ const BDashboard = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
     <Header />
     <ScrollView contentContainerStyle={styles.scrollContent}>
-      <ProductList navigation={navigation}/>
+      <ProductList navigation={navigation} />
       <InfoSection navigation={navigation} />
     </ScrollView>
     <BottomNav navigation={navigation} />
