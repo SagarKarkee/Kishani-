@@ -34,7 +34,7 @@ const imageMap = {
   '7': carrotImg,
   '8': cabbageImg,
   '9': capssicumImg,
-  '10':  CarrotImg,
+  '10': CarrotImg,
   '11': ChillyImg,
   '12': cucumberImg,
   '13': greenchillyImg,
@@ -57,6 +57,26 @@ const products = [
   { id: '12', name: 'cucumber', price: 'Rs 100/kg', imageUrl: imageMap['12'], availableDate: '2024-09-06', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
   { id: '13', name: 'greenchilly', price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
   { id: '14', name: 'radish', price: 'Rs 90/kg', imageUrl: imageMap['14'], availableDate: '2024-09-03', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '15', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '16', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
+  { id: '17', name: 'Brinjal', price: 'Rs 80/kg', imageUrl: imageMap['3'], availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
+  { id: '18', name: 'Potato', price: 'Rs 70/kg', imageUrl: imageMap['4'], availableDate: '2024-09-02', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
+  { id: '19', name: 'Chilly', price: 'Rs 90/kg', imageUrl: imageMap['5'], availableDate: '2024-09-03', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
+  { id: '20', name: 'Onion', price: 'Rs 30/kg', imageUrl: imageMap['6'], availableDate: '2024-09-04', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '21', name: 'carrot', price: 'Rs 20/kg', imageUrl: imageMap['7'], availableDate: '2024-09-05', farmerName: 'Black', phoneNumber: '444-555-6666' },
+  { id: '22', name: 'cabbage', price: 'Rs 90/kg', imageUrl: imageMap['8'], availableDate: '2024-09-01', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '23', name: 'capssicum', price: 'Rs 40/kg', imageUrl: imageMap['9'], availableDate: '2024-09-09', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '24', name: 'Carrot', price: 'Rs 30/kg', imageUrl: imageMap['10'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '25', name: 'Chilly', price: 'Rs 20/kg', imageUrl: imageMap['11'], availableDate: '2024-09-07', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '26', name: 'cucumber', price: 'Rs 100/kg', imageUrl: imageMap['12'], availableDate: '2024-09-06', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '27', name: 'greenchilly', price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '28', name: 'radish', price: 'Rs 90/kg', imageUrl: imageMap['14'], availableDate: '2024-09-03', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '29', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '30', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
+  { id: '31', name: 'Brinjal', price: 'Rs 80/kg', imageUrl: imageMap['3'], availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
+  { id: '32', name: 'Potato', price: 'Rs 70/kg', imageUrl: imageMap['4'], availableDate: '2024-09-02', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
+  { id: '33', name: 'Chilly', price: 'Rs 90/kg', imageUrl: imageMap['5'], availableDate: '2024-09-03', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
+  { id: '34', name: 'Onion', price: 'Rs 30/kg', imageUrl: imageMap['6'], availableDate: '2024-09-04', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
 
 ];
 // Header Component
@@ -81,9 +101,10 @@ const ProductCard = ({ product, navigation }) => (
     <Image source={product.imageUrl} style={styles.productImage} />
     <Text style={styles.productName}>{product.name}</Text>
     <Text style={styles.productPrice}>{product.price}</Text>
-    <TouchableOpacity style={styles.addButton}>
+    <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('VegetableDetails', { product })}>
       <Text style={styles.addButtonText}>+</Text>
     </TouchableOpacity>
+
   </TouchableOpacity>
 );
 
@@ -161,7 +182,7 @@ const BottomNav = ({ navigation }) => (
 );
 
 
- // Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
+// Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
 
 
 // Main Dashboard Screen
@@ -194,7 +215,7 @@ const BDashboard = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
     <Header />
     <ScrollView contentContainerStyle={styles.scrollContent}>
-      <ProductList navigation={navigation}/>
+      <ProductList navigation={navigation} />
       <InfoSection navigation={navigation} />
     </ScrollView>
     <BottomNav navigation={navigation} />

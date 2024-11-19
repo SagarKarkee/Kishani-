@@ -9,7 +9,7 @@ const B_vegetableDetails = ({ route }) => {
 
   const BuyNow = () => {
     // Navigate to the next screen
-    navigation.navigate('BDashboard'); // Change 'NextScreen' to your actual screen name
+    navigation.navigate('BFeedbackScreen'); // Change 'NextScreen' to your actual screen name
 
   };
 
