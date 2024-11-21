@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button, Checkbox } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 const BLoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -12,7 +14,7 @@ const BLoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-  
+
     try {
       const response = await fetch('http://192.168.1.91:5000/blogin', {
         method: 'POST',
@@ -21,37 +23,52 @@ const BLoginScreen = ({ navigation }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        Alert.alert('Success', 'Login successful');
-        // Navigate to the buyer's dashboard and pass user details
-        navigation.navigate('BDashboard', { username: data.user.fullName });
 
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'Logged in successfully');
+        if (rememberMe) {
+          await AsyncStorage.setItem('userEmail', email);
+          await AsyncStorage.setItem('userPassword', password);
+        }
+        navigation.navigate('BDashboard', { username: data.user.fullName }); // Pass the username here
       } else {
-        // Handle errors returned by the server
-        Alert.alert('Error', data.message || 'Login failed');
+        Alert.alert('Error', data.message || 'Invalid credentials');
       }
     } catch (error) {
       console.error('Login error:', error);
-      Alert.alert('Error', 'Something went wrong. Please try again later.');
+      Alert.alert('Error', 'Failed to connect to the server');
     }
   };
-  
+
+
+  useEffect(() => {
+    const loadCredentials = async () => {
+      const storedEmail = await AsyncStorage.getItem('userEmail');
+      const storedPassword = await AsyncStorage.getItem('userPassword');
+      if (storedEmail && storedPassword) {
+        setEmail(storedEmail);
+        setPassword(storedPassword);
+        setRememberMe(true);
+      }
+    };
+    loadCredentials();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
-    
+
+
       <TextInput
-       style={styles.input}
-       placeholder="Email"
-       keyboardType="email-address"
-       value={email}
-       onChangeText={setEmail}
-       autoCapitalize="none"
-        
+        style={styles.input}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+
       />
       <TextInput
         style={styles.input}
@@ -130,7 +147,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize:20,
+    fontSize: 20,
   },
   link: {
     marginTop: 16,
