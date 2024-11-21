@@ -82,20 +82,21 @@ const products = [
 // Header Component
 const Header = ({ navigation }) => (
   <View style={styles.header}>
-    <View style={styles.headerText}>
-      <Image source={require('./../assets/b.jpeg')} style={styles.profileImage} />
-      <View>
-        <Text style={styles.greeting}>Hi Sagar! 👋</Text>
-        <Text style={styles.welcomeText}>Welcome to KISHANI App</Text>
+      <View style={styles.headerText}>
+          <Image source={require('./../assets/b.jpeg')} style={styles.profileImage} />
+          <View>
+              <Text style={styles.greeting}>
+                  Hi {username ? username.toString() : 'User'}! 👋
+              </Text> 
+              <Text style={styles.welcomeText}>Welcome to KISHANI App</Text>
+          </View>
       </View>
-    </View >
-    <View style={styles.notification}>
-      <TouchableOpacity style={styles.notifications} onPress={() => navigation.navigate('Bnotification')}>
-        <Icon name="notifications-outline" size={30} color="#000" />
+      <TouchableOpacity>
+          <Icon name="notifications-outline" size={30} color="#000" />
       </TouchableOpacity>
-    </View>
   </View>
 );
+
 
 // Product Card Component
 const ProductCard = ({ product, navigation }) => (
@@ -188,41 +189,28 @@ const BottomNav = ({ navigation }) => (
 
 
 // Main Dashboard Screen
-// const BDashboard = ({ navigation }) => (
-//   <SafeAreaView style={styles.container}>
-//     {/* Removed ScrollView wrapping around FlatList */}
-//     <Header />
-//     {/* Only wrap non-list elements in ScrollView */}
-//     <ScrollView contentContainerStyle={styles.scrollContent}>
-//       <InfoSection navigation={navigation} />
-//     </ScrollView>
-//     {/* FlatList is now outside of the ScrollView */}
-//     <FlatList
-//       data={products}
-//       renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
-//       keyExtractor={(item) => item.id}
-//       numColumns={2}
-//       columnWrapperStyle={styles.row}
-//       contentContainerStyle={styles.productList}
-//     />
-//     <BottomNav navigation={navigation} />
-//   </SafeAreaView>
-// );
+const BDashboard = ({ navigation, route }) => {
+  const username = route?.params?.username || 'User'; // Fallback to 'User' if not defined
+  return (
+      <SafeAreaView style={styles.container}>
+          <Header username={username} />
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+              <InfoSection navigation={navigation} />
+          </ScrollView>
+          <FlatList
+              data={products}
+              renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              contentContainerStyle={styles.productList}
+          />
+          <BottomNav navigation={navigation} />
+      </SafeAreaView>
+  );
+};
 
 
-
-// YO cHAI OLD wALA
-
-const BDashboard = ({ navigation }) => (
-  <SafeAreaView style={styles.container}>
-    <Header navigation={navigation} />
-    <ScrollView contentContainerStyle={styles.scrollContent}>
-      <ProductList navigation={navigation} />
-      <InfoSection navigation={navigation} />
-    </ScrollView>
-    <BottomNav navigation={navigation} />
-  </SafeAreaView>
-);
 
 // Styles
 const styles = StyleSheet.create({

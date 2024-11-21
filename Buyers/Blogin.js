@@ -27,7 +27,8 @@ const BLoginScreen = ({ navigation }) => {
       if (response.ok) {
         Alert.alert('Success', 'Login successful');
         // Navigate to the buyer's dashboard and pass user details
-        navigation.navigate('BDashboard');
+        navigation.navigate('BDashboard', { username: data.user.fullName });
+
       } else {
         // Handle errors returned by the server
         Alert.alert('Error', data.message || 'Login failed');
