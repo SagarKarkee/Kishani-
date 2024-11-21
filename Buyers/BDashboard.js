@@ -80,7 +80,7 @@ const products = [
 
 ];
 // Header Component
-const Header = () => (
+const Header = ({ navigation }) => (
   <View style={styles.header}>
     <View style={styles.headerText}>
       <Image source={require('./../assets/b.jpeg')} style={styles.profileImage} />
@@ -88,10 +88,12 @@ const Header = () => (
         <Text style={styles.greeting}>Hi Sagar! 👋</Text>
         <Text style={styles.welcomeText}>Welcome to KISHANI App</Text>
       </View>
+    </View >
+    <View style={styles.notification}>
+      <TouchableOpacity style={styles.notifications} onPress={() => navigation.navigate('Bnotification')}>
+        <Icon name="notifications-outline" size={30} color="#000" />
+      </TouchableOpacity>
     </View>
-    <TouchableOpacity>
-      <Icon name="notifications-outline" size={30} color="#000" />
-    </TouchableOpacity>
   </View>
 );
 
@@ -213,7 +215,7 @@ const BottomNav = ({ navigation }) => (
 
 const BDashboard = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
-    <Header />
+    <Header navigation={navigation} />
     <ScrollView contentContainerStyle={styles.scrollContent}>
       <ProductList navigation={navigation} />
       <InfoSection navigation={navigation} />

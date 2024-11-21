@@ -29,6 +29,8 @@ import Account_Type from './src/Accounttype.js';
 import Bcultivation from './Buyers/Bcultivation.js';
 import Bcropdiseases from './Buyers/Bcropsdiseases.js';
 import FeedbackScreen from './Buyers/BFeedbackScreen.js';
+import NotificationPage from './Buyers/Bnotification.js';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -95,6 +97,9 @@ export default function App() {
         <Stack.Screen name="Bcultivation" component={Bcultivation}/>
         <Stack.Screen name="Bcropsdiseases" component={Bcropdiseases}/>
         <Stack.Screen name="BFeedbackScreen" component={FeedbackScreen}/>
+        <Stack.Screen name="Bnotification" component={NotificationPage}/>
+
+        
 
       </Stack.Navigator>
     </NavigationContainer>
