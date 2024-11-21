@@ -14,7 +14,7 @@ const BLoginScreen = ({ navigation }) => {
     }
   
     try {
-      const response = await fetch('http://192.168.1.81:5000/blogin', {
+      const response = await fetch('http://192.168.1.91:5000/blogin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,8 @@ const BLoginScreen = ({ navigation }) => {
       if (response.ok) {
         Alert.alert('Success', 'Login successful');
         // Navigate to the buyer's dashboard and pass user details
-        navigation.navigate('BDashboard');
+        navigation.navigate('BDashboard', { username: data.user.fullName });
+
       } else {
         // Handle errors returned by the server
         Alert.alert('Error', data.message || 'Login failed');

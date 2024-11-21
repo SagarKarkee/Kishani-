@@ -6,7 +6,7 @@ import axios from 'axios';
 // import API_URL from '../config';
 
 
-const API_URL = 'http://192.168.1.81:5000';
+const API_URL = 'http://192.168.1.91:5000';
 
 const BSignup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
