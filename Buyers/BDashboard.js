@@ -80,7 +80,7 @@ const products = [
 
 ];
 // Header Component
-const Header = ({ navigation }) => (
+const Header = ({ username, navigation }) => (
   <View style={styles.header}>
       <View style={styles.headerText}>
           <Image source={require('./../assets/b.jpeg')} style={styles.profileImage} />
@@ -123,15 +123,7 @@ const ProductList = ({ navigation }) => (
   />
 );
 
-// Info Card Component (Subtitle Removed)
-// const InfoCard = ({ title, imageUrl }) => (
-//   <View style={styles.infoCard}>
-//     <Image source={imageUrl} style={styles.infoImage} />
-//     <View style={styles.infoTextContainer}>
-//       <Text style={styles.infoTitle}>{title}</Text>
-//     </View>
-//   </View>
-// );
+
 
 // Info Section Component
 const InfoSection = ({ navigation }) => (
