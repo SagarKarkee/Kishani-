@@ -45,10 +45,12 @@ const BLoginScreen = ({ navigation }) => {
       
     
       <TextInput
-         style={styles.input}
-         placeholder="Email"
-         value={email}
-         onChangeText={setEmail}
+       style={styles.input}
+       placeholder="Email"
+       keyboardType="email-address"
+       value={email}
+       onChangeText={setEmail}
+       autoCapitalize="none"
         
       />
       <TextInput
