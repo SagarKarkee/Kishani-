@@ -32,7 +32,7 @@ const BLoginScreen = ({ navigation }) => {
           await AsyncStorage.setItem('userEmail', email);
           await AsyncStorage.setItem('userPassword', password);
         }
-        navigation.navigate('BDashboard', { user: data.user.fullName }); // Pass the username here
+        navigation.navigate('BDashboard', { username: data.user.fullName }); // Pass the username here
       } else {
         Alert.alert('Error', data.message || 'Invalid credentials');
       }
