@@ -7,6 +7,7 @@ const connectDB = require('./connection');
 const farmersLoginSchema = require('./FarmersLogin'); // Import the schema directly
 const buyersLoginSchema = require('./BuyersLogin'); // Import the schema directly
 const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
+const productSchema = require('./Product');
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json()); // Middleware to parse JSON
 // Initialize FarmersLogin model globally once the database connection is established
 let FarmersLogin;
 let SecurityQuestion;
+let AddProduct;
 let BuyersLogin;
 mongoose.connection.on('connected', () => {
     const farmersDb = mongoose.connection.useDb('Farmers');
@@ -28,6 +30,9 @@ mongoose.connection.on('connected', () => {
 
     SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
     console.log('SecurityAnswers model initialized');
+
+    AddProduct = farmersDb.model('Product', productSchema, 'AddedProduct');
+    console.log('AddedProduct model initialized');
 
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
@@ -149,6 +154,84 @@ app.post('/login', async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
 
+});
+
+
+// Add Product Route
+app.post("/addProduct", async (req, res) => {
+  const { farmerEmail, productName, quantity, price, date } = req.body;
+
+  if (!farmerEmail || !productName || !quantity || !price || !date) {
+    return res.status(400).json({ message: "Please provide all required fields." });
+  }
+
+  try {
+    const newProduct = new AddedProduct({
+      farmerEmail,
+      productName,
+      quantity,
+      price,
+      date,
+    });
+    await newProduct.save();
+    res.status(201).json({ message: "Product added successfully" });
+  } catch (error) {
+    console.error("Error saving product:", error);
+    res.status(500).json({ message: "Error adding product", error: error.message });
+  }
+});
+
+
+// Get Products Route
+app.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Error fetching products", error: error.message });
+  }
+});
+
+// Update Product Route
+app.put("/update-product/:id", async (req, res) => {
+  const { id } = req.params;
+  const { productName, quantity, price, date } = req.body;
+
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { productName, quantity, price, date },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Error updating product", error: error.message });
+  }
+});
+
+// Delete Product Route
+app.delete("/delete-product/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ message: "Error deleting product", error: error.message });
+  }
 });
 
 
