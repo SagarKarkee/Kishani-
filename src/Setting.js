@@ -123,7 +123,7 @@ const SettingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'green',
+        backgroundColor: '#43B76A',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
