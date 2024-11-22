@@ -3,37 +3,42 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Profile = ({ navigation, route }) => {
-  const { profileImage } = route.params || {};
+  const { profileImage, userName = 'User', email = 'user@example.com' } = route.params || {};
 
   const handleLogout = () => {
-    // Perform any logout logic here, such as clearing tokens or user data
-    // For example, AsyncStorage.clear(), if you're using AsyncStorage to store the session
-    // Then navigate to the Login screen
     navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
   };
 
   return (
     <View style={styles.container}>
-      {/* Profile Image Section */}
+      {/* Profile Image and Details Section */}
       <View style={styles.imageSection}>
         {profileImage ? (
           <Image source={{ uri: profileImage }} style={styles.profileImage} />
         ) : (
           <Icon name="person-circle-outline" size={150} color="#43B76A" />
         )}
+        {/* User Info Row */}
+        <View style={styles.userInfoRow}>
+          <Text style={styles.userName}>{userName}</Text>
+          <Text style={styles.userEmail}>{email}</Text>
+        </View>
       </View>
 
       {/* Profile Information Section */}
-      <TouchableOpacity style={styles.sectionButton}
+      <TouchableOpacity
+        style={styles.sectionButton}
         onPress={() => navigation.navigate('PersonelDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
-          <Text style={styles.sectionButtonText}>Personal Information</Text>
+        <Text style={styles.sectionButtonText}>Personal Information</Text>
       </TouchableOpacity>
 
       {/* Settings Section */}
-      <TouchableOpacity style={styles.sectionButton}
-        onPress={() => navigation.navigate('')}>
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('')}
+      >
         <Icon name="settings-outline" size={25} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
@@ -94,15 +99,30 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
     paddingVertical: 10,
-    marginTop: 60,
-    // marginBottom: -200,
+    marginTop: 40,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  userInfoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '90%',
+    marginTop: 10,
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  userEmail: {
+    fontSize: 16,
+    color: '#555555',
+    textAlign: 'right',
   },
   sectionButton: {
     flexDirection: 'row',
