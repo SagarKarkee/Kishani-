@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   clearButton: {
-    backgroundColor: "#FF6F61",
+    backgroundColor: "#43B76A",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",

@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const connectDB = require('./connection');
 const farmersLoginSchema = require('./FarmersLogin'); // Import the schema directly
 const buyersLoginSchema = require('./BuyersLogin'); // Import the schema directly
+const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
+
 
 dotenv.config();
 const app = express();
@@ -17,11 +19,15 @@ app.use(express.json()); // Middleware to parse JSON
 
 // Initialize FarmersLogin model globally once the database connection is established
 let FarmersLogin;
+let SecurityQuestion;
 let BuyersLogin;
 mongoose.connection.on('connected', () => {
     const farmersDb = mongoose.connection.useDb('Farmers');
     FarmersLogin = farmersDb.model('FarmersLogin', farmersLoginSchema, 'LoginData');
     console.log('FarmersLogin model initialized');
+
+    SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
+    console.log('SecurityAnswers model initialized');
 
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
@@ -31,28 +37,85 @@ mongoose.connection.on('connected', () => {
 
 // Farmer's Signup route 
 app.post('/signup', async (req, res) => {
-    const { fullName, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
-    if (!fullName || !email || !password) {
-        return res.status(400).json({ message: 'Please fill all required fields' });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const fullNameRegex = /^[A-Za-z]{2,}\s[A-Za-z]{2,}$/;
+
+  if (!fullName || !email || !password) {
+    return res.status(400).json({ message: 'Please fill all required fields' });
+  }
+
+  const sanitizedEmail = email.toLowerCase(); // Convert email to lowercase
+
+  if (!fullNameRegex.test(fullName)) {
+    return res.status(400).json({
+      message: 'Full Name must include first and last name, each at least 2 characters long (e.g., "Sa Bud")',
+    });
+  }
+
+  if (!emailRegex.test(sanitizedEmail)) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message: 'Password must be at least 8 characters long, contain at least one uppercase letter, and one number',
+    });
+  }
+
+  try {
+    const existingUser = await FarmersLogin.findOne({ email: sanitizedEmail });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email is already in use' });
     }
 
-    try {
-        const existingUser = await FarmersLogin.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email is already in use' });
-        }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new FarmersLogin({
+      fullName,
+      email: sanitizedEmail, // Save email in lowercase
+      password: hashedPassword,
+    });
+    await newUser.save();
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new FarmersLogin({ fullName, email, password: hashedPassword });
-        await newUser.save();
-
-        res.status(201).json({ message: 'User created successfully' });
-    } catch (error) {
-        console.error('Signup error:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
+
+
+//Secutity Questions
+app.post('/SecurityQuestion', async (req, res) => {
+  const { email, securityQuestion, securityAnswer } = req.body;
+
+  if (!email || !securityQuestion || !securityAnswer) {
+    console.error('Missing required fields:', { email, securityQuestion, securityAnswer });
+    return res.status(400).json({ message: 'Please fill all required fields' });
+  }
+
+  try {
+    const hashedAnswer = await bcrypt.hash(securityAnswer, 10);
+
+    const newEntry = await SecurityQuestion.findOneAndUpdate(
+      { email }, // Search for existing entry by email
+      { question: securityQuestion, answer: hashedAnswer }, // Update or create with new data
+      { upsert: true, new: true } // Create if not found
+    );
+    
+
+    console.log('Security question saved:', newEntry);
+    res.status(201).json({ message: 'Security question saved successfully' });
+  } catch (error) {
+    console.error('Error saving security question:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
+
+
 
 // Farmer's Login Route
 app.post('/login', async (req, res) => {
