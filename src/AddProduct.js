@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView,
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import axios from 'axios';
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState('');
@@ -53,14 +54,21 @@ const AddProduct = ({ navigation, route }) => {
       Alert.alert('Validation Error', 'Please fill all the fields.');
       return;
     }
+  
+    if (isNaN(quantity) || isNaN(price)) {
+        Alert.alert('Validation Error', 'Quantity and Price must be numbers.');
+        return;
+    }
+  
 
-    const newProduct = {
-      productName,
-      quantity,
-      price,
-      date,
-      imageUri: 'https://example.com/product-image.jpg', // Update with actual image URI if available
-    };
+const newProduct = {
+    productName,
+    quantity: parseFloat(quantity), // Ensure numeric
+    price: parseFloat(price),       // Ensure numeric
+    date,
+    imageUri: 'https://example.com/product-image.jpg', // Add a valid default image URI
+};
+
 
     try {
       if (editingIndex !== null) {

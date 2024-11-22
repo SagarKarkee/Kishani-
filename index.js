@@ -157,41 +157,50 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Add Product Route
-app.post("/addProduct", async (req, res) => {
+// Farmers Add Product Route
+
+app.post('/addProduct', async (req, res) => {
   const { farmerEmail, productName, quantity, price, date } = req.body;
 
   if (!farmerEmail || !productName || !quantity || !price || !date) {
-    return res.status(400).json({ message: "Please provide all required fields." });
+    return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    const newProduct = new AddedProduct({
+    // Create a new product document
+    const newProduct = new AddProduct({
       farmerEmail,
       productName,
       quantity,
       price,
       date,
     });
+
+    // Save the product to the database
     await newProduct.save();
-    res.status(201).json({ message: "Product added successfully" });
+
+    res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
-    console.error("Error saving product:", error);
-    res.status(500).json({ message: "Error adding product", error: error.message });
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 });
+
 
 
 // Get Products Route
-app.get("/products", async (req, res) => {
+app.get('/products', async (req, res) => {
+  const { farmerEmail } = req.query;
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+      const products = await AddProduct.find({ farmerEmail }); 
+      res.status(200).json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Error fetching products", error: error.message });
+      console.error('Error fetching products:', error);
+      res.status(500).json({ message: 'Server error' });
   }
 });
+
+
 
 // Update Product Route
 app.put("/update-product/:id", async (req, res) => {
@@ -199,7 +208,8 @@ app.put("/update-product/:id", async (req, res) => {
   const { productName, quantity, price, date } = req.body;
 
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await AddProduct.findByIdAndUpdate(
+
       id,
       { productName, quantity, price, date },
       { new: true } // Returns the updated document
@@ -221,7 +231,7 @@ app.delete("/delete-product/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedProduct = await Product.findByIdAndDelete(id);
+    const deletedProduct = await AddProduct.findByIdAndDelete(id);
 
     if (!deletedProduct) {
       return res.status(404).json({ message: "Product not found" });
