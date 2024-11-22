@@ -32,7 +32,7 @@ const BLoginScreen = ({ navigation }) => {
           await AsyncStorage.setItem('userEmail', email);
           await AsyncStorage.setItem('userPassword', password);
         }
-        navigation.navigate('BDashboard', { username: data.user.fullName }); // Pass the username here
+        navigation.navigate('BDashboard', { user: data.user.fullName }); // Pass the username here
       } else {
         Alert.alert('Error', data.message || 'Invalid credentials');
       }
@@ -41,7 +41,7 @@ const BLoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Failed to connect to the server');
     }
   };
-
+  
 
   useEffect(() => {
     const loadCredentials = async () => {
@@ -56,10 +56,10 @@ const BLoginScreen = ({ navigation }) => {
     loadCredentials();
   }, []);
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-
 
       <TextInput
         style={styles.input}
@@ -68,7 +68,6 @@ const BLoginScreen = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
-
       />
       <TextInput
         style={styles.input}
@@ -85,20 +84,19 @@ const BLoginScreen = ({ navigation }) => {
           />
           <Text style={styles.rememberMeText}>Remember Me</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('BforgetPassword')}>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </Button>
-      <TouchableOpacity onPress={() => navigation.navigate('BSignup')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.link}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
