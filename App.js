@@ -31,6 +31,7 @@ import Bcropdiseases from './Buyers/Bcropsdiseases.js';
 import FeedbackScreen from './Buyers/BFeedbackScreen.js';
 import NotificationPage from './Buyers/Bnotification.js';
 import SecurityQuestionScreen from './src/SecurityQuestion.js';
+import YourSecurityQuestionScreen from './src/YourQuestion.js';
 
 
 const Stack = createStackNavigator();
@@ -100,6 +101,7 @@ export default function App() {
         <Stack.Screen name="BFeedbackScreen" component={FeedbackScreen}/>
         <Stack.Screen name="Bnotification" component={NotificationPage}/>
         <Stack.Screen name="SecurityQuestion" component={SecurityQuestionScreen}/>
+        <Stack.Screen name="YourSecurityQuestion" component={YourSecurityQuestionScreen}/>
 
         
 

@@ -12,8 +12,10 @@ const ForgotPasswordScreen = ({ navigation }) => {
     }
     // Perform send email action here
     // For example, you can show an alert and navigate to the login screen:
-    Alert.alert('Success', 'Please check your email for password reset instructions');
-    navigation.navigate('Login');
+    // Alert.alert('Success', 'Please check your email for password reset instructions');
+    
+    navigation.navigate('YourSecurityQuestion');
+    Alert.alert('Now you can Change your Password');
   };
 
   return (
