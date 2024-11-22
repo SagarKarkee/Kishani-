@@ -84,14 +84,14 @@ const BLoginScreen = ({ navigation }) => {
           />
           <Text style={styles.rememberMeText}>Remember Me</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('BforgotPassword')}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </Button>
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+      <TouchableOpacity onPress={() => navigation.navigate('BSignup')}>
         <Text style={styles.link}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
