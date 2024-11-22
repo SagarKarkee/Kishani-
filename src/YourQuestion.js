@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const SecurityQuestionScreen = ({ navigation }) => {
+const YourSecurityQuestionScreen  = ({ navigation }) => {
   const [Question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
 
@@ -36,7 +36,7 @@ const SecurityQuestionScreen = ({ navigation }) => {
       {/* Navigate to another screen */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('')} // Use your actual screen name
+        onPress={() => navigation.navigate('ChangePassword')} // Use your actual screen name
       >
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
@@ -44,11 +44,11 @@ const SecurityQuestionScreen = ({ navigation }) => {
   );
 };
 
-const YourSecurityQuestionScreen = () => {
+const BYourSecurityQuestionScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <SecurityQuestionScreen />
+        <BYourSecurityQuestionScreen  />
       </ScrollView>
     </SafeAreaView>
   );
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecurityQuestionScreen;
+export default YourSecurityQuestionScreen;
