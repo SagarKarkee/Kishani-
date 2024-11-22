@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 
 const API_URL="http://192.168.1.68:5000";
-// const API_URL = 'http://192.168.1.81:5000';
+
 
 const Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -18,8 +18,30 @@ const Signup = ({ navigation }) => {
   
 
   const handleSignup = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const fullNameRegex = /^[A-Za-z]{2,}\s[A-Za-z]{2,}$/;
+  
     if (fullName === '' || email === '' || password === '' || confirmPassword === '') {
       Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+    if (!fullNameRegex.test(fullName)) {
+      Alert.alert(
+        'Error',
+        'Full Name must include first and last name, each at least 2 characters long (e.g., "Sa Bud")'
+      );
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      Alert.alert(
+        'Error',
+        'Password must be at least 8 characters long, contain at least one uppercase letter, and one number'
+      );
       return;
     }
     if (password !== confirmPassword) {
@@ -40,10 +62,9 @@ const Signup = ({ navigation }) => {
         }
       });
       console.log('Backend response:', response.data);
-
+  
       if (response.status === 201) {
-        Alert.alert('Success', 'User registered successfully');
-        navigation.navigate('Login');
+        navigation.navigate('SecurityQuestion', { email });
       } else {
         Alert.alert('Error', 'Registration failed');
       }
@@ -54,6 +75,8 @@ const Signup = ({ navigation }) => {
       setLoading(false);
     }
   };
+  
+  
 
 
   return (
@@ -77,8 +100,12 @@ const Signup = ({ navigation }) => {
           placeholder="Email"
           keyboardType="email-address"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => setEmail(text.toLowerCase())}
         />
+
+
+
+
       </View>
 
       {/* Password Input */}

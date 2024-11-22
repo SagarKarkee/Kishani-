@@ -9,7 +9,9 @@ export default function Account_Type({ navigation }) {
       <View style={styles.optionContainer}>
         <TouchableOpacity 
           style={styles.option} 
+          // onPress={() => navigation.navigate('SecurityQuestion')}>
           onPress={() => navigation.navigate('Login')}>
+
           <Image 
             source={require('./../assets/f.jpeg')} // replace with your image path
             style={styles.image} 
