@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Install if not already
 
-const ChangePasswordScreen = ({ navigation }) => {
+const BChangePasswordScreen = ({ navigation }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -36,7 +36,7 @@ const ChangePasswordScreen = ({ navigation }) => {
     }
 
     Alert.alert('Success', 'Password has been changed successfully!');
-    navigation.navigate('Login'); // Navigate to another screen
+    navigation.navigate('Blogin'); // Navigate to another screen
   };
 
   return (
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChangePasswordScreen;
+export default BChangePasswordScreen;
