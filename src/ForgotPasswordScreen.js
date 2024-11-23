@@ -1,32 +1,52 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
+import axios from 'axios';
 
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
 
+  // Email regex pattern
   const isValidEmail = (email) => {
-    // Regular expression to validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (email === '') {
       Alert.alert('Error', 'Please enter your email');
       return;
     }
-
+  
     if (!isValidEmail(email)) {
       Alert.alert('Error', 'Please enter a valid email address');
       return;
     }
-
-    // If the email is valid, navigate to the next screen
-    navigation.navigate('YourQuestion');
-    // Alert.alert('Now You Can Give Answer Of The Secret Question');
+  
+    try {
+      // Send request to the backend to get the security question
+      const response = await axios.post('http://192.168.1.91:5000/forgot-password', { email });
+  
+      // Check if the email exists in the database
+      if (response.status === 200) {
+        console.log('Security question found:', response.data.question);
+        // Navigate to the YourQuestionScreen and pass the email and question
+        navigation.navigate('YourQuestion', { email, question: response.data.question });
+      } else {
+        Alert.alert('Error', response.data.message || 'Email not found');
+      }
+    } catch (error) {
+      console.error('Error in forgot password:', error);
+      if (error.response) {
+        // Server returned an error
+        Alert.alert('Error', `Server error: ${error.response.data.message}`);
+      } else {
+        // No response from server
+        Alert.alert('Error', 'Unable to fetch security question');
+      }
+    }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Forgot password</Text>
@@ -39,7 +59,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
         placeholder="Enter your email"
         keyboardType="email-address"
         value={email}
-        onChangeText={setEmail}
+        // onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text.toLowerCase())}
+
       />
       <Button mode="contained" onPress={handleSend} style={styles.button}>
         <Text style={styles.buttonText}>Send</Text>

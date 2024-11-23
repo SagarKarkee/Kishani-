@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker'; // Install this package for dropdown
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.68:5000';
+const API_URL = 'http://192.168.1.91:5000';
 
 
 const SecurityQuestionScreen = ({ route, navigation }) => {

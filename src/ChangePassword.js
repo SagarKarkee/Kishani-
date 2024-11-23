@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Install if not already
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import axios from 'axios';
 
-const ChangePasswordScreen = ({ navigation }) => {
+const ChangePasswordScreen = ({ route, navigation }) => {
+  const { email } = route.params || {}; // Ensure email is passed correctly from previous screen
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -16,7 +18,7 @@ const ChangePasswordScreen = ({ navigation }) => {
     return hasUppercase && hasNumber && isValidLength;
   };
 
-  const handleChangePassword = () => {
+  const handleChangePassword = async () => {
     if (!newPassword || !confirmPassword) {
       Alert.alert('Error', 'Please fill all fields.');
       return;
@@ -35,8 +37,26 @@ const ChangePasswordScreen = ({ navigation }) => {
       return;
     }
 
-    Alert.alert('Success', 'Password has been changed successfully!');
-    navigation.navigate('Login'); // Navigate to another screen
+    try {
+      
+      if (!email) {
+        Alert.alert('Error', 'Email not provided');
+        return;
+      }
+
+      const response = await axios.post('http://192.168.1.91:5000/reset-password', {
+        email,
+        newPassword,
+      });
+
+      if (response.status === 200) {
+        Alert.alert('Success', 'Password has been changed successfully!');
+        navigation.navigate('Login'); // Navigate to the login screen after changing the password
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      Alert.alert('Error', 'Error resetting password');
+    }
   };
 
   return (
