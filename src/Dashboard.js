@@ -84,6 +84,14 @@ const Dashboard = ({ route, navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
+          onPress={() => navigation.navigate('PublicChat')} // Change 'PublicChat' to the correct screen name
+        >
+          <Icon name="document-text-outline" size={25} color="#43B76A" />
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>PublicChat</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
           onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
         >
           <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />

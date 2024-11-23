@@ -8,6 +8,7 @@ import Signup from './src/Signup'; // Adjust the import according to your file s
 import PersonelDetails from './src/PersonelDetails'; // Adjust the import according to your file structure
 import Dashboard from './src/Dashboard'; // Adjust the import according to your file structure
 import Notes from './src/Notes'; // Adjust the import according to your file structure
+import Publicchat from './src/PublicChat'; // Adjust the import according to your file structure
 import Message from './src/Message'; // Adjust the import according to your file structure
 import Profile from './src/Profile'; // Adjust the import according to your file structure
 import { Ionicons } from '@expo/vector-icons'; // or another icon library
@@ -47,6 +48,8 @@ function MainTabNavigator() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Notes') {
             iconName = focused ? 'book' : 'book-outline';
+          } else if (route.name === 'PublicChat') {
+              iconName = focused ? 'book' : 'book-outline';
           } else if (route.name === 'Message') {
             iconName = focused ? 'chatbox' : 'chatbox-outline';
           } else if (route.name === 'Profile') {
@@ -62,6 +65,7 @@ function MainTabNavigator() {
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Notes" component={Notes} />
+      <Tab.Screen name="PublicChat" component={PublicChat} />
       <Tab.Screen name="Message" component={Message} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -79,6 +83,7 @@ export default function App() {
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Notes" component={Notes} />
+        <Stack.Screen name="PublicChat" component={Publicchat} />
         <Stack.Screen name="Message" component={Message} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
