@@ -7,6 +7,7 @@ const connectDB = require('./connection');
 const farmersLoginSchema = require('./FarmersLogin'); // Import the schema directly
 const buyersLoginSchema = require('./BuyersLogin'); // Import the schema directly
 const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
+const productSchema = require('./Product');
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json()); // Middleware to parse JSON
 // Initialize FarmersLogin model globally once the database connection is established
 let FarmersLogin;
 let SecurityQuestion;
+let AddProduct;
 let BuyersLogin;
 mongoose.connection.on('connected', () => {
     const farmersDb = mongoose.connection.useDb('Farmers');
@@ -28,6 +30,9 @@ mongoose.connection.on('connected', () => {
 
     SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
     console.log('SecurityAnswers model initialized');
+
+    AddProduct = farmersDb.model('Product', productSchema, 'AddedProduct');
+    console.log('AddedProduct model initialized');
 
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
@@ -122,8 +127,10 @@ app.post('/login', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      // Check if the user exists in the database
-      const user = await FarmersLogin.findOne({ email });
+      const sanitizedEmail = email.toLowerCase(); // Convert email to lowercase
+
+      // Check if the user exists in the database using the sanitized email
+      const user = await FarmersLogin.findOne({ email: sanitizedEmail });
   
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
@@ -149,6 +156,101 @@ app.post('/login', async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
 
+});
+
+
+// Farmers Add Product Route
+
+app.post('/addProduct', async (req, res) => {
+  const { farmerEmail, productName, quantity, price, date } = req.body;
+
+  if (!farmerEmail || !productName || !quantity || !price || !date) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    // Check if the product already exists for this farmer
+    const existingProduct = await AddProduct.findOne({ farmerEmail, productName });
+    if (existingProduct) {
+      return res.status(400).json({ message: 'This product is already added by the farmer.' });
+    }
+
+    // Create a new product document
+    const newProduct = new AddProduct({
+      farmerEmail,
+      productName,
+      quantity,
+      price,
+      date,
+    });
+
+    // Save the product to the database
+    await newProduct.save();
+
+    res.status(201).json({ message: 'Product added successfully' });
+  } catch (error) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
+
+
+
+
+// Get Products Route
+app.get('/products', async (req, res) => {
+  const { farmerEmail } = req.query;  // Get the farmer's email from query params
+  try {
+    // Ensure farmerEmail is passed and find the products for the farmer
+    const products = await AddProduct.find({ farmerEmail }); 
+    res.status(200).json(products);  // Return the products in the response
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+// Update Product Route
+app.put("/update-product/:id", async (req, res) => {
+  const { id } = req.params;
+  const { productName, quantity, price, date } = req.body;
+
+  try {
+    const updatedProduct = await AddProduct.findByIdAndUpdate(
+      id,
+      { productName, quantity, price, date },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Error updating product", error: error.message });
+  }
+});
+
+// Delete Product Route
+app.delete("/delete-product/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedProduct = await AddProduct.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ message: "Error deleting product", error: error.message });
+  }
 });
 
 
