@@ -55,7 +55,7 @@ function MainTabNavigator() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Notes') {
             iconName = focused ? 'book' : 'book-outline';
-          } else if (route.name === 'Message') {
+          } else if (route.name === 'Education') {
             iconName = focused ? 'chatbox' : 'chatbox-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';

@@ -71,7 +71,7 @@ const Profile = ({ navigation, route }) => {
           onPress={() => navigation.navigate('Message')}
         >
           <Icon name="book-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Message</Text>
+          <Text style={styles.navButtonText}>Education</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
