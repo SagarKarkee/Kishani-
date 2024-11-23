@@ -7,6 +7,7 @@ import Login from './src/Login'; // Adjust the import according to your file str
 import Signup from './src/Signup'; // Adjust the import according to your file structure
 import PersonelDetails from './src/PersonelDetails'; // Adjust the import according to your file structure
 import Dashboard from './src/Dashboard'; // Adjust the import according to your file structure
+import CropRecommendation from './src/CropRecommendation.js';
 import Notes from './src/Notes'; // Adjust the import according to your file structure
 import Message from './src/Message'; // Adjust the import according to your file structure
 import Profile from './src/Profile'; // Adjust the import according to your file structure
@@ -84,6 +85,7 @@ export default function App() {
         <Stack.Screen name="PersonelDetails" component={PersonelDetails} />
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="CropRecommendation" component={CropRecommendation} />
         <Stack.Screen name="Notes" component={Notes} />
         <Stack.Screen name="Message" component={Message} />
         <Stack.Screen name="Profile" component={Profile} />
