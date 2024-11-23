@@ -33,7 +33,7 @@ const Profile = ({ navigation, route }) => {
 
       {/* Settings Section */}
       <TouchableOpacity style={styles.sectionButton}
-        onPress={() => navigation.navigate(' ')}>
+        onPress={() => navigation.navigate('Bsetting')}>
         <Icon name="settings-outline" size={25} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
