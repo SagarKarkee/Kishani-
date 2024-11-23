@@ -32,6 +32,12 @@ import Bcropdiseases from './Buyers/Bcropsdiseases.js';
 import FeedbackScreen from './Buyers/BFeedbackScreen.js';
 import NotificationPage from './Buyers/Bnotification.js';
 import SecurityQuestionScreen from './src/SecurityQuestion.js';
+import YourSecurityQuestionScreen from './src/YourQuestion.js';
+import ChangePasswordScreen from './src/ChangePassword.js';
+import SettingScreen from './src/Setting.js';
+import Notificationpage from './src/Notification.js';
+import BYourSecurityQuestionScreen from './Buyers/BYourQuestion.js';
+import BChangePasswordScreen from './Buyers/BChangePassword.js';
 
 
 const Stack = createStackNavigator();
@@ -105,6 +111,20 @@ export default function App() {
         <Stack.Screen name="BFeedbackScreen" component={FeedbackScreen}/>
         <Stack.Screen name="Bnotification" component={NotificationPage}/>
         <Stack.Screen name="SecurityQuestion" component={SecurityQuestionScreen}/>
+        <Stack.Screen name="YourQuestion" component={YourSecurityQuestionScreen}/>
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
+        <Stack.Screen name="Setting" component={SettingScreen}/>
+        <Stack.Screen name="Notification" component={Notificationpage}/>
+        <Stack.Screen name="BYourQuestion" component={BYourSecurityQuestionScreen}/>
+        <Stack.Screen name="BChangePassword" component={BChangePasswordScreen}/>
+
+
+
+
+
+
+        
+
 
         
 

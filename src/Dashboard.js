@@ -18,9 +18,11 @@ const Dashboard = ({ route, navigation }) => {
           <Text style={styles.headerText}>Welcome {userName}👋!</Text>
           <Text style={styles.subHeaderText}>Welcome to KISHANI APP</Text>
         </View>
-        <TouchableOpacity style={styles.notificationIcon}>
-          <Icon name="notifications-outline" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        <View style={styles.notification}>
+      <TouchableOpacity style={styles.notifications} onPress={() => navigation.navigate('Notification')}>
+        <Icon name="notifications-outline" size={30} color="#000" />
+      </TouchableOpacity>
+    </View>
       </View>
 
       {/* Add Product Section */}
