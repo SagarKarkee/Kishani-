@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const YourSecurityQuestionScreen  = ({ navigation }) => {
+const BYourSecurityQuestionScreen  = ({ navigation }) => {
   const [Question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
 
@@ -29,7 +29,7 @@ const YourSecurityQuestionScreen  = ({ navigation }) => {
       {/* Navigate to another screen */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('ChangePassword')} // Use your actual screen name
+        onPress={() => navigation.navigate('BChangePassword')} // Use your actual screen name
       >
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
@@ -37,11 +37,11 @@ const YourSecurityQuestionScreen  = ({ navigation }) => {
   );
 };
 
-const BYourSecurity = () => {
+const BYourSecurityQuestion = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <BYourSecurity  />
+        <BYourSecurityQuestion  />
       </ScrollView>
     </SafeAreaView>
   );
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default YourSecurityQuestionScreen;
+export default BYourSecurityQuestionScreen;
