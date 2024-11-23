@@ -3693,11 +3693,6 @@
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   "version" "4.0.0"
 
-"escape-string-regexp@2.0.0":
-  "integrity" "sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w=="
-  "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz"
-  "version" "2.0.0"
-
 "esprima@^4.0.0", "esprima@~4.0.0":
   "integrity" "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A=="
   "resolved" "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz"
@@ -3824,6 +3819,11 @@
   "integrity" "sha512-/t3xdbS8KB0prj5KG5w7z+wZPFlPtkgs95BsmrP/E7Q0xHXTcDcQ6Cu2FkFuRM+PKTb17cJDnLkawyS5vDLxMA=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.12.1.tgz"
   "version" "1.12.1"
+
+"expo-web-browser@^14.0.1":
+  "integrity" "sha512-QM9F3ie+UyIOoBvqFmT6CZojb1vMc2H+7ZlMT5dEu1PL2jtYyOeK2hLfbt/EMt7CBm/w+P29H9W9Y9gdebOkuQ=="
+  "resolved" "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-14.0.1.tgz"
+  "version" "14.0.1"
 
 "expo@*", "expo@^51.0.32":
   "integrity" "sha512-Cs/9xopyzJrpXWbyVUZnr37rprdFJorRgfSp6cdBfvbjxZeKnw2MEu7wJwV/s626i5lZTPGjZPHUF9uQvt51cg=="
@@ -6592,12 +6592,12 @@
     "postcss-value-parser" "^4.2.0"
     "styleq" "^0.1.3"
 
-"react-native-webview@^13.8.6":
-  "integrity" "sha512-jtZ9OgB2AN6rhDwto6dNL3PtOtl/SI4VN93pZEPbMLvRjqHfxiUrilGllL5fKAXq5Ry5FJyfUi82A4Ii8olZ7A=="
-  "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-13.8.6.tgz"
-  "version" "13.8.6"
+"react-native-webview@^13.12.4":
+  "integrity" "sha512-8lWeYPVWeOj0ya9ZpDesOQPRgczuN3ogQHlhS21sNXndd4kvfPG+WjlRdrvxYgj//udpwmzcWzagwLnEp60Aqg=="
+  "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-13.12.4.tgz"
+  "version" "13.12.4"
   dependencies:
-    "escape-string-regexp" "2.0.0"
+    "escape-string-regexp" "^4.0.0"
     "invariant" "2.2.4"
 
 "react-native@*", "react-native@^0.0.0-0 || >=0.65 <1.0", "react-native@>=0.65.0", "react-native@0.74.5":
