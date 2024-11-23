@@ -127,8 +127,10 @@ app.post('/login', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      // Check if the user exists in the database
-      const user = await FarmersLogin.findOne({ email });
+      const sanitizedEmail = email.toLowerCase(); // Convert email to lowercase
+
+      // Check if the user exists in the database using the sanitized email
+      const user = await FarmersLogin.findOne({ email: sanitizedEmail });
   
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
@@ -167,6 +169,12 @@ app.post('/addProduct', async (req, res) => {
   }
 
   try {
+    // Check if the product already exists for this farmer
+    const existingProduct = await AddProduct.findOne({ farmerEmail, productName });
+    if (existingProduct) {
+      return res.status(400).json({ message: 'This product is already added by the farmer.' });
+    }
+
     // Create a new product document
     const newProduct = new AddProduct({
       farmerEmail,
@@ -188,15 +196,17 @@ app.post('/addProduct', async (req, res) => {
 
 
 
+
 // Get Products Route
 app.get('/products', async (req, res) => {
-  const { farmerEmail } = req.query;
+  const { farmerEmail } = req.query;  // Get the farmer's email from query params
   try {
-      const products = await AddProduct.find({ farmerEmail }); 
-      res.status(200).json(products);
+    // Ensure farmerEmail is passed and find the products for the farmer
+    const products = await AddProduct.find({ farmerEmail }); 
+    res.status(200).json(products);  // Return the products in the response
   } catch (error) {
-      console.error('Error fetching products:', error);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -209,7 +219,6 @@ app.put("/update-product/:id", async (req, res) => {
 
   try {
     const updatedProduct = await AddProduct.findByIdAndUpdate(
-
       id,
       { productName, quantity, price, date },
       { new: true } // Returns the updated document

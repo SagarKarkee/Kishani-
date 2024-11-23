@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import local images
 import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
-const Dashboard = ({ route, navigation }) => {
-  
-  const userName = route.params?.user || 'User';
-  
+const Dashboard = ({route, navigation }) => {
+  const [userName, setUserName] = useState('User');
+
+  useEffect(() => {
+      // Load the user's name from AsyncStorage
+      const loadUserName = async () => {
+          const storedName = await AsyncStorage.getItem('userFullName');
+          if (storedName) setUserName(storedName);
+      };
+
+      loadUserName();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
