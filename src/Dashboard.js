@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Linking } from 'react-native';
 
 // Import local images
 import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
 const Dashboard = ({ route, navigation }) => {
-  
-  const userName = route.params?.user || 'User';
-  
+  const [userName, setUserName] = useState('User');
+
+  useEffect(() => {
+    // Load the user's name from AsyncStorage
+    const loadUserName = async () => {
+      const storedName = await AsyncStorage.getItem('userFullName');
+      if (storedName) setUserName(storedName);
+    };
+
+    loadUserName();
+  }, []);
+
+  // Function to open the index.html in a browser
+  const openRecommendationPage = () => {
+    // Assuming the index.html is hosted locally or on a server (e.g., 'http://localhost/index.html')
+    const url = 'http://192.168.0.102:5000/'; // Replace with the correct URL
+    Linking.openURL(url).catch(err => console.error("Couldn't load the page", err));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -19,21 +36,35 @@ const Dashboard = ({ route, navigation }) => {
           <Text style={styles.subHeaderText}>Welcome to KISHANI APP</Text>
         </View>
         <View style={styles.notification}>
-      <TouchableOpacity style={styles.notifications} onPress={() => navigation.navigate('Notification')}>
-        <Icon name="notifications-outline" size={30} color="#000" />
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity style={styles.notifications} onPress={() => navigation.navigate('Notification')}>
+            <Icon name="notifications-outline" size={30} color="#000" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Add Product Section */}
       <View style={styles.addProductSection}>
         <Text style={styles.businessTitle}>Start your business right now</Text>
         <Text style={styles.addProductText}>Add a New Product</Text>
-        <TouchableOpacity 
-          style={styles.addButton} 
+        <TouchableOpacity
+          style={styles.addButton}
           onPress={() => navigation.navigate('AddProduct')} // Replace 'AddProduct' with the actual screen name
         >
           <Text style={styles.addButtonText}>+ Add Product</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Crops Recommendation Section */}
+      <View style={styles.recommendationSection}>
+        <Text style={styles.recommendationTitle}>Crops Recommendation</Text>
+        <Text style={styles.recommendationText}>
+          Get insights into the best crops to grow based on your region and soil type.
+        </Text>
+        <TouchableOpacity
+          style={styles.recommendationButton}
+          onPress={openRecommendationPage} // Use the function to open the web page
+        >
+          <Text style={styles.recommendationButtonText}>Go to Recommendations</Text>
         </TouchableOpacity>
       </View>
 
@@ -41,21 +72,21 @@ const Dashboard = ({ route, navigation }) => {
       <View style={styles.educationSection}>
         <Text style={styles.educationTitle}>Education</Text>
         <View style={styles.educationBoxes}>
-          <TouchableOpacity 
-            style={styles.educationBox} 
+          <TouchableOpacity
+            style={styles.educationBox}
             onPress={() => navigation.navigate('Cultivation')} // Replace 'Cultivation' with the actual screen name
           >
-            <Image 
+            <Image
               source={cultivationImage} // Use the imported image
               style={styles.educationImage}
             />
             <Text style={styles.educationText}>Cultivation Process</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.educationBox} 
+          <TouchableOpacity
+            style={styles.educationBox}
             onPress={() => navigation.navigate('CropDiseases')} // Replace 'CropDiseases' with the actual screen name
           >
-            <Image 
+            <Image
               source={cropDiseasesImage} // Use the imported image
               style={styles.educationImage}
             />
@@ -67,36 +98,36 @@ const Dashboard = ({ route, navigation }) => {
       <View style={styles.content}>
         {/* Your content goes here */}
       </View>
-      
+
       <View style={styles.navButtons}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
         >
           <Icon name="home-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold',}}>Home</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold', }}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Notes')} // Change 'Notes' to the correct screen name
         >
           <Icon name="document-text-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Notes</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Notes</Text>
 
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
         >
           <Icon name="chatbox-ellipses-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Message</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Message</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Profile')} // Change 'Profile' to the correct screen name
         >
           <Icon name="person-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Profile</Text>
+          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Profile</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -219,6 +250,38 @@ const styles = StyleSheet.create({
     color: '#6200EE',
     fontSize: 14,
   },
+
+  //for recomendation
+  recommendationSection: {
+    padding: 20,
+    backgroundColor: '#FFECB3',
+    borderRadius: 10,
+    marginHorizontal: 20,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  recommendationTitle: {
+    fontSize: 18,
+    color: '#FFA000',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  recommendationText: {
+    fontSize: 16,
+    color: '#000000',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  recommendationButton: {
+    backgroundColor: '#FFA000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  recommendationButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
 });
 
 export default Dashboard;

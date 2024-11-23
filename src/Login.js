@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button, Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
+
 
 
 
@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
     }
   
     try {
-      const response = await fetch('http://192.168.1.68:5000/login', {
+      const response = await fetch('http://192.168.1.91:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,6 +38,10 @@ const LoginScreen = ({ navigation }) => {
           await AsyncStorage.setItem('userEmail', email);
           await AsyncStorage.setItem('userPassword', password);
         }
+            // Store user data in AsyncStorage for later use
+        await AsyncStorage.setItem('userFullName', data.user.fullName);
+        await AsyncStorage.setItem('userEmail', data.user.email);  
+             
         navigation.navigate('Dashboard', { user: data.user.fullName }); // Pass the username here
       } else {
         Alert.alert('Error', data.message || 'Invalid credentials');

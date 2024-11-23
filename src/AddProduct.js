@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView,
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState('');
@@ -12,12 +14,37 @@ const AddProduct = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [products, setProducts] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [productId, setProductId] = useState(null);  // To store the product ID when editing
 
   useEffect(() => {
     if (route.params?.selectedVegetable) {
       setProductName(route.params.selectedVegetable);
     }
+    fetchProducts();  // Load products on page load
   }, [route.params?.selectedVegetable]);
+
+  // Function to fetch products from the database
+  const fetchProducts = async () => {
+    try {
+      // Get the logged-in farmer's email from AsyncStorage
+      const farmerEmail = await AsyncStorage.getItem('userEmail');
+      if (!farmerEmail) {
+        Alert.alert('Error', 'No logged-in user found');
+        return;
+      }
+  
+      const response = await axios.get('http://192.168.1.91:5000/products', {
+        params: { farmerEmail } // Send the farmerEmail in the query
+      });
+  
+      console.log(response.data); // Check if the correct data is fetched
+      setProducts(response.data); // This should update your products state with the fetched data
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+  
+  
 
   const handleAddButtonPress = () => {
     navigation.navigate('SelectVegetable');
@@ -36,35 +63,62 @@ const AddProduct = ({ navigation, route }) => {
     hideDatePicker();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!productName || !quantity || !price || !date) {
       Alert.alert('Validation Error', 'Please fill all the fields.');
       return;
     }
-
-    const newProduct = {
-      productName,
-      quantity,
-      price,
-      date,
-      imageUri: 'https://example.com/product-image.jpg', // Replace with actual image URI
-    };
-
-    if (editingIndex !== null) {
-      const updatedProducts = [...products];
-      updatedProducts[editingIndex] = newProduct;
-      setProducts(updatedProducts);
-      setEditingIndex(null);
-    } else {
-      setProducts([...products, newProduct]);
+  
+    if (isNaN(quantity) || isNaN(price)) {
+      Alert.alert('Validation Error', 'Quantity and Price must be numbers.');
+      return;
     }
-
-    // Clear input fields after adding the product
-    setProductName('');
-    setQuantity('');
-    setPrice('');
-    setDate('');
+  
+    try {
+      const farmerEmail = await AsyncStorage.getItem('userEmail');
+      if (!farmerEmail) {
+        Alert.alert('Error', 'Failed to identify the logged-in user. Please log in again.');
+        navigation.navigate('Login');
+        return;
+      }
+  
+      const productData = {
+        farmerEmail,
+        productName,
+        quantity: parseFloat(quantity),
+        price: parseFloat(price),
+        date,
+      };
+  
+      if (editingIndex !== null) {
+        // Update existing product
+        const response = await axios.put(`http://192.168.1.91:5000/update-product/${productId}`, productData);
+        if (response.status === 200) {
+          Alert.alert('Success', 'Product updated successfully!');
+          fetchProducts();  // Refresh product list
+          setEditingIndex(null);  // Reset editing state
+        }
+      } else {
+        // Add new product
+        const response = await axios.post('http://192.168.1.91:5000/addProduct', productData);
+        if (response.status === 201) {
+          Alert.alert('Success', 'Product added successfully!');
+          fetchProducts();  // Refresh product list
+        }
+      }
+  
+      // Clear form fields after submit
+      setProductName('');
+      setQuantity('');
+      setPrice('');
+      setDate('');
+  
+    } catch (error) {
+      console.error('Error submitting product:', error);
+      Alert.alert('Error', 'Failed to submit product');
+    }
   };
+  
 
   const handleEdit = (index) => {
     const product = products[index];
@@ -72,10 +126,13 @@ const AddProduct = ({ navigation, route }) => {
     setQuantity(product.quantity);
     setPrice(product.price);
     setDate(product.date);
+    setProductId(product._id);  // Save the product's _id for the update request
     setEditingIndex(index);
   };
+  
 
-  const handleDelete = (index) => {
+  const handleDelete = async (index) => {
+    const product = products[index];
     Alert.alert(
       'Confirm Delete',
       'Are you sure you want to delete this product?',
@@ -86,15 +143,24 @@ const AddProduct = ({ navigation, route }) => {
         },
         {
           text: 'Delete',
-          onPress: () => {
-            const updatedProducts = products.filter((_, i) => i !== index);
-            setProducts(updatedProducts);
+          onPress: async () => {
+            try {
+              const response = await axios.delete(`http://192.168.1.91:5000/delete-product/${product._id}`);
+              Alert.alert('Success', response.data.message);
+              const updatedProducts = products.filter((_, i) => i !== index);
+              setProducts(updatedProducts);  // Remove deleted product from UI
+            } catch (error) {
+              console.error('Error deleting product:', error);
+              Alert.alert('Error', 'Failed to delete product');
+            }
           },
         },
       ],
       { cancelable: true }
     );
   };
+  
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -262,3 +328,4 @@ const styles = StyleSheet.create({
 });
 
 export default AddProduct;
+
