@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Profile = ({ navigation, route }) => {
-  const { profileImage } = route.params || {};
+  const { profileImage, userName = 'UserName', email = 'user@example.com' } = route.params || {};
 
   const handleLogout = () => {
     // Perform any logout logic here, such as clearing tokens or user data
@@ -14,13 +14,18 @@ const Profile = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {/* Profile Image Section */}
+      {/* Profile Image and Details Section */}
       <View style={styles.imageSection}>
         {profileImage ? (
           <Image source={{ uri: profileImage }} style={styles.profileImage} />
         ) : (
           <Icon name="person-circle-outline" size={150} color="#43B76A" />
         )}
+        {/* User Info Row */}
+        <View style={styles.userInfoRow}>
+          <Text style={styles.userName}>{userName}</Text>
+          <Text style={styles.userEmail}>{email}</Text>
+        </View>
       </View>
 
       {/* Profile Information Section */}
@@ -103,6 +108,27 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+
+  userInfoRow: {
+    flexDirection: 'colume',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '90%',
+    marginTop: 10,
+  },
+  userName: {
+    fontSize: 16,
+    color: '#555555',
+   
+    marginTop: -10,
+    alignItems: 'center',
+  },
+  userEmail: {
+    fontSize: 16,
+    color: '#555555',
+    // textAlign: 'center',
+    alignItems: 'center',
   },
   sectionButton: {
     flexDirection: 'row',
