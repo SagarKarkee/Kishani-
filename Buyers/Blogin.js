@@ -16,7 +16,7 @@ const BLoginScreen = ({ navigation }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.91:5000/blogin', {
+      const response = await fetch('http://192.168.1.68:5000/blogin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -33,7 +33,7 @@ const AddProduct = ({ navigation, route }) => {
         return;
       }
   
-      const response = await axios.get('http://192.168.1.91:5000/products', {
+      const response = await axios.get('http://192.168.1.68:5000/products', {
         params: { farmerEmail } // Send the farmerEmail in the query
       });
   
