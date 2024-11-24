@@ -16,8 +16,6 @@ const CropRecommendation = () => {
   const [rainfall, setRainfall] = useState('');
   const [result, setResult] = useState('');
 
-  
-
   // Handle form submission
   const handleSubmit = async () => {
     const data = {
