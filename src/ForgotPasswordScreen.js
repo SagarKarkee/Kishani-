@@ -27,7 +27,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
   
     try {
       // Send request to the backend to get the security question
-      const response = await axios.post(`${API_URL}forgot-password`, { email });
+      const response = await axios.post(`${API_URL}/forgot-password`, { email });
   
       // Check if the email exists in the database
       if (response.status === 200) {

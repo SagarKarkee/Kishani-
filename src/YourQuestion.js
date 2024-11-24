@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 
 const API_URL = process.env.API_URL;
+console.log("Api url for YourQuestion: ", API_URL);
 
 const YourSecurityQuestionScreen = ({ navigation, route }) => {
   const { email } = route.params; 
@@ -14,7 +15,7 @@ const YourSecurityQuestionScreen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchSecurityQuestion = async () => {
       try {
-        const response = await axios.post(`${API_URL}forgot-password`, { email });
+        const response = await axios.post(`${API_URL}/forgot-password`, { email });
         
         if (response.status === 200) {
           setQuestion(response.data.question); // Set the question from the response
@@ -37,7 +38,7 @@ const YourSecurityQuestionScreen = ({ navigation, route }) => {
     }
   
     try {
-      const response = await axios.post(`${API_URL}validate-answer`, {
+      const response = await axios.post(`${API_URL}/validate-answer`, {
         email,
         answer,
       });

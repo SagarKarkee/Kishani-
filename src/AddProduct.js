@@ -6,6 +6,9 @@ import moment from 'moment';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const API_URL = process.env.API_URL;
+console.log("Api url for addproduct: ", API_URL);
+
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -33,12 +36,10 @@ const AddProduct = ({ navigation, route }) => {
         return;
       }
   
-      const response = await axios.get('http://192.168.1.68:5000/products', {
-        params: { farmerEmail } // Send the farmerEmail in the query
-      });
+      const response = await axios.get(`${API_URL}/products`, { params: { farmerEmail } });
   
-      console.log(response.data); // Check if the correct data is fetched
-      setProducts(response.data); // This should update your products state with the fetched data
+      console.log(response.data); 
+      setProducts(response.data); 
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -92,7 +93,7 @@ const AddProduct = ({ navigation, route }) => {
   
       if (editingIndex !== null) {
         // Update existing product
-        const response = await axios.put(`http://192.168.1.84:5000/update-product/${productId}`, productData);
+        const response = await axios.put(`${API_URL}/update-product/${productId}`, productData);
         if (response.status === 200) {
           Alert.alert('Success', 'Product updated successfully!');
           fetchProducts();  // Refresh product list
@@ -100,7 +101,7 @@ const AddProduct = ({ navigation, route }) => {
         }
       } else {
         // Add new product
-        const response = await axios.post('http://192.168.1.84:5000/addProduct', productData);
+        const response = await axios.post(`${API_URL}/addProduct`, productData);
         if (response.status === 201) {
           Alert.alert('Success', 'Product added successfully!');
           fetchProducts();  // Refresh product list
@@ -126,7 +127,7 @@ const AddProduct = ({ navigation, route }) => {
     setQuantity(product.quantity);
     setPrice(product.price);
     setDate(product.date);
-    setProductId(product._id);  // Save the product's _id for the update request
+    setProductId(product._id);  
     setEditingIndex(index);
   };
   
@@ -145,7 +146,7 @@ const AddProduct = ({ navigation, route }) => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await axios.delete(`http://192.168.1.91:5000/delete-product/${product._id}`);
+              const response = await axios.delete(`${API_URL}/delete-product/${product._id}`);
               Alert.alert('Success', response.data.message);
               const updatedProducts = products.filter((_, i) => i !== index);
               setProducts(updatedProducts);  // Remove deleted product from UI

@@ -246,13 +246,13 @@ app.post('/addProduct', async (req, res) => {
   }
 
   try {
-    // Check if the product already exists for this farmer
+    console.log('Adding product for farmer:', farmerEmail); // Log the farmer email
+
     const existingProduct = await AddProduct.findOne({ farmerEmail, productName });
     if (existingProduct) {
       return res.status(400).json({ message: 'This product is already added by the farmer.' });
     }
 
-    // Create a new product document
     const newProduct = new AddProduct({
       farmerEmail,
       productName,
@@ -261,15 +261,15 @@ app.post('/addProduct', async (req, res) => {
       date,
     });
 
-    // Save the product to the database
     await newProduct.save();
 
     res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
-    console.error('Error adding product:', error);
+    console.error('Error adding product:', error); // Log the error on the server
     res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 });
+
 
 
 

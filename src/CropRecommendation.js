@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
+const API_URL = process.env.API_URL;
+console.log("Api url for addproduct: ", API_URL);
+
 const CropRecommendation = () => {
   // State for form data
   const [nitrogen, setNitrogen] = useState('');
@@ -12,9 +15,6 @@ const CropRecommendation = () => {
   const [ph, setPh] = useState('');
   const [rainfall, setRainfall] = useState('');
   const [result, setResult] = useState('');
-
-  // API URL from your Flask server
-  const API_URL = "http://192.168.1.68:5000/"; // Change to your IP address or URL
 
   // Handle form submission
   const handleSubmit = async () => {

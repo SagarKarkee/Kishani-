@@ -40,7 +40,7 @@ const ChangePasswordScreen = ({ route, navigation }) => {
     }
   
     try {
-      const response = await axios.post(`${API_URL}update-password`, {
+      const response = await axios.post(`${API_URL}/update-password`, {
         email, // Passed from YourQuestion screen
         newPassword,
       });

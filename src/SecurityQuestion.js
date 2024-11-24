@@ -30,7 +30,7 @@ const SecurityQuestionScreen = ({ route, navigation }) => {
 
     try {
         setLoading(true);
-        const response = await axios.post(`${API_URL}SecurityQuestion`, 
+        const response = await axios.post(`${API_URL}/SecurityQuestion`, 
             {
                 email, // Include the email
                 securityQuestion,
