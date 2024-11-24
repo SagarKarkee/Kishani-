@@ -10,16 +10,18 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  
+
+
   const handleLogin = async () => {
     if (email === '' || password === '') {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-  
+
     try {
-      
+
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: {
@@ -30,19 +32,19 @@ const LoginScreen = ({ navigation }) => {
           password,
         }),
       });
-  
+
       const data = await response.json(); // Only call json once
-  
+
       if (response.ok) {
         Alert.alert('Success', 'Logged in successfully');
         if (rememberMe) {
           await AsyncStorage.setItem('userEmail', email);
           await AsyncStorage.setItem('userPassword', password);
         }
-            // Store user data in AsyncStorage for later use
+        // Store user data in AsyncStorage for later use
         await AsyncStorage.setItem('userFullName', data.user.fullName);
-        await AsyncStorage.setItem('userEmail', data.user.email);  
-             
+        await AsyncStorage.setItem('userEmail', data.user.email);
+
         navigation.navigate('Dashboard', { user: data.user.fullName }); // Pass the username here
       } else {
         Alert.alert('Error', data.message || 'Invalid credentials');
@@ -52,7 +54,7 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Failed to connect to the server');
     }
   };
-  
+
 
   useEffect(() => {
     const loadCredentials = async () => {
@@ -83,10 +85,20 @@ const LoginScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        secureTextEntry
+        secureTextEntry={!passwordVisible}
         value={password}
         onChangeText={setPassword}
       />
+
+      <TouchableOpacity
+        onPress={() => setPasswordVisible(!passwordVisible)}
+        style={styles.eyeButton}
+      >
+        <Text style={styles.eyeText}>{passwordVisible ? '👁' : '🙈'}</Text>
+      </TouchableOpacity>
+
+
+
       <View style={styles.rememberForgotContainer}>
         <View style={styles.rememberMeContainer}>
           <Checkbox
@@ -133,6 +145,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#DFDFDF',
     color: 'black',
   },
+
+  eyeButton: {
+    position: 'absolute',
+    right: 30,
+    top: 373,
+  },
+  eyeText: {
+    fontSize: 18,
+  },
+
+
   rememberForgotContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

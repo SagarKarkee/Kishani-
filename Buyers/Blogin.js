@@ -11,6 +11,7 @@ const BLoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleLogin = async () => {
     if (email === '' || password === '') {
@@ -75,10 +76,18 @@ const BLoginScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        secureTextEntry
+        secureTextEntry={!passwordVisible}
         value={password}
         onChangeText={setPassword}
       />
+       <TouchableOpacity
+          onPress={() => setPasswordVisible(!passwordVisible)}
+          style={styles.eyeButton}
+        >
+          <Text style={styles.eyeText}>{passwordVisible ? '👁' : '🙈'}</Text>
+        </TouchableOpacity>
+
+
       <View style={styles.rememberForgotContainer}>
         <View style={styles.rememberMeContainer}>
           <Checkbox
@@ -124,6 +133,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#DFDFDF',
     color: 'black'
   },
+
+  eyeButton: {
+    position: 'absolute',
+    right: 30,
+    top: 373,
+  },
+  eyeText: {
+    fontSize: 18,
+  },
+
   rememberForgotContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

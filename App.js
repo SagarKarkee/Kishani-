@@ -43,7 +43,9 @@ import BBcropdiseases from './Buyers/BBcropDiseases.js';
 import PrivacyPolicyScreen from './Buyers/BprivacyPolicy.js';
 import BBbcropdiseases from './src/BBbcropDiseases.js';
 import PrivacyPolicyScreens from './src/PrivacyPolicy.js';
+import KhaltiScreen from './Buyers/khalti.js';
 
+import TransferScreen from './Buyers/payment.js';
 
 
 const Stack = createStackNavigator();
@@ -125,6 +127,10 @@ export default function App() {
         <Stack.Screen name="BprivacyPolicy" component={PrivacyPolicyScreen}/>
         <Stack.Screen name="BBbcropDiseases" component={BBbcropdiseases}/>
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreens}/>
+        <Stack.Screen name="khalti" component={KhaltiScreen}/>
+        <Stack.Screen name="payment" component={TransferScreen}/>
+
+
 
 
 
