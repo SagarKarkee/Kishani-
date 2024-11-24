@@ -39,6 +39,8 @@ import Notificationpage from './src/Notification.js';
 import BYourSecurityQuestionScreen from './Buyers/BYourQuestion.js';
 import BChangePasswordScreen from './Buyers/BChangePassword.js';
 import BsettingScreen from './Buyers/Bsetting.js';
+import BBcropdiseases from './Buyers/BBcropDiseases.js';
+import PrivacyPolicyScreen from './Buyers/BprivacyPolicy.js';
 
 
 const Stack = createStackNavigator();
@@ -116,6 +118,10 @@ export default function App() {
         <Stack.Screen name="BYourQuestion" component={BYourSecurityQuestionScreen}/>
         <Stack.Screen name="BChangePassword" component={BChangePasswordScreen}/>
         <Stack.Screen name="Bsetting" component={BsettingScreen}/>
+        <Stack.Screen name="BBcropDiseases" component={BBcropdiseases}/>
+        <Stack.Screen name="BprivacyPolicy" component={PrivacyPolicyScreen}/>
+
+
 
 
 
