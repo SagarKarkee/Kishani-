@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Install if not already
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import axios from 'axios';
 
-const ChangePasswordScreen = ({ navigation }) => {
+const API_URL = process.env.API_URL;
+
+const ChangePasswordScreen = ({ route, navigation }) => {
+  const { email } = route.params || {}; // Ensure email is passed correctly from previous screen
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -16,12 +20,12 @@ const ChangePasswordScreen = ({ navigation }) => {
     return hasUppercase && hasNumber && isValidLength;
   };
 
-  const handleChangePassword = () => {
+  const handleChangePassword = async () => {
     if (!newPassword || !confirmPassword) {
       Alert.alert('Error', 'Please fill all fields.');
       return;
     }
-
+  
     if (!validatePassword(newPassword)) {
       Alert.alert(
         'Error',
@@ -29,15 +33,30 @@ const ChangePasswordScreen = ({ navigation }) => {
       );
       return;
     }
-
+  
     if (newPassword !== confirmPassword) {
       Alert.alert('Error', 'New password and confirm password do not match.');
       return;
     }
-
-    Alert.alert('Success', 'Password has been changed successfully!');
-    navigation.navigate('Login'); // Navigate to another screen
+  
+    try {
+      const response = await axios.post(`${API_URL}update-password`, {
+        email, // Passed from YourQuestion screen
+        newPassword,
+      });
+  
+      if (response.status === 200) {
+        Alert.alert('Success', 'Password has been changed successfully!');
+        navigation.navigate('Login'); // Navigate to login screen
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error.response?.data || error);
+      Alert.alert('Error', 'Error resetting password');
+    }
   };
+  
+  
+  
 
   return (
     <View style={styles.container}>

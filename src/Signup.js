@@ -4,7 +4,8 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 
-const API_URL="http://192.168.1.68:5000";
+
+const API_URL = process.env.API_URL;
 
 
 const Signup = ({ navigation }) => {
@@ -52,7 +53,7 @@ const Signup = ({ navigation }) => {
     try {
       setLoading(true);
       console.log('Attempting to sign up with:', { fullName, email });
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await axios.post(`${API_URL}signup`, {
         fullName,
         email,
         password,

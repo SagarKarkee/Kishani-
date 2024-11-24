@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker'; // Install this package for dropdown
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.68:5000';
+const API_URL = process.env.API_URL;
 
 
 const SecurityQuestionScreen = ({ route, navigation }) => {
@@ -30,8 +30,7 @@ const SecurityQuestionScreen = ({ route, navigation }) => {
 
     try {
         setLoading(true);
-        const response = await axios.post(
-            `${API_URL}/SecurityQuestion`, // Ensure backend API endpoint is correct
+        const response = await axios.post(`${API_URL}SecurityQuestion`, 
             {
                 email, // Include the email
                 securityQuestion,

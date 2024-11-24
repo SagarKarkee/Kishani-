@@ -4,8 +4,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const connectDB = require('./connection');
-const farmersLoginSchema = require('./FarmersLogin'); // Import the schema directly
-const buyersLoginSchema = require('./BuyersLogin'); // Import the schema directly
+const farmersLoginSchema = require('./FarmersLogin'); 
+const buyersLoginSchema = require('./BuyersLogin'); 
 const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
 const productSchema = require('./Product');
 
@@ -24,15 +24,14 @@ let SecurityQuestion;
 let AddProduct;
 let BuyersLogin;
 mongoose.connection.on('connected', () => {
+
+    //Farmers Database Section
     const farmersDb = mongoose.connection.useDb('Farmers');
     FarmersLogin = farmersDb.model('FarmersLogin', farmersLoginSchema, 'LoginData');
-    console.log('FarmersLogin model initialized');
-
     SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
-    console.log('SecurityAnswers model initialized');
-
     AddProduct = farmersDb.model('Product', productSchema, 'AddedProduct');
-    console.log('AddedProduct model initialized');
+
+    // Buyers Database Section
 
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
@@ -41,7 +40,7 @@ mongoose.connection.on('connected', () => {
 
 
 // Farmer's Signup route 
-app.post('/signup', async (req, res) => {
+app.post('/signup', async (req, res) => { 
   const { fullName, email, password } = req.body;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,7 +55,7 @@ app.post('/signup', async (req, res) => {
 
   if (!fullNameRegex.test(fullName)) {
     return res.status(400).json({
-      message: 'Full Name must include first and last name, each at least 2 characters long (e.g., "Sa Bud")',
+      message: 'Full Name must include first and last name, each at least 2 characters long',
     });
   }
 
@@ -93,7 +92,8 @@ app.post('/signup', async (req, res) => {
 
 
 
-//Secutity Questions
+// Farmers Secutity Questions
+
 app.post('/SecurityQuestion', async (req, res) => {
   const { email, securityQuestion, securityAnswer } = req.body;
 
@@ -103,6 +103,7 @@ app.post('/SecurityQuestion', async (req, res) => {
   }
 
   try {
+    console.log('SecurityQuestion is using the database:', SecurityQuestion.db.name); // Debugging log
     const hashedAnswer = await bcrypt.hash(securityAnswer, 10);
 
     const newEntry = await SecurityQuestion.findOneAndUpdate(
@@ -111,7 +112,6 @@ app.post('/SecurityQuestion', async (req, res) => {
       { upsert: true, new: true } // Create if not found
     );
     
-
     console.log('Security question saved:', newEntry);
     res.status(201).json({ message: 'Security question saved successfully' });
   } catch (error) {
@@ -122,14 +122,13 @@ app.post('/SecurityQuestion', async (req, res) => {
 
 
 
+
 // Farmer's Login Route
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      const sanitizedEmail = email.toLowerCase(); // Convert email to lowercase
-
-      // Check if the user exists in the database using the sanitized email
+      const sanitizedEmail = email.toLowerCase();
       const user = await FarmersLogin.findOne({ email: sanitizedEmail });
   
       if (!user) {
@@ -157,6 +156,84 @@ app.post('/login', async (req, res) => {
     }
 
 });
+
+
+// Forgot Password Section for Farmers
+
+// Forgot Password Request (Validate email)
+app.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const securityRecord = await SecurityQuestion.findOne({ email });
+
+    if (!securityRecord) {
+      return res.status(400).json({ message: 'Email not found in security questions' });
+    }
+
+    // If found, send the security question
+    res.status(200).json({
+      message: 'Security question found',
+      question: securityRecord.question,
+    });
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    res.status(500).json({ message: 'Error processing your request' });
+  }
+});
+
+// Validate Answer
+app.post('/validate-answer', async (req, res) => {
+  const { email, answer } = req.body;
+
+  if (!email || !answer) {
+    console.error('Missing required fields:', { email, answer });
+    return res.status(400).json({ message: 'Email and answer are required' });
+  }
+
+  try {
+    const securityRecord = await SecurityQuestion.findOne({ email });
+
+    if (!securityRecord) {
+      return res.status(400).json({ message: 'Email not found in security questions' });
+    }
+
+    // Compare the provided answer with the hashed answer in the database
+    const isMatch = await bcrypt.compare(answer, securityRecord.answer);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Incorrect answer to the security question' });
+    }
+
+    res.status(200).json({ message: 'Answer verified successfully' });
+  } catch (error) {
+    console.error('Error in /validate-answer:', error);
+    res.status(500).json({ message: 'Error processing your request' });
+  }
+});
+
+
+// 2. Verify Answer and Reset Password
+// Update Password
+app.post('/update-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+    console.error('Missing required fields:', { email, newPassword });
+    return res.status(400).json({ message: 'Email and new password are required' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await FarmersLogin.updateOne({ email }, { password: hashedPassword });
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error in /update-password:', error);
+    res.status(500).json({ message: 'Error processing your request' });
+  }
+});
+
 
 
 // Farmers Add Product Route
