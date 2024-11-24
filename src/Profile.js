@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -25,10 +25,26 @@ const Profile = ({ navigation }) => {
   }, []);
 
   const handleLogout = async () => {
-    await AsyncStorage.clear(); 
-    navigation.replace('Accounttype'); 
+    Alert.alert(
+      'Confirm Logout',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel', 
+        },
+        {
+          text: 'Logout',
+          style: 'destructive', 
+          onPress: async () => {
+            await AsyncStorage.clear(); 
+            navigation.replace('GetStarted'); // Redirect to the GetStarted screen
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
-
 
   return (
     <View style={styles.container}>
