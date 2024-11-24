@@ -3,9 +3,9 @@ import numpy as np
 import pickle
 
 # Load pre-trained models and scalers
-model = pickle.load(open('Crop_Recommendation/model.pkl', 'rb'))
-sc = pickle.load(open('Crop_Recommendation/standscaler.pkl', 'rb'))
-mx = pickle.load(open('Crop_Recommendation/minmaxscaler.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
+sc = pickle.load(open('standscaler.pkl', 'rb'))
+mx = pickle.load(open('minmaxscaler.pkl', 'rb'))
 
 app = Flask(__name__)
 

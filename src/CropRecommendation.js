@@ -14,7 +14,7 @@ const CropRecommendation = () => {
   const [result, setResult] = useState('');
 
   // API URL from your Flask server
-  const API_URL = "http://192.168.1.68:5000/"; // Change to your IP address or URL
+  const API_URL = "http://192.168.0.102:5000/"; // Change to your IP address or URL
 
   // Handle form submission
   const handleSubmit = async () => {
