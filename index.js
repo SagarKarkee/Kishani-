@@ -8,6 +8,7 @@ const farmersLoginSchema = require('./FarmersLogin');
 const buyersLoginSchema = require('./BuyersLogin'); 
 const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
 const productSchema = require('./Product');
+const personalDetailSchema = require('./PersonalDetailsSchema');
 
 
 dotenv.config();
@@ -23,6 +24,7 @@ let FarmersLogin;
 let SecurityQuestion;
 let AddProduct;
 let BuyersLogin;
+let PersonalDetails;
 mongoose.connection.on('connected', () => {
 
     //Farmers Database Section
@@ -30,6 +32,7 @@ mongoose.connection.on('connected', () => {
     FarmersLogin = farmersDb.model('FarmersLogin', farmersLoginSchema, 'LoginData');
     SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
     AddProduct = farmersDb.model('Product', productSchema, 'AddedProduct');
+    PersonalDetails = farmersDb.model('PersonalDetailsSchema', personalDetailSchema, 'PersonalDetails');
 
     // Buyers Database Section
 
@@ -329,6 +332,60 @@ app.delete("/delete-product/:id", async (req, res) => {
     res.status(500).json({ message: "Error deleting product", error: error.message });
   }
 });
+
+
+// Farmer's Profile and Personnal Details route
+
+// Save or update personal details
+app.post('/personal-details', async (req, res) => {
+  const { email, fullName, address, phoneNumber, citizenshipNumber, profileImage } = req.body;
+
+  if (!email || !fullName) {
+    return res.status(400).json({ message: 'Email and Full Name are required.' });
+  }
+
+  try {
+    const personalDetails = await PersonalDetails.findOneAndUpdate(
+      { email }, // Find by email
+      { fullName, address, phoneNumber, citizenshipNumber, profileImage }, // Update or create with these fields
+      { upsert: true, new: true } // Insert new if not found
+    );
+
+    res.status(200).json({
+      message: 'Personal details saved successfully.',
+      data: personalDetails,
+    });
+  } catch (error) {
+    console.error('Error saving personal details:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
+
+// Get personal details by email
+app.get('/personal-details/:email', async (req, res) => {
+  const { email } = req.params;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required.' });
+  }
+
+  try {
+    const personalDetails = await PersonalDetails.findOne({ email });
+
+    if (!personalDetails) {
+      return res.status(404).json({ message: 'Personal details not found.' });
+    }
+
+    res.status(200).json({ data: personalDetails });
+  } catch (error) {
+    console.error('Error fetching personal details:', error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+
+
+
 
 
 // Buyers Signup Route

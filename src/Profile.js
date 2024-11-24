@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const API_URL = process.env.API_URL;
 
 const Profile = ({ navigation }) => {
   const [userName, setUserName] = useState('');
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
 
     marginTop: -10,
     alignItems: 'center',
+    fontWeight: 'bold',
   },
   userEmail: {
     fontSize: 16,
