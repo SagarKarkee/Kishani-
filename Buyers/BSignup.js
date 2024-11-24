@@ -3,10 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-// import API_URL from '../config';
 
-const API_URL="http://192.168.1.68:5000";
-// const API_URL = 'http://192.168.1.81:5000';
+const API_URL = process.env.API_URL;
+console.log("Api url for BSignup: ", API_URL);
 
 const BSignup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');

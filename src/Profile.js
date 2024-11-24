@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Profile = ({ navigation, route }) => {
-  const { profileImage, userName = 'UserName', email = 'user@example.com' } = route.params || {};
 
-  const handleLogout = () => {
-    // Perform any logout logic here, such as clearing tokens or user data
-    // For example, AsyncStorage.clear(), if you're using AsyncStorage to store the session
-    // Then navigate to the Login screen
-    navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
+const Profile = ({ navigation }) => {
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+
+  // Load user details from AsyncStorage
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const name = await AsyncStorage.getItem('userFullName');
+      const email = await AsyncStorage.getItem('userEmail');
+      const image = await AsyncStorage.getItem('profileImage'); // Optional
+
+      setUserName(name || 'User Name');
+      setUserEmail(email || 'user@example.com');
+      setProfileImage(image || null); // Image can be null
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    await AsyncStorage.clear(); 
+    navigation.replace('Accounttype'); 
   };
+
 
   return (
     <View style={styles.container}>
-      {/* Profile Image and Details Section */}
+      {/* Profile Image */}
       <View style={styles.imageSection}>
         {profileImage ? (
           <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -23,8 +41,8 @@ const Profile = ({ navigation, route }) => {
         )}
         {/* User Info Row */}
         <View style={styles.userInfoRow}>
-          <Text style={styles.userName}>{userName}</Text>
-          <Text style={styles.userEmail}>{email}</Text>
+          <Text style={styles.userName}>{userName || 'UserName'}</Text>
+          <Text style={styles.userEmail}>{userEmail || 'user@example.com'}</Text>
         </View>
       </View>
 
