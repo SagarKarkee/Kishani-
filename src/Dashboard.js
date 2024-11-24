@@ -8,7 +8,7 @@ import { Linking } from 'react-native';
 import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
-const Dashboard = ({ route, navigation }) => {
+const Dashboard = ({ navigation }) => {
   const [userName, setUserName] = useState('User');
   const [isChatBoxVisible, setIsChatBoxVisible] = useState(false);
   const [newMessage, setNewMessage] = useState('');
@@ -22,20 +22,24 @@ const Dashboard = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    // Load the user's name from AsyncStorage
-    const loadUserName = async () => {
+    const loadUserData = async () => {
       const storedName = await AsyncStorage.getItem('userFullName');
+      const storedEmail = await AsyncStorage.getItem('userEmail');
+  
       if (storedName) setUserName(storedName);
+      if (!storedName || !storedEmail) {
+        console.error('User data missing in AsyncStorage');
+      }
     };
-
-    loadUserName();
+  
+    loadUserData();
   }, []);
 
   // Function to open the index.html in a browser
   const openRecommendationPage = () => {
     
     const url = process.env.API_URL;
-    Linking.openURL(url).catch(err => console.error("Couldn't load the page", err));
+    Linking.openURL(`${url}/`).catch(err => console.error("Couldn't load the page", err));
   };
 
   return (
