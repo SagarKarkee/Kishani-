@@ -2032,6 +2032,7 @@ axios@^1.7.7:
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
 
+
 babel-plugin-inline-dotenv@^1.7.0:
   version "1.7.0"
   resolved "https://registry.npmjs.org/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.7.0.tgz"
@@ -2041,6 +2042,7 @@ babel-plugin-inline-dotenv@^1.7.0:
 
 babel-plugin-polyfill-corejs2@^0.4.10:
   version "0.4.11"
+
   dependencies:
     "@babel/compat-data" "^7.22.6"
     "@babel/helper-define-polyfill-provider" "^0.6.2"
@@ -2682,11 +2684,13 @@ dir-glob@^3.0.1:
 
 "dotenv-expand@>= 5.0.0", dotenv-expand@~11.0.6:
   version "11.0.6"
+
   dependencies:
     dotenv "^16.4.4"
 
 dotenv@^16.0.0, dotenv@^16.4.4, dotenv@^16.4.5, dotenv@~16.4.5:
   version "16.4.5"
+
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
