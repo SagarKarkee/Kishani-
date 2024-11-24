@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
 
 // Import images from assets folder
 import cultivationImg from './../assets/Cul-1.jpeg';
 import diseasesImg from './../assets/dis.jpeg';
 import diseaseImg from './../assets/cul-2.jpeg';
+
 
 
 // Header Component
@@ -17,15 +19,6 @@ const Header = () => (
 
 );
 
-//Info Card Component (Subtitle Removed)
-// const InfoCard = ({ title, imageUrl }) => (
-//   <View style={styles.infoCard}>
-//     <Image source={imageUrl} style={styles.infoImage} />
-//     <View style={styles.infoTextContainer}>
-//       <Text style={styles.infoTitle}>{title}</Text>
-//     </View>
-//   </View>
-// );
 
 // Info Section Component
 const InfoSection = ({ navigation }) => (
@@ -70,26 +63,71 @@ const InfoSection = ({ navigation }) => (
 );
 
 // Bottom Navigation Component
-const BottomNav = ({ navigation }) => (
-  <View style={styles.fixedNavButtons}>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Dashboard')}>
-      <Icon name="home-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Home</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Notes')}>
-      <Icon name="document-text-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Notes</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Message')}>
-      <Icon name="book-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Education</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
-      <Icon name="person-outline" size={25} color="#43B76A" />
-      <Text style={styles.navButtonText}>Profile</Text>
-    </TouchableOpacity>
-  </View>
-);
+const BottomNav = ({ navigation }) => {
+  const route = useRoute();
+
+  const isActive = (screen) => route.name === screen;
+
+  return (
+    <View style={styles.navButtons}>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => navigation.navigate('Dashboard')}
+      >
+        <Icon
+          name={isActive('Dashboard') ? 'home' : 'home-outline'}
+          size={25}
+          color={isActive('Dashboard') ? '#43B76A' : '#000'}
+        />
+        <Text style={[styles.navButtonText, isActive('Dashboard') && styles.activeNavText]}>
+          Home
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => navigation.navigate('Notes')}
+      >
+        <Icon
+          name={isActive('Notes') ? 'document-text' : 'document-text-outline'}
+          size={25}
+          color={isActive('Notes') ? '#43B76A' : '#000'}
+        />
+        <Text style={[styles.navButtonText, isActive('Notes') && styles.activeNavText]}>
+          Notes
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => navigation.navigate('Message')}
+      >
+        <Icon
+          name={isActive('Message') ? 'book' : 'book-outline'}
+          size={25}
+          color={isActive('Message') ? '#43B76A' : '#000'}
+        />
+        <Text style={[styles.navButtonText, isActive('Message') && styles.activeNavText]}>
+          Education
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => navigation.navigate('Profile')}
+      >
+        <Icon
+          name={isActive('Profile') ? 'person' : 'person-outline'}
+          size={25}
+          color={isActive('Profile') ? '#43B76A' : '#000'}
+        />
+        <Text style={[styles.navButtonText, isActive('Profile') && styles.activeNavText]}>
+          Profile
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+
+
 
 // Main Dashboard Screen
 const Message = ({ navigation }) => (
@@ -174,21 +212,29 @@ const styles = StyleSheet.create({
   // },
 
 
-  fixedNavButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15,
+  navButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
     backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    elevation: 5,
   },
   navButton: {
     alignItems: 'center',
   },
   navButtonText: {
     marginTop: 5,
-    color: '#000000',
+    color: '#6200EE',
     fontSize: 14,
+  },
+
+  activeNavText: {
+    color: '#43B76A',
     fontWeight: 'bold',
   },
 });

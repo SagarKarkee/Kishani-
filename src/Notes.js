@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Modal, Button, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
 
 const Notes = ({ navigation }) => {
+  const route = useRoute();
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [note, setNote] = useState('');
@@ -69,6 +71,8 @@ const Notes = ({ navigation }) => {
     );
   };
 
+  const isActive = (screen) => route.name === screen; 
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
@@ -105,34 +109,57 @@ const Notes = ({ navigation }) => {
         )}
       </View>
       <View style={styles.navButtons}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
+          onPress={() => navigation.navigate('Dashboard')}
         >
-          <Icon name="home-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold',}}>Home</Text>
+          <Icon
+            name={isActive('Dashboard') ? 'home' : 'home-outline'}
+            size={25}
+            color={isActive('Dashboard') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Dashboard') && styles.activeNavText]}>
+            Home
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Notes')} // Change 'Notes' to the correct screen name
+          onPress={() => navigation.navigate('Notes')}
         >
-          <Icon name="document-text-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Notes</Text>
-
+          <Icon
+            name={isActive('Notes') ? 'document-text' : 'document-text-outline'}
+            size={25}
+            color={isActive('Notes') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Notes') && styles.activeNavText]}>
+            Notes
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
+          onPress={() => navigation.navigate('Message')}
         >
-          <Icon name="book-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Education</Text>
+          <Icon
+            name={isActive('Message') ? 'book' : 'book-outline'}
+            size={25}
+            color={isActive('Message') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Message') && styles.activeNavText]}>
+            Education
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')} // Change 'Profile' to the correct screen name
+          onPress={() => navigation.navigate('Profile')}
         >
-          <Icon name="person-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5 ,fontWeight:'bold'}}>Profile</Text>
+          <Icon
+            name={isActive('Profile') ? 'person' : 'person-outline'}
+            size={25}
+            color={isActive('Profile') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Profile') && styles.activeNavText]}>
+            Profile
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -286,12 +313,16 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   navButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: 10,
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
+    elevation: 5,
   },
   navButton: {
     alignItems: 'center',
@@ -299,7 +330,12 @@ const styles = StyleSheet.create({
   navButtonText: {
     marginTop: 5,
     color: '#6200EE',
-    fontSize: 1,
+    fontSize: 14,
+  },
+
+  activeNavText: {
+    color: '#43B76A',
+    fontWeight: 'bold',
   },
 });
 
