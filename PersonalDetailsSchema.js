@@ -4,11 +4,16 @@ const PersonalDetailsSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // Each email corresponds to one PersonalDetails entry
+    unique: true, 
   },
   fullName: {
     type: String,
-    required: true, // Mandatory, already provided during signup
+    required: true, 
+  },
+  userName: {
+    type: String,
+    required: true, 
+    unique: true, 
   },
   address: {
     type: String,
@@ -16,16 +21,18 @@ const PersonalDetailsSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    default: '',
+    default: '', 
   },
   citizenshipNumber: {
     type: String,
-    default: '',
+    default: '', 
   },
   profileImage: {
-    type: String, // URL or base64 encoded string
-    default: null,
+    type: String, 
+    default: null, 
   },
+}, {
+  timestamps: true, 
 });
 
 module.exports = PersonalDetailsSchema;

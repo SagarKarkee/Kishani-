@@ -1,223 +1,287 @@
-import React, { useState } from 'react';
-import { View,Text,TextInput,Button,Image,StyleSheet,TouchableOpacity,Modal,Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { MaterialIcons } from '@expo/vector-icons'; // For back arrow icon
 
 const API_URL = process.env.API_URL; // Ensure environment variable is set
-console.log("API URL for Personal Details:", API_URL);
 
 const PersonalDetailsForm = ({ navigation }) => {
-  const [imageUri, setImageUri] = useState(null);
-  const [userName, setUserName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [citizenshipNumber, setCitizenshipNumber] = useState('');
-  const [modalVisible, setModalVisible] = useState(false); // Initialize modal visibility state
+    const [imageUri, setImageUri] = useState(null);
+    const [userName, setUserName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [citizenshipNumber, setCitizenshipNumber] = useState('');
+    const [fullName, setFullName] = useState(''); // For displaying fullName
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isDetailsSaved, setIsDetailsSaved] = useState(false); // Flag to track if personal details are saved
 
-  const pickImage = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (response) => {
-      if (response.assets && response.assets.length > 0) {
-        setImageUri(response.assets[0].uri);
-      }
-    });
-  };
+    // Fetch the fullName from AsyncStorage and personal details from the server
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                // Get the fullName from AsyncStorage (this is never null as it's set during signup)
+                const savedFullName = await AsyncStorage.getItem('userFullName');
+                if (!savedFullName) {
+                    console.error('Full Name missing in AsyncStorage');
+                    Alert.alert("Please Save your Personal Details");
+                    return;
+                }
+                setFullName(savedFullName); // Set the fullName from AsyncStorage
 
-  const handleSubmit = async () => {
-    if (!userName || !address || !phoneNumber || !citizenshipNumber) {
-      Alert.alert('Error', 'All fields must be filled out.');
-      return;
-    }
+                // Get the email from AsyncStorage
+                const email = await AsyncStorage.getItem('userEmail');
+                if (!email) {
+                    console.error('User email missing in AsyncStorage');
+                    return;
+                }
 
-    try {
-      const email = await AsyncStorage.getItem('userEmail'); // Fetch email from AsyncStorage
-      if (!email) {
-        Alert.alert('Error', 'User email is missing.');
-        return;
-      }
+                // Fetch personal details from the backend only if not saved
+                const response = await fetch(`${API_URL}/personal-details/${email}`);
+                const data = await response.json();
 
-      const response = await fetch(`${API_URL}/personal-details`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          fullName: userName,
-          address,
-          phoneNumber,
-          citizenshipNumber,
-          profileImage: imageUri,
-        }),
-      });
+                if (response.ok) {
+                    // If personal details exist, set them
+                    setUserName(data.userName || '');
+                    setAddress(data.address || '');
+                    setPhoneNumber(data.phoneNumber || '');
+                    setCitizenshipNumber(data.citizenshipNumber || '');
+                    setImageUri(data.profileImage || null);
+                    setIsDetailsSaved(true); // Mark as saved
+                } else {
+                    // If personal details don't exist, show alert
+                    console.error('Personal details not found:', data.message);
+                    setIsDetailsSaved(false); // Mark as unsaved
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        };
 
-      const data = await response.json();
-      if (response.ok) {
-        // Save updated details in AsyncStorage for Profile and Dashboard
-        await AsyncStorage.setItem('userFullName', userName);
-        if (imageUri) {
-          await AsyncStorage.setItem('profileImage', imageUri);
+        fetchUserDetails();
+    }, []); // Run once when component mounts
+
+    const pickImage = () => {
+        launchImageLibrary({ mediaType: 'photo' }, (response) => {
+            if (response.assets && response.assets.length > 0) {
+                setImageUri(response.assets[0].uri);
+            }
+        });
+    };
+
+    const handleSubmit = async () => {
+        if (!userName || !address || !phoneNumber || !citizenshipNumber) {
+            Alert.alert('Error', 'All fields must be filled out.');
+            return;
         }
 
-        Alert.alert('Success', 'Personal details updated successfully.');
-        setModalVisible(true); // Show confirmation modal
-      } else {
-        Alert.alert('Error', data.message || 'Failed to save personal details.');
-      }
-    } catch (error) {
-      console.error('Error saving personal details:', error);
-      Alert.alert('Error', 'Failed to connect to the server.');
-    }
-  };
+        // Validate Nepal citizenship number (12-14 digits without spaces)
+        const citizenshipRegex = /^[0-9]{12,14}$/;
+        if (!citizenshipRegex.test(citizenshipNumber)) {
+            Alert.alert('Error', 'Citizenship number must be between 12 and 14 digits.');
+            return;
+        }
 
-  const handleLoginNavigation = () => {
-    setModalVisible(false); // Close modal
-    navigation.navigate('Profile'); // Navigate back to Profile
-  };
+        try {
+            const email = await AsyncStorage.getItem('userEmail');
+            if (!email) {
+                Alert.alert('Error', 'User email is missing.');
+                return;
+            }
 
-  return (
-    <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <MaterialIcons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Personal Details</Text>
-      </View>
+            const response = await fetch(`${API_URL}/personal-details`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    fullName,  // Don't allow editing fullName
+                    userName,
+                    address,
+                    phoneNumber,
+                    citizenshipNumber,
+                    profileImage: imageUri || "", // Use empty string if no image
+                }),
+            });
 
-      {/* Profile Image Picker */}
-      <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
-        {imageUri ? (
-          <Image source={{ uri: imageUri }} style={styles.image} />
-        ) : (
-          <View style={styles.placeholder}>
-            <Text style={styles.imageText}>Upload Image</Text>
-          </View>
-        )}
-      </TouchableOpacity>
+            const data = await response.json();
+            if (response.ok) {
+                // Save updated details in AsyncStorage
+                await AsyncStorage.setItem('userFullName', fullName);
+                await AsyncStorage.setItem('profileImage', imageUri || ""); // Use empty string if no image
 
-      {/* Input Fields */}
-      <TextInput
-        style={styles.input}
-        placeholder="User Name"
-        value={userName}
-        onChangeText={setUserName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Address"
-        value={address}
-        onChangeText={setAddress}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Citizenship Number"
-        value={citizenshipNumber}
-        onChangeText={setCitizenshipNumber}
-        keyboardType="number-pad"
-      />
-      <Button title="Save" onPress={handleSubmit} />
+                Alert.alert('Success', 'Personal details updated successfully.');
+                setModalVisible(true); // Show confirmation modal
+                setIsDetailsSaved(true); // Mark details as saved
+            } else {
+                Alert.alert('Error', data.message || 'Failed to save personal details.');
+            }
+        } catch (error) {
+            console.error('Error saving personal details:', error);
+            Alert.alert('Error', 'Failed to connect to the server.');
+        }
+    };
 
-      {/* Confirmation Modal */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.successMessage}>
-              Your personal details have been updated successfully!
-            </Text>
-            <Button title="Go Back to Profile" onPress={handleLoginNavigation} />
-          </View>
+    const handleLoginNavigation = () => {
+        setModalVisible(false); // Close modal
+        navigation.navigate('Profile'); // Navigate back to Profile
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <MaterialIcons name="arrow-back" size={24} color="#fff" />
+                </TouchableOpacity>
+                <Text style={styles.title}>Personal Details</Text>
+            </View>
+
+            {/* Profile Image Picker */}
+            <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
+                {imageUri ? (
+                    <Image source={{ uri: imageUri }} style={styles.image} />
+                ) : (
+                    <View style={styles.placeholder}>
+                        <Text style={styles.imageText}>Upload Image</Text>
+                    </View>
+                )}
+            </TouchableOpacity>
+
+            {/* Input Fields */}
+            <Text style={styles.label}>Full Name</Text>
+            <TextInput
+                style={styles.input}
+                value={fullName}
+                editable={false} // Full name is not editable
+            />
+            <Text style={styles.label}>Nickname (Username)</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Nickname"
+                value={userName}
+                onChangeText={setUserName}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Address"
+                value={address}
+                onChangeText={setAddress}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                keyboardType="phone-pad"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Citizenship Number"
+                value={citizenshipNumber}
+                onChangeText={setCitizenshipNumber}
+                keyboardType="number-pad"
+                editable={!isDetailsSaved} // Allow editing only if details are not saved
+            />
+            <Button title="Save" onPress={handleSubmit} />
+
+            {/* Confirmation Modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.successMessage}>
+                            Your personal details have been updated successfully!
+                        </Text>
+                        <Button title="Go Back to Profile" onPress={handleLoginNavigation} />
+                    </View>
+                </View>
+            </Modal>
         </View>
-      </Modal>
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#43B76A',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    marginBottom: 50,
-  },
-  backButton: {
-    padding: 5,
-    marginRight: -40,
-  },
-  title: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    flex: 1,
-  },
-  imagePicker: {
-    alignItems: 'center',
-    marginBottom: 40,
-    marginTop: -30,
-  },
-  placeholder: {
-    width: 150,
-    height: 150,
-    borderRadius: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DFDFDF',
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  imageText: {
-    fontSize: 18,
-    color: '#888',
-  },
-  input: {
-    height: 40,
-    borderColor: 'black',
-    backgroundColor: '#DFDFDF',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  successMessage: {
-    fontSize: 18,
-    color: 'green',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#43B76A',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        marginVertical: 10,
+        marginBottom: 50,
+    },
+    backButton: {
+        padding: 5,
+        marginRight: -40,
+    },
+    title: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        flex: 1,
+    },
+    imagePicker: {
+        alignItems: 'center',
+        marginBottom: 40,
+        marginTop: -30,
+    },
+    placeholder: {
+        width: 150,
+        height: 150,
+        borderRadius: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#DFDFDF',
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+    },
+    imageText: {
+        fontSize: 18,
+        color: '#888',
+    },
+    input: {
+        height: 40,
+        borderColor: 'black',
+        backgroundColor: '#DFDFDF',
+        borderWidth: 1,
+        marginBottom: 20,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+    },
+    label: {
+        color: '#fff',
+        marginBottom: 5,
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    modalContent: {
+        width: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    successMessage: {
+        fontSize: 18,
+        color: 'green',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
 });
 
 export default PersonalDetailsForm;

@@ -338,16 +338,17 @@ app.delete("/delete-product/:id", async (req, res) => {
 
 // Save or update personal details
 app.post('/personal-details', async (req, res) => {
-  const { email, fullName, address, phoneNumber, citizenshipNumber, profileImage } = req.body;
+  const { email, fullName, userName, address, phoneNumber, citizenshipNumber, profileImage } = req.body;
 
-  if (!email || !fullName) {
-    return res.status(400).json({ message: 'Email and Full Name are required.' });
+  // Validate required fields
+  if (!email || !fullName || !userName || !address || !phoneNumber || !citizenshipNumber) {
+    return res.status(400).json({ message: 'All fields are required.' });
   }
 
   try {
     const personalDetails = await PersonalDetails.findOneAndUpdate(
       { email }, // Find by email
-      { fullName, address, phoneNumber, citizenshipNumber, profileImage }, // Update or create with these fields
+      { fullName, userName, address, phoneNumber, citizenshipNumber, profileImage }, // Update or create with these fields
       { upsert: true, new: true } // Insert new if not found
     );
 
@@ -360,6 +361,7 @@ app.post('/personal-details', async (req, res) => {
     res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 });
+
 
 // Get personal details by email
 app.get('/personal-details/:email', async (req, res) => {
