@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, TextInput 
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Linking } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 // Import local images
 import cultivationImage from '../assets/Cul-1.jpeg'; // Replace with your actual path
 import cropDiseasesImage from '../assets/dis.jpeg'; // Replace with your actual path
 
 const Dashboard = ({ navigation }) => {
+  const route = useRoute();
   const [userName, setUserName] = useState('User');
   const [isChatBoxVisible, setIsChatBoxVisible] = useState(false);
   const [newMessage, setNewMessage] = useState('');
@@ -41,6 +43,9 @@ const Dashboard = ({ navigation }) => {
     const url = process.env.API_URL;
     Linking.openURL(`${url}/`).catch(err => console.error("Couldn't load the page", err));
   };
+
+
+  const isActive = (screen) => route.name === screen; 
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -150,38 +155,61 @@ const Dashboard = ({ navigation }) => {
       <View style={styles.navButtons}>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Dashboard')} // Change 'Dashboard' to the correct screen name if different
+          onPress={() => navigation.navigate('Dashboard')}
         >
-          <Icon name="home-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold', }}>Home</Text>
+          <Icon
+            name={isActive('Dashboard') ? 'home' : 'home-outline'}
+            size={25}
+            color={isActive('Dashboard') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Dashboard') && styles.activeNavText]}>
+            Home
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Notes')} // Change 'Notes' to the correct screen name
+          onPress={() => navigation.navigate('Notes')}
         >
-          <Icon name="document-text-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Notes</Text>
-
+          <Icon
+            name={isActive('Notes') ? 'document-text' : 'document-text-outline'}
+            size={25}
+            color={isActive('Notes') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Notes') && styles.activeNavText]}>
+            Notes
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Message')} // Change 'Message' to the correct screen name
+          onPress={() => navigation.navigate('Message')}
         >
-          <Icon name="book-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Education</Text>
+          <Icon
+            name={isActive('Message') ? 'book' : 'book-outline'}
+            size={25}
+            color={isActive('Message') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Message') && styles.activeNavText]}>
+            Education
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')} // Change 'Profile' to the correct screen name
+          onPress={() => navigation.navigate('Profile')}
         >
-          <Icon name="person-outline" size={25} color="#43B76A" />
-          <Text style={{ color: '#000000', fontSize: 14, marginTop: 5, fontWeight: 'bold' }}>Profile</Text>
+          <Icon
+            name={isActive('Profile') ? 'person' : 'person-outline'}
+            size={25}
+            color={isActive('Profile') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Profile') && styles.activeNavText]}>
+            Profile
+          </Text>
         </TouchableOpacity>
       </View>
-
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -376,6 +404,11 @@ const styles = StyleSheet.create({
   recommendationButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
+  },
+
+  activeNavText: {
+    color: '#43B76A',
+    fontWeight: 'bold',
   },
 
   
