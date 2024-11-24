@@ -4,7 +4,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 const B_personal = ({ navigation }) => {
     const [imageUri, setImageUri] = useState(null);
-    const [fullName, setNickName] = useState('');
+    const [userName, setUserName] = useState('');
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [citizenshipNumber, setCitizenshipNumber] = useState('');
@@ -22,13 +22,13 @@ const B_personal = ({ navigation }) => {
 
     const handleSubmit = () => {
         // Validation logic
-        if (!NickName || !address || !phoneNumber || !citizenshipNumber || imageUri) {
+        if (!userName || !address || !phoneNumber || !citizenshipNumber || imageUri) {
             Alert.alert('Error', 'All fields must be filled out.');
             return;
         }
 
         // Handle the form submission logic here
-        console.log('Nick Name:', NickName);
+        console.log('User Name:', userName);
         console.log('Address:', address);
         console.log('Phone number:', phoneNumber);
         console.log('Citizenship number:', citizenshipNumber);
@@ -60,9 +60,9 @@ const B_personal = ({ navigation }) => {
 
             <TextInput
                 style={styles.input}
-                placeholder="Nick Name"
-                value={fullName}
-                onChangeText={setNickName}
+                placeholder="User Name"
+                value={userName}
+                onChangeText={setUserName}
             />
 
             <TextInput
