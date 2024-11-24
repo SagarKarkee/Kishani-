@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView,} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 
+const API_URL = process.env.API_URL;
 
 const YourSecurityQuestionScreen = ({ navigation, route }) => {
   const { email } = route.params; 
@@ -13,7 +14,7 @@ const YourSecurityQuestionScreen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchSecurityQuestion = async () => {
       try {
-        const response = await axios.post('http://192.168.1.91:5000/forgot-password', { email });
+        const response = await axios.post(`${API_URL}forgot-password`, { email });
         
         if (response.status === 200) {
           setQuestion(response.data.question); // Set the question from the response
@@ -34,30 +35,26 @@ const YourSecurityQuestionScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Please provide an answer');
       return;
     }
-
+  
     try {
-      // Verify the answer by sending it to the backend
-      const response = await axios.post('http://192.168.1.91:5000/reset-password', {
+      const response = await axios.post(`${API_URL}validate-answer`, {
         email,
         answer,
       });
-
+  
       if (response.status === 200) {
         Alert.alert('Success', 'Answer verified. You can now reset your password.');
-        // Navigate to ChangePassword screen
-        navigation.navigate('ChangePassword', { email });
+        navigation.navigate('ChangePassword', { email }); // Pass email to ChangePassword screen
       } else {
         Alert.alert('Error', response.data.message || 'Incorrect answer');
       }
     } catch (error) {
-      console.error('Error verifying security answer:', error);
-      if (error.response) {
-        Alert.alert('Error', `Server error: ${error.response.data.message}`);
-      } else {
-        Alert.alert('Error', 'Unable to verify the answer');
-      }
+      console.error('Error verifying security answer:', error.response?.data || error);
+      Alert.alert('Error', 'Unable to verify the answer');
     }
   };
+  
+  
 
 
   return (
@@ -83,10 +80,11 @@ const YourSecurityQuestionScreen = ({ navigation, route }) => {
       {/* Navigate to another screen */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('ChangePassword')} // Use your actual screen name
-      >
+        onPress={handleSubmitAnswer} // Call handleSubmitAnswer on button press
+        >
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
+
     </View>
   );
 };

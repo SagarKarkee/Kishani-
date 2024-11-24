@@ -128,9 +128,7 @@ app.post('/login', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      const sanitizedEmail = email.toLowerCase(); // Convert email to lowercase
-
-      // Check if the user exists in the database using the sanitized email
+      const sanitizedEmail = email.toLowerCase();
       const user = await FarmersLogin.findOne({ email: sanitizedEmail });
   
       if (!user) {
@@ -184,43 +182,57 @@ app.post('/forgot-password', async (req, res) => {
   }
 });
 
+// Validate Answer
+app.post('/validate-answer', async (req, res) => {
+  const { email, answer } = req.body;
 
-
-// 2. Verify Answer and Reset Password
-app.post('/reset-password', async (req, res) => {
-  const { email, answer, newPassword } = req.body;
+  if (!email || !answer) {
+    console.error('Missing required fields:', { email, answer });
+    return res.status(400).json({ message: 'Email and answer are required' });
+  }
 
   try {
-    console.log('Email:', email); // Log email for debugging
-    console.log('Answer:', answer); // Log the answer to verify
-    console.log('New Password:', newPassword); // Log the new password to verify
-
     const securityRecord = await SecurityQuestion.findOne({ email });
 
     if (!securityRecord) {
       return res.status(400).json({ message: 'Email not found in security questions' });
     }
 
-    // Compare the provided answer with the stored hashed answer
+    // Compare the provided answer with the hashed answer in the database
     const isMatch = await bcrypt.compare(answer, securityRecord.answer);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Incorrect answer to the security question' });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update the password in the FarmersLogin collection
-    await FarmersLogin.updateOne({ email }, { password: hashedPassword });
-
-    res.status(200).json({ message: 'Password updated successfully' });
+    res.status(200).json({ message: 'Answer verified successfully' });
   } catch (error) {
-    console.error('Error in /reset-password:', error); // Log the error for debugging
+    console.error('Error in /validate-answer:', error);
     res.status(500).json({ message: 'Error processing your request' });
   }
 });
 
 
+// 2. Verify Answer and Reset Password
+// Update Password
+app.post('/update-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+    console.error('Missing required fields:', { email, newPassword });
+    return res.status(400).json({ message: 'Email and new password are required' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await FarmersLogin.updateOne({ email }, { password: hashedPassword });
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error in /update-password:', error);
+    res.status(500).json({ message: 'Error processing your request' });
+  }
+});
 
 
 

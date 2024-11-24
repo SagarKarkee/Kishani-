@@ -92,7 +92,7 @@ const AddProduct = ({ navigation, route }) => {
   
       if (editingIndex !== null) {
         // Update existing product
-        const response = await axios.put(`http://192.168.1.91:5000/update-product/${productId}`, productData);
+        const response = await axios.put(`http://192.168.1.84:5000/update-product/${productId}`, productData);
         if (response.status === 200) {
           Alert.alert('Success', 'Product updated successfully!');
           fetchProducts();  // Refresh product list
@@ -100,7 +100,7 @@ const AddProduct = ({ navigation, route }) => {
         }
       } else {
         // Add new product
-        const response = await axios.post('http://192.168.1.91:5000/addProduct', productData);
+        const response = await axios.post('http://192.168.1.84:5000/addProduct', productData);
         if (response.status === 201) {
           Alert.alert('Success', 'Product added successfully!');
           fetchProducts();  // Refresh product list

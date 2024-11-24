@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, } from 'rea
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import axios from 'axios';
 
+const API_URL = process.env.API_URL;
+
 const ChangePasswordScreen = ({ route, navigation }) => {
   const { email } = route.params || {}; // Ensure email is passed correctly from previous screen
   const [newPassword, setNewPassword] = useState('');
@@ -23,7 +25,7 @@ const ChangePasswordScreen = ({ route, navigation }) => {
       Alert.alert('Error', 'Please fill all fields.');
       return;
     }
-
+  
     if (!validatePassword(newPassword)) {
       Alert.alert(
         'Error',
@@ -31,33 +33,30 @@ const ChangePasswordScreen = ({ route, navigation }) => {
       );
       return;
     }
-
+  
     if (newPassword !== confirmPassword) {
       Alert.alert('Error', 'New password and confirm password do not match.');
       return;
     }
-
+  
     try {
-      
-      if (!email) {
-        Alert.alert('Error', 'Email not provided');
-        return;
-      }
-
-      const response = await axios.post('http://192.168.1.91:5000/reset-password', {
-        email,
+      const response = await axios.post(`${API_URL}update-password`, {
+        email, // Passed from YourQuestion screen
         newPassword,
       });
-
+  
       if (response.status === 200) {
         Alert.alert('Success', 'Password has been changed successfully!');
-        navigation.navigate('Login'); // Navigate to the login screen after changing the password
+        navigation.navigate('Login'); // Navigate to login screen
       }
     } catch (error) {
-      console.error('Error resetting password:', error);
+      console.error('Error resetting password:', error.response?.data || error);
       Alert.alert('Error', 'Error resetting password');
     }
   };
+  
+  
+  
 
   return (
     <View style={styles.container}>

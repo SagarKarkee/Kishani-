@@ -3,8 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button, Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
+const API_URL = process.env.API_URL;
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -19,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
     }
   
     try {
-      const response = await fetch('http://192.168.1.91:5000/login', {
+      const response = await fetch(`${API_URL}login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
