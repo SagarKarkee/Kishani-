@@ -38,11 +38,15 @@ const Profile = ({ navigation, route }) => {
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
 
-      {/* Privacy Policy Section */}
-      <TouchableOpacity style={styles.sectionButton}>
+     {/* Privacy Policy Section */}
+      <TouchableOpacity 
+        style={styles.sectionButton} 
+        onPress={() => navigation.navigate('PrivacyPolicy')} // Add this line
+      >
         <Icon name="lock-closed-outline" size={25} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Privacy Policy</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
+
 
       {/* Logout Section */}
       <TouchableOpacity style={styles.sectionButton} onPress={handleLogout}>

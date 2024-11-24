@@ -11,6 +11,7 @@ import Notes from './src/Notes'; // Adjust the import according to your file str
 import Publicchat from './src/PublicChat'; // Adjust the import according to your file structure
 import Message from './src/Message'; // Adjust the import according to your file structure
 import Profile from './src/Profile'; // Adjust the import according to your file structure
+import PrivacyPolicy from './src/PrivacyPolicy.js';
 import { Ionicons } from '@expo/vector-icons'; // or another icon library
 import ForgotPasswordScreen from './src/ForgotPasswordScreen';
 import AddProduct from './src/AddProduct';
@@ -92,6 +93,7 @@ export default function App() {
         <Stack.Screen name="PublicChat" component={Publicchat} />
         <Stack.Screen name="Message" component={Message} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
         <Stack.Screen name="AddProduct" component={AddProduct} />
         <Stack.Screen name="SelectVegetable" component={SelectVegetable} />
         <Stack.Screen name="CropDiseases" component={CropDiseases} />
