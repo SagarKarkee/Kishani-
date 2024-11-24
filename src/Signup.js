@@ -3,13 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-// import { API_URL } from '@env';
+
 
 const API_URL = process.env.API_URL;
-console.log('API_URL:', API_URL);
-
-
-// const API_URL="http://192.168.1.84:5000";
 
 
 const Signup = ({ navigation }) => {

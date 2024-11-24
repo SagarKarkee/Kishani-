@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 // import API_URL from '../config';
 
-const API_URL="http://192.168.1.91:5000";
+const API_URL="http://192.168.1.68:5000";
 // const API_URL = 'http://192.168.1.81:5000';
 
 const BSignup = ({ navigation }) => {
