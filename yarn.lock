@@ -2032,6 +2032,13 @@
 "babel-core@^7.0.0-bridge.0":
   "version" "7.0.0-bridge.0"
 
+"babel-plugin-inline-dotenv@^1.7.0":
+  "integrity" "sha512-FUrXEwY9R9ZO8l0NFHqXFBzHjjMvdIJlELrzJoE6imDsj6Vh7g9svm7iHPHVYPbHmt6BPB2eCAJkwvG6kr5byg=="
+  "resolved" "https://registry.npmjs.org/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.7.0.tgz"
+  "version" "1.7.0"
+  dependencies:
+    "dotenv" "^16.0.0"
+
 "babel-plugin-polyfill-corejs2@^0.4.10":
   "version" "0.4.11"
   dependencies:
@@ -2673,12 +2680,12 @@
   dependencies:
     "path-type" "^4.0.0"
 
-"dotenv-expand@~11.0.6":
+"dotenv-expand@>= 5.0.0", "dotenv-expand@~11.0.6":
   "version" "11.0.6"
   dependencies:
     "dotenv" "^16.4.4"
 
-"dotenv@^16.4.4", "dotenv@^16.4.5", "dotenv@~16.4.5":
+"dotenv@^16.0.0", "dotenv@^16.4.4", "dotenv@^16.4.5", "dotenv@~16.4.5":
   "version" "16.4.5"
 
 "eastasianwidth@^0.2.0":

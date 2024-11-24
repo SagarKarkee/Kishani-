@@ -34,7 +34,7 @@ const Dashboard = ({ route, navigation }) => {
   // Function to open the index.html in a browser
   const openRecommendationPage = () => {
     // Assuming the index.html is hosted locally or on a server (e.g., 'http://localhost/index.html')
-    const url = 'http://192.168.0.102:5000/'; // Replace with the correct URL
+    const url = 'http://192.168.1.68:5000/'; // Replace with the correct URL
     Linking.openURL(url).catch(err => console.error("Couldn't load the page", err));
   };
 
