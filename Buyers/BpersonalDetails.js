@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Pressable, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons'; // For back arrow icon
 
 const B_personal = ({ navigation }) => {
     const [imageUri, setImageUri] = useState(null);
@@ -46,7 +48,13 @@ const B_personal = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Personal Details</Text>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <MaterialIcons name="arrow-back" size={24} color="#fff" />
+                </TouchableOpacity>
+
+                <Text style={styles.title}>Personal Details</Text>
+            </View>
 
             <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
                 {imageUri ? (
@@ -77,7 +85,7 @@ const B_personal = ({ navigation }) => {
                 placeholder="Citizenship Number"
                 value={citizenshipNumber}
                 onChangeText={setCitizenshipNumber}
-               keyboardType="phone-pad"
+                keyboardType="phone-pad"
             />
 
             <TextInput
@@ -112,17 +120,35 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#43B76A'
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+    header: {
+        // backgroundColor: '#41B06E', 
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        marginVertical: 10,
         marginBottom: 50,
+    },
+    backButton: {
+        padding: 5,
+        marginRight: -40,
+    },
+    title: {
+        // fontSize: 24,
+        // fontWeight: 'bold',
+        // marginBottom: 50,
+        // textAlign: 'center',
+        // marginTop: 30,
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 30,
+        flex: 1,
     },
     imagePicker: {
         alignItems: 'center',
         marginBottom: 40,
-        marginTop:-30,
+        marginTop: -30,
     },
     placeholder: {
         width: 150,
@@ -173,5 +199,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
+
 
 export default B_personal;
