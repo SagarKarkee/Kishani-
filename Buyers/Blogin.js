@@ -4,6 +4,9 @@ import { Button, Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 
+const API_URL = process.env.API_URL;
+console.log("Api url for BLogin: ", API_URL);
+
 const BLoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +19,7 @@ const BLoginScreen = ({ navigation }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.68:5000/blogin', {
+      const response = await fetch(`${API_URL}/blogin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
