@@ -33,7 +33,7 @@ const Profile = ({ navigation, route }) => {
         onPress={() => navigation.navigate('PersonelDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
-          <Text style={styles.sectionButtonText}>Personal Information</Text>
+        <Text style={styles.sectionButtonText}>Personal Information</Text>
       </TouchableOpacity>
 
       {/* Settings Section */}
@@ -44,7 +44,8 @@ const Profile = ({ navigation, route }) => {
       </TouchableOpacity>
 
       {/* Privacy Policy Section */}
-      <TouchableOpacity style={styles.sectionButton}>
+      <TouchableOpacity style={styles.sectionButton}
+        onPress={() => navigation.navigate('PrivacyPolicy')}>
         <Icon name="lock-closed-outline" size={25} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Privacy Policy</Text>
       </TouchableOpacity>
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     color: '#555555',
-   
+
     marginTop: -10,
     alignItems: 'center',
   },

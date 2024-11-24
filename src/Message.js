@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 // Import images from assets folder
 import cultivationImg from './../assets/Cul-1.jpeg';
 import diseasesImg from './../assets/dis.jpeg';
+import diseaseImg from './../assets/cul-2.jpeg';
 
 
 // Header Component
@@ -51,6 +52,16 @@ const InfoSection = ({ navigation }) => (
     >
       <Image
         source={diseasesImg} // Use the imported image
+        style={styles.educationImage}
+      />
+      <Text style={styles.educationText}>Crop Diseases Solutions</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.educationBox}
+      onPress={() => navigation.navigate('BBbcropDiseases')} // Replace 'CropDiseases' with the actual screen name
+    >
+      <Image
+        source={diseaseImg} // Use the imported image
         style={styles.educationImage}
       />
       <Text style={styles.educationText}>Crop Diseases Solutions</Text>
