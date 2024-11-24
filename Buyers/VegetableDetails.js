@@ -7,7 +7,7 @@ const B_vegetableDetails = ({ route }) => {
   const navigation = useNavigation();
 
   const BuyNow = () => {
-    navigation.navigate('BFeedbackScreen'); // Update with your actual screen name
+    navigation.navigate('khalti'); // Update with your actual screen name
   };
 
   const callNow = () => {
@@ -27,11 +27,11 @@ const B_vegetableDetails = ({ route }) => {
       <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
 
       <TouchableOpacity style={styles.button} onPress={BuyNow}>
-        <Text style={styles.buttonText}>Book Now</Text>
+        <Text style={styles.buttonText}>BUY NOW</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={callNow}>
-        <Text style={styles.buttonText}>Call Now</Text>
+        <Text style={styles.buttonText}>CALL NOW</Text>
       </TouchableOpacity>
     </View>
   );
