@@ -54,6 +54,7 @@ const products = [
   { id: '15', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
   { id: '16', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
   { id: '17', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: cauliflowerImg, availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '13', name: 'greenchilly', price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
   // Add more products here as needed
 ];
 
