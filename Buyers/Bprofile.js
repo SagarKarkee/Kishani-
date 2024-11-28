@@ -37,7 +37,7 @@ const Profile = ({ navigation, route }) => {
       {/* Favorites Section */}
       <TouchableOpacity
         style={styles.sectionButton}
-        onPress={() => navigation.navigate('BFavourites')}
+        onPress={() => navigation.navigate('Bfav')}
       >
         <Icon name="heart-outline" size={30} color="#FF6347" />
         <Text style={styles.sectionButtonText}>Favourites</Text>
@@ -46,7 +46,7 @@ const Profile = ({ navigation, route }) => {
       {/* History Section */}
       <TouchableOpacity
         style={styles.sectionButton}
-        onPress={() => navigation.navigate('BHistory')}
+        onPress={() => navigation.navigate('Bhistory')}
       >
         <Icon name="time-outline" size={30} color="#649CB4" />
         <Text style={styles.sectionButtonText}>History</Text>
