@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useRoute } from '@react-navigation/native';
+const API_URL = process.env.API_URL;
 
 const Profile = ({ navigation }) => {
+  const route = useRoute();
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [profileImage, setProfileImage] = useState(null);
@@ -45,7 +47,7 @@ const Profile = ({ navigation }) => {
       { cancelable: true }
     );
   };
-
+  const isActive = (screen) => route.name === screen;
   return (
     <View style={styles.container}>
       {/* Profile Image */}
@@ -96,29 +98,53 @@ const Profile = ({ navigation }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('Dashboard')}
         >
-          <Icon name="home-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Home</Text>
+          <Icon
+            name={isActive('Dashboard') ? 'home' : 'home-outline'}
+            size={25}
+            color={isActive('Dashboard') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Dashboard') && styles.activeNavText]}>
+            Home
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Notes')}
         >
-          <Icon name="document-text-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Notes</Text>
+          <Icon
+            name={isActive('Notes') ? 'document-text' : 'document-text-outline'}
+            size={25}
+            color={isActive('Notes') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Notes') && styles.activeNavText]}>
+            Notes
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Message')}
         >
-          <Icon name="book-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Education</Text>
+          <Icon
+            name={isActive('Message') ? 'book' : 'book-outline'}
+            size={25}
+            color={isActive('Message') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Message') && styles.activeNavText]}>
+            Education
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Profile')}
         >
-          <Icon name="person-outline" size={25} color="#43B76A" />
-          <Text style={styles.navButtonText}>Profile</Text>
+          <Icon
+            name={isActive('Profile') ? 'person' : 'person-outline'}
+            size={25}
+            color={isActive('Profile') ? '#43B76A' : '#000'}
+          />
+          <Text style={[styles.navButtonText, isActive('Profile') && styles.activeNavText]}>
+            Profile
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -128,26 +154,24 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start', // Align the profile section content to the top
     backgroundColor: '#FFFFFF',
-    paddingBottom: 0,
+    paddingBottom: 70, // Add enough space for the bottom navigation
   },
   imageSection: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     paddingVertical: 10,
     marginTop: 60,
-    // marginBottom: -200,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
   },
-
   userInfoRow: {
-    flexDirection: 'colume',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
     marginTop: 10,
@@ -155,15 +179,11 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     color: '#555555',
-
-    marginTop: -10,
-    alignItems: 'center',
+    fontWeight: 'bold',
   },
   userEmail: {
     fontSize: 16,
     color: '#555555',
-    // textAlign: 'center',
-    alignItems: 'center',
   },
   sectionButton: {
     flexDirection: 'row',
@@ -173,7 +193,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
     paddingVertical: 10,
-    marginTop: -190,
+    marginTop: 10, // Adjust margin for spacing
   },
   sectionButtonText: {
     marginLeft: 15,
@@ -181,22 +201,30 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   navButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 5,
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
+    paddingVertical: 10,
+    elevation: 5,
   },
   navButton: {
     alignItems: 'center',
   },
   navButtonText: {
     marginTop: 5,
-    color: '#000000',
+    color: '#6200EE',
     fontSize: 14,
+  },
+  activeNavText: {
+    color: '#43B76A',
     fontWeight: 'bold',
   },
 });
+
 
 export default Profile;

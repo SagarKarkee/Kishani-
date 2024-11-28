@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const API_URL = process.env.API_URL;
-console.log("Api url for signup: ", API_URL);
+
 
 const Signup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');

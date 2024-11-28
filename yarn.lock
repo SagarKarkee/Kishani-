@@ -2032,15 +2032,17 @@
 "babel-core@^7.0.0-bridge.0":
   "version" "7.0.0-bridge.0"
 
-"babel-plugin-inline-dotenv@^1.7.0":
-  "integrity" "sha512-FUrXEwY9R9ZO8l0NFHqXFBzHjjMvdIJlELrzJoE6imDsj6Vh7g9svm7iHPHVYPbHmt6BPB2eCAJkwvG6kr5byg=="
-  "resolved" "https://registry.npmjs.org/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.7.0.tgz"
-  "version" "1.7.0"
-  dependencies:
-    "dotenv" "^16.0.0"
 
-"babel-plugin-polyfill-corejs2@^0.4.10":
-  "version" "0.4.11"
+babel-plugin-inline-dotenv@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.7.0.tgz"
+  integrity sha512-FUrXEwY9R9ZO8l0NFHqXFBzHjjMvdIJlELrzJoE6imDsj6Vh7g9svm7iHPHVYPbHmt6BPB2eCAJkwvG6kr5byg==
+  dependencies:
+    dotenv "^16.0.0"
+
+babel-plugin-polyfill-corejs2@^0.4.10:
+  version "0.4.11"
+
   dependencies:
     "@babel/compat-data" "^7.22.6"
     "@babel/helper-define-polyfill-provider" "^0.6.2"
@@ -2678,18 +2680,18 @@
 "dir-glob@^3.0.1":
   "version" "3.0.1"
   dependencies:
-    "path-type" "^4.0.0"
 
-"dotenv-expand@>= 5.0.0", "dotenv-expand@~11.0.6":
-  "version" "11.0.6"
+    path-type "^4.0.0"
+
+"dotenv-expand@>= 5.0.0", dotenv-expand@~11.0.6:
+  version "11.0.6"
+
   dependencies:
     "dotenv" "^16.4.4"
 
-"dotenv@^16.0.0", "dotenv@^16.4.4", "dotenv@^16.4.5", "dotenv@~16.4.5":
-  "version" "16.4.5"
 
-"eastasianwidth@^0.2.0":
-  "version" "0.2.0"
+eastasianwidth@^0.2.0:
+  version "0.2.0"
 
 "ecdsa-sig-formatter@1.0.11":
   "version" "1.0.11"
@@ -2938,8 +2940,12 @@
 "expo-status-bar@~1.12.1":
   "version" "1.12.1"
 
-"expo@*", "expo@^51.0.32":
-  "version" "51.0.39"
+
+expo@*, expo@^51.0.39:
+  version "51.0.39"
+  resolved "https://registry.npmjs.org/expo/-/expo-51.0.39.tgz"
+  integrity sha512-Cs/9xopyzJrpXWbyVUZnr37rprdFJorRgfSp6cdBfvbjxZeKnw2MEu7wJwV/s626i5lZTPGjZPHUF9uQvt51cg==
+
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "0.18.31"
@@ -3378,8 +3384,15 @@
   dependencies:
     "function-bind" "^1.1.2"
 
-"hermes-estree@0.19.1":
-  "version" "0.19.1"
+
+helmet@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/helmet/-/helmet-8.0.0.tgz"
+  integrity sha512-VyusHLEIIO5mjQPUI1wpOAEu+wl6Q0998jzTxqUYGE45xCIcAxy3MsbEK/yyJUJ3ADeMoB6MornPH6GMWAf+Pw==
+
+hermes-estree@0.19.1:
+  version "0.19.1"
+
 
 "hermes-estree@0.23.0":
   "version" "0.23.0"
