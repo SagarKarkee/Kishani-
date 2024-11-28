@@ -10,6 +10,7 @@ const productSchema = require('./Product');
 const personalDetailSchema = require('./PersonalDetailsSchema');
 const buyersLoginSchema = require('./BuyersLogin'); 
 const bPersonalDetailSchema = require('./BPersonalDetailsSchema');
+const purchaseRequestSchema = require('./PurchaseRequest');
 
 
 dotenv.config();
@@ -28,6 +29,8 @@ let PersonalDetails;
 
 let BuyersLogin;
 let BPersonalDetails;
+
+let PurchaseRequest;
 mongoose.connection.on('connected', () => {
 
     //Farmers Database Section
@@ -41,8 +44,12 @@ mongoose.connection.on('connected', () => {
     
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
-    BPersonalDetails = farmersDb.model('BPersonalDetailsSchema', bPersonalDetailSchema, 'BPersonalDetails');
+    BPersonalDetails = buyersDb.model('BPersonalDetailsSchema', bPersonalDetailSchema, 'BPersonalDetails');
     console.log('BuyersLogin model initialized.');
+
+    //Farmers-Buyers Connection Section
+    const sharedDb = mongoose.connection.useDb('Shared');
+    PurchaseRequest = sharedDb.model('PurchaseRequest', purchaseRequestSchema, 'PurchaseRequests');
 });
 
 
@@ -511,6 +518,84 @@ app.get('/bpersonal-details/:email', async (req, res) => {
     res.status(500).json({ message: 'Server error.' });
   }
 });
+
+
+
+// Farmers-Buyer's Connection
+
+
+
+// Fetch all available products (for buyers)
+app.get('/available-products', async (req, res) => {
+  try {
+      const farmersWithDetails = await PersonalDetails.find({}, 'email');
+      const farmerEmails = farmersWithDetails.map((farmer) => farmer.email);
+
+      const products = await AddProduct.find({
+          quantity: { $gt: 0 },
+          farmerEmail: { $in: farmerEmails },
+      });
+      res.status(200).json(products);
+  } catch (error) {
+      console.error('Error fetching available products:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
+
+async function verifyBuyerDetails(req, res, next) {
+  const { buyerEmail } = req.body;
+  const buyerDetails = await BPersonalDetails.findOne({ email: buyerEmail });
+
+  if (!buyerDetails) {
+      return res.status(403).json({ message: 'Save personal details to perform this action.' });
+  }
+  next();
+}
+
+
+
+
+app.post('/purchase-request', verifyBuyerDetails, async (req, res) => {
+  const { buyerEmail, farmerEmail, productId, quantity } = req.body;
+
+  try {
+      const product = await AddProduct.findById(productId);
+
+      if (!product) {
+          return res.status(400).json({ message: 'Product not found' });
+      }
+
+      if (product.quantity < quantity) {
+          return res.status(400).json({ message: 'Not enough stock available' });
+      }
+
+      const newRequest = new PurchaseRequest({
+          buyerEmail,
+          farmerEmail,
+          productId,
+          quantity,
+      });
+
+      await newRequest.save();
+
+      product.quantity -= quantity;
+      await product.save();
+
+      // Notify the farmer
+      const farmerNotification = {
+          farmerEmail,
+          message: `New purchase request from ${buyerEmail} for ${quantity} of ${product.productName}`,
+      };
+      // Save farmerNotification to the database or any notification system.
+
+      res.status(201).json({ message: 'Purchase request sent successfully' });
+  } catch (error) {
+      console.error('Error sending purchase request:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 
 
