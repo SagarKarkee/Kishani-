@@ -39,24 +39,24 @@ const imageMap = {
 };
 
 const products = [
-  { id: '1', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: cauliflowerImg, availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
-  
-  { id: '2', name: 'Tomato', price: 'Rs 40/kg', imageUrl: tomatoImg, availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
-  { id: '3', name: 'Brinjal', price: 'Rs 80/kg', imageUrl: brinjalImg, availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
-  { id: '4', name: 'Potato', price: 'Rs 70/kg', imageUrl: potatoImg, availableDate: '2024-09-02', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
-  { id: '5', name: 'Chilly', price: 'Rs 90/kg', imageUrl: imageMap['5'], availableDate: '2024-09-03', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
-  { id: '6', name: 'Onion', price: 'Rs 30/kg', imageUrl: imageMap['6'], availableDate: '2024-09-04', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '7', name: 'carrot', price: 'Rs 20/kg', imageUrl: imageMap['7'], availableDate: '2024-09-05', farmerName: 'Black', phoneNumber: '444-555-6666' },
-  { id: '8', name: 'cabbage', price: 'Rs 90/kg', imageUrl: imageMap['8'], availableDate: '2024-09-01', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '9', name: 'capssicum', price: 'Rs 40/kg', imageUrl: imageMap['9'], availableDate: '2024-09-09', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '10', name: 'Carrot', price: 'Rs 30/kg', imageUrl: imageMap['10'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '11', name: 'Chilly', price: 'Rs 20/kg', imageUrl: imageMap['11'], availableDate: '2024-09-07', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '12', name: 'cucumber', price: 'Rs 100/kg', imageUrl: imageMap['12'], availableDate: '2024-09-06', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '13', name: 'greenchilly', price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '14', name: 'radish', price: 'Rs 90/kg', imageUrl: imageMap['14'], availableDate: '2024-09-03', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
-  { id: '15', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
-  { id: '16', name: 'Tomato', price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
-  { id: '17', name: 'Cauliflower', price: 'Rs 30/kg', imageUrl: cauliflowerImg, availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '1', name: 'Cauliflower', Quantity:"Quantity 100 kg", price: 'Rs 30/kg', imageUrl: cauliflowerImg, availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '2', name: 'Tomato', Quantity:"Quantity 100 kg", price: 'Rs 40/kg', imageUrl: tomatoImg, availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
+  { id: '3', name: 'Brinjal', Quantity:"Quantity 100 kg", price: 'Rs 80/kg', imageUrl: brinjalImg, availableDate: '2024-09-07', farmerName: 'Emily Brown', phoneNumber: '111-222-3333' },
+  { id: '4', name: 'Potato', Quantity:"Quantity 100 kg", price: 'Rs 70/kg', imageUrl: potatoImg, availableDate: '2024-09-02', farmerName: 'Michael Green', phoneNumber: '444-555-6666' },
+  { id: '5', name: 'Chilly', Quantity:"Quantity 100 kg", price: 'Rs 90/kg', imageUrl: imageMap['5'], availableDate: '2024-09-03', farmerName: 'Sandip Green', phoneNumber: '444-555-6666' },
+  { id: '6', name: 'Onion', Quantity:"Quantity 100 kg", price: 'Rs 30/kg', imageUrl: imageMap['6'], availableDate: '2024-09-04', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '7', name: 'carrot', Quantity:"Quantity 100 kg", price: 'Rs 20/kg', imageUrl: imageMap['7'], availableDate: '2024-09-05', farmerName: 'Black', phoneNumber: '444-555-6666' },
+  { id: '8', name: 'cabbage', Quantity:"Quantity 100 kg", price: 'Rs 90/kg', imageUrl: imageMap['8'], availableDate: '2024-09-01', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '9', name: 'capssicum', Quantity:"Quantity 100 kg", price: 'Rs 40/kg', imageUrl: imageMap['9'], availableDate: '2024-09-09', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '10', name: 'Carrot',Quantity:"Quantity 100 kg", price: 'Rs 30/kg', imageUrl: imageMap['10'], availableDate: '2024-09-08', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '11', name: 'Chilly', Quantity:"Quantity 100 kg", price: 'Rs 20/kg', imageUrl: imageMap['11'], availableDate: '2024-09-07', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '12', name: 'cucumber', Quantity:"Quantity 100 kg", price: 'Rs 100/kg', imageUrl: imageMap['12'], availableDate: '2024-09-06', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '13', name: 'greenchilly', Quantity:"Quantity 100 kg", price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '14', name: 'radish', Quantity:"Quantity 100 kg", price: 'Rs 90/kg', imageUrl: imageMap['14'], availableDate: '2024-09-03', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
+  { id: '15', name: 'Cauliflower', Quantity:"Quantity 100 kg", price: 'Rs 30/kg', imageUrl: imageMap['1'], availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '16', name: 'Tomato', Quantity:"Quantity 100 kg", price: 'Rs 40/kg', imageUrl: imageMap['2'], availableDate: '2024-09-06', farmerName: 'Jane Smith', phoneNumber: '098-765-4321' },
+  { id: '17', name: 'Cauliflower', Quantity:"Quantity 100 kg", price: 'Rs 30/kg', imageUrl: cauliflowerImg, availableDate: '2024-09-05', farmerName: 'John Doe', phoneNumber: '123-456-7890' },
+  { id: '13', name: 'greenchilly', Quantity:"Quantity 100 kg", price: 'Rs 60/kg', imageUrl: imageMap['13'], availableDate: '2024-09-02', farmerName: 'Malbik Black', phoneNumber: '444-555-6666' },
   // Add more products here as needed
 ];
 
@@ -85,6 +85,7 @@ const ProductCard = ({ product, navigation }) => (
   >
     <Image source={product.imageUrl} style={styles.productImage} />
     <Text style={styles.productName}>{product.name}</Text>
+    <Text style={styles.Quantity}>{product.Quantity}</Text>
     <Text style={styles.productPrice}>{product.price}</Text>
   </TouchableOpacity>
 );
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f0f0',
+    
   },
   header: {
     width: '100%',
@@ -243,6 +245,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     elevation: 2,
+    // marginBottom: 10,
   },
   productImage: {
     width: '100%',
@@ -256,6 +259,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     textAlign: 'center',
+  },
+  Quantity:{
+    fontSize: 20,
+    color: '#666',
+    marginBottom: 10,
+  },
+  Quantity:{
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 7,
+    textAlign: 'center',
+    marginTop: 3,
   },
   productPrice: {
     fontSize: 12,
