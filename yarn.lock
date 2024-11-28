@@ -2938,8 +2938,10 @@ expo-modules-core@1.12.26:
 expo-status-bar@~1.12.1:
   version "1.12.1"
 
-expo@*, expo@^51.0.32:
+expo@*, expo@^51.0.39:
   version "51.0.39"
+  resolved "https://registry.npmjs.org/expo/-/expo-51.0.39.tgz"
+  integrity sha512-Cs/9xopyzJrpXWbyVUZnr37rprdFJorRgfSp6cdBfvbjxZeKnw2MEu7wJwV/s626i5lZTPGjZPHUF9uQvt51cg==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "0.18.31"

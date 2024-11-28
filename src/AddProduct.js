@@ -23,7 +23,7 @@ const AddProduct = ({ navigation, route }) => {
     if (route.params?.selectedVegetable) {
       setProductName(route.params.selectedVegetable);
     }
-    fetchProducts();  // Load products on page load
+    fetchProducts();  
   }, [route.params?.selectedVegetable]);
 
   // Function to fetch products from the database
@@ -161,7 +161,7 @@ const AddProduct = ({ navigation, route }) => {
     );
   };
   
-  
+  const today = new Date();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -226,6 +226,7 @@ const AddProduct = ({ navigation, route }) => {
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        minimumDate={today}
       />
     </ScrollView>
   );
