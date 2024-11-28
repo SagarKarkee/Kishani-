@@ -15,13 +15,14 @@ const PersonalDetailsSchema = new mongoose.Schema({
     required: true, 
     unique: true, 
   },
-  address: {
-    type: String,
-    default: '',
-  },
-  phoneNumber: {
-    type: String,
+  address: { type: String, default: 'N/A' },
+  phoneNumber: { 
+    type: String, 
     default: '', 
+    validate: { 
+      validator: (phone) => validator.isMobilePhone(phone, 'any'), 
+      message: 'Invalid phone number format' 
+    } 
   },
   citizenshipNumber: {
     type: String,

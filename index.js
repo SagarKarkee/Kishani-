@@ -169,6 +169,7 @@ app.post('/forgot-password', async (req, res) => {
 
   try {
     const securityRecord = await SecurityQuestion.findOne({ email });
+    
 
     if (!securityRecord) {
       return res.status(400).json({ message: 'Email not found in security questions' });

@@ -87,33 +87,7 @@ const Dashboard = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Education Section */}
-      {/* <View style={styles.educationSection}>
-        <Text style={styles.educationTitle}>Education</Text>
-        <View style={styles.educationBoxes}>
-          <TouchableOpacity
-            style={styles.educationBox}
-            onPress={() => navigation.navigate('Cultivation')} // Replace 'Cultivation' with the actual screen name
-          >
-            <Image
-              source={cultivationImage} // Use the imported image
-              style={styles.educationImage}
-            />
-            <Text style={styles.educationText}>Cultivation Process</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.educationBox}
-            onPress={() => navigation.navigate('CropDiseases')} // Replace 'CropDiseases' with the actual screen name
-          >
-            <Image
-              source={cropDiseasesImage} // Use the imported image
-              style={styles.educationImage}
-            />
-            <Text style={styles.educationText}>Crop Diseases Solutions</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
-
+      
       {/* Chat Box */}
       {isChatBoxVisible && (
         <View style={styles.chatBox}>

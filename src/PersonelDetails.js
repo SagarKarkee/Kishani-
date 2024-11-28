@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { MaterialIcons } from '@expo/vector-icons'; // For back arrow icon
 
-const API_URL = process.env.API_URL; // Ensure environment variable is set
+const API_URL = process.env.API_URL; 
 
 const PersonalDetailsForm = ({ navigation }) => {
     const [imageUri, setImageUri] = useState(null);
@@ -12,54 +12,58 @@ const PersonalDetailsForm = ({ navigation }) => {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [citizenshipNumber, setCitizenshipNumber] = useState('');
-    const [fullName, setFullName] = useState(''); // For displaying fullName
+    const [fullName, setFullName] = useState(''); 
     const [modalVisible, setModalVisible] = useState(false);
-    const [isDetailsSaved, setIsDetailsSaved] = useState(false); // Flag to track if personal details are saved
+    const [isDetailsSaved, setIsDetailsSaved] = useState(false); 
 
     // Fetch the fullName from AsyncStorage and personal details from the server
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                // Get the fullName from AsyncStorage (this is never null as it's set during signup)
-                const savedFullName = await AsyncStorage.getItem('userFullName');
-                if (!savedFullName) {
-                    console.error('Full Name missing in AsyncStorage');
-                    Alert.alert("Please Save your Personal Details");
-                    return;
+              const savedFullName = await AsyncStorage.getItem('userFullName');
+              if (!savedFullName) {
+                console.error('Full Name missing in AsyncStorage');
+                return;
+              }
+              setFullName(savedFullName); // Set the fullName from AsyncStorage
+          
+              // Get the email from AsyncStorage
+              const email = await AsyncStorage.getItem('userEmail');
+              if (!email) {
+                console.error('User email missing in AsyncStorage');
+                return;
+              }
+          
+              // Fetch personal details from the backend only if not saved
+              const response = await fetch(`${API_URL}/personal-details/${email}`);
+              const data = await response.json();
+          
+              if (response.ok) {
+                if (data && data.data) {
+                  // If personal details exist, set them
+                  setUserName(data.data.userName || '');
+                  setAddress(data.data.address || '');
+                  setPhoneNumber(data.data.phoneNumber || '');
+                  setCitizenshipNumber(data.data.citizenshipNumber || '');
+                  setImageUri(data.data.profileImage || null);
+                  setIsDetailsSaved(true); // Mark as saved
                 }
-                setFullName(savedFullName); // Set the fullName from AsyncStorage
-
-                // Get the email from AsyncStorage
-                const email = await AsyncStorage.getItem('userEmail');
-                if (!email) {
-                    console.error('User email missing in AsyncStorage');
-                    return;
-                }
-
-                // Fetch personal details from the backend only if not saved
-                const response = await fetch(`${API_URL}/personal-details/${email}`);
-                const data = await response.json();
-
-                if (response.ok) {
-                    // If personal details exist, set them
-                    setUserName(data.userName || '');
-                    setAddress(data.address || '');
-                    setPhoneNumber(data.phoneNumber || '');
-                    setCitizenshipNumber(data.citizenshipNumber || '');
-                    setImageUri(data.profileImage || null);
-                    setIsDetailsSaved(true); // Mark as saved
-                } else {
-                    // If personal details don't exist, show alert
-                    console.error('Personal details not found:', data.message);
-                    setIsDetailsSaved(false); // Mark as unsaved
-                }
+              } else {
+                
+                setIsDetailsSaved(false); // Mark as unsaved
+                Alert.alert("Please Save your Personal Details");
+              }
             } catch (error) {
-                console.error('Error fetching user details:', error);
+              console.error('Error fetching user details:', error);
+              Alert.alert('Error', 'Failed to fetch user details.');
             }
-        };
-
+          };
+          
+    
         fetchUserDetails();
-    }, []); // Run once when component mounts
+    }, []); 
+     
+    
 
     const pickImage = () => {
         launchImageLibrary({ mediaType: 'photo' }, (response) => {
@@ -69,57 +73,59 @@ const PersonalDetailsForm = ({ navigation }) => {
         });
     };
 
-    const handleSubmit = async () => {
-        if (!userName || !address || !phoneNumber || !citizenshipNumber) {
-            Alert.alert('Error', 'All fields must be filled out.');
+const handleSubmit = async () => {
+    if (!userName || !address || !phoneNumber || !citizenshipNumber) {
+        Alert.alert('Error', 'All fields must be filled out.');
+        return;
+    }
+
+    // Validate Nepal citizenship number (12-14 digits without spaces)
+    const citizenshipRegex = /^[0-9]{12,14}$/;
+    if (!citizenshipRegex.test(citizenshipNumber)) {
+        Alert.alert('Error', 'Citizenship number must be between 12 and 14 digits.');
+        return;
+    }
+
+    try {
+        const email = await AsyncStorage.getItem('userEmail');
+        if (!email) {
+            Alert.alert('Error', 'User email is missing.');
             return;
         }
 
-        // Validate Nepal citizenship number (12-14 digits without spaces)
-        const citizenshipRegex = /^[0-9]{12,14}$/;
-        if (!citizenshipRegex.test(citizenshipNumber)) {
-            Alert.alert('Error', 'Citizenship number must be between 12 and 14 digits.');
-            return;
+        const response = await fetch(`${API_URL}/personal-details`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email,
+                fullName,  // Don't allow editing fullName
+                userName,
+                address,
+                phoneNumber,
+                citizenshipNumber,
+                profileImage: imageUri || "", // Use empty string if no image
+            }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            // Save updated details in AsyncStorage
+            await AsyncStorage.setItem('userFullName', fullName);
+            await AsyncStorage.setItem('profileImage', imageUri || ""); // Use empty string if no image
+
+            
+            setModalVisible(true); // Show confirmation modal
+            setIsDetailsSaved(true); // Mark details as saved
+        } else {
+            Alert.alert('Error', data.message || 'Failed to save personal details.');
         }
+    } catch (error) {
+        console.error('Error saving personal details:', error);
+        Alert.alert('Error', 'Failed to connect to the server.');
+    }
+};
 
-        try {
-            const email = await AsyncStorage.getItem('userEmail');
-            if (!email) {
-                Alert.alert('Error', 'User email is missing.');
-                return;
-            }
-
-            const response = await fetch(`${API_URL}/personal-details`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email,
-                    fullName,  // Don't allow editing fullName
-                    userName,
-                    address,
-                    phoneNumber,
-                    citizenshipNumber,
-                    profileImage: imageUri || "", // Use empty string if no image
-                }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                // Save updated details in AsyncStorage
-                await AsyncStorage.setItem('userFullName', fullName);
-                await AsyncStorage.setItem('profileImage', imageUri || ""); // Use empty string if no image
-
-                Alert.alert('Success', 'Personal details updated successfully.');
-                setModalVisible(true); // Show confirmation modal
-                setIsDetailsSaved(true); // Mark details as saved
-            } else {
-                Alert.alert('Error', data.message || 'Failed to save personal details.');
-            }
-        } catch (error) {
-            console.error('Error saving personal details:', error);
-            Alert.alert('Error', 'Failed to connect to the server.');
-        }
-    };
+    
 
     const handleLoginNavigation = () => {
         setModalVisible(false); // Close modal
@@ -174,13 +180,14 @@ const PersonalDetailsForm = ({ navigation }) => {
                 onChangeText={setPhoneNumber}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Citizenship Number"
-                value={citizenshipNumber}
-                onChangeText={setCitizenshipNumber}
-                keyboardType="number-pad"
-                editable={!isDetailsSaved} // Allow editing only if details are not saved
+               style={styles.input}
+               placeholder="Citizenship Number"
+               value={citizenshipNumber}
+               onChangeText={setCitizenshipNumber}
+               keyboardType="number-pad"
+               editable={!isDetailsSaved} // Allow editing only if details are not saved
             />
+
             <Button title="Save" onPress={handleSubmit} />
 
             {/* Confirmation Modal */}
