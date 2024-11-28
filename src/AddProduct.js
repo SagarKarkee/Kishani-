@@ -17,8 +17,8 @@ const AddProduct = ({ navigation, route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [products, setProducts] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
-  const [productId, setProductId] = useState(null);  // To store the product ID when editing
-
+  const [productId, setProductId] = useState(null);  
+  
   useEffect(() => {
     if (route.params?.selectedVegetable) {
       setProductName(route.params.selectedVegetable);
