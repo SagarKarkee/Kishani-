@@ -1,32 +1,35 @@
+
 import React, { useState } from "react";
-import {
-  View, Text, FlatList, StyleSheet, TouchableOpacity} from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons'; // For back arrow icon
+import { useNavigation } from '@react-navigation/native';
 
 const NotificationPage = () => {
+  const navigation = useNavigation();
   const [notifications, setNotifications] = useState([
     {
       id: "1",
       title: "Password Reset",
       description: "Your password has been reset successfully.",
-      time: "10:00 AM",
+      
     },
     {
       id: "2",
       title: "Feedback Submitted",
       description: "Thank you for providing your feedback!",
-      time: "10:30 AM",
+      
     },
     {
       id: "3",
       title: "Successful Login",
       description: "You have logged in successfully.",
-      time: "11:00 AM",
+      
     },
     {
       id: "4",
       title: "Order Placed",
       description: "Your order has been placed successfully!",
-      time: "12:00 PM",
+     
     },
   ]);
 
@@ -44,8 +47,13 @@ const NotificationPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Notifications</Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <MaterialIcons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Notifications</Text>
 
+      </View>
       {notifications.length > 0 ? (
         <FlatList
           data={notifications}
@@ -72,15 +80,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f4f4f4",
-    padding: 16,
+    // padding: 20,
+    
   },
   header: {
-    fontSize: 34,
-    fontWeight: "bold",
-    marginBottom: 16,
-    marginTop: 40,
-    marginLeft: 55,
+    backgroundColor: '#41B06E', // Green background
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    marginVertical: 35,
   },
+  backButton: {
+    padding: 5,
+    marginRight: 9,
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1, // Centers the title in the header
+  },
+  // header: {
+  //   fontSize: 34,
+  //   fontWeight: "bold",
+  //   marginBottom: 16,
+  //   marginTop: 40,
+  //   marginLeft: 55,
+  // },
   notificationCard: {
     backgroundColor: "#fff",
     padding: 16,
@@ -117,7 +145,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 16,
+    paddingBottom: 20,
+    marginBottom: 50,
+    marginLeft: 20,
+    marginRight: 20,
   },
   clearButtonText: {
     color: "#fff",

@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Linking,
-  Alert,
-  Modal,
-  TextInput,
-} from 'react-native';
+import {View,Text,StyleSheet,Image,TouchableOpacity,Linking,Alert, Modal, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +9,7 @@ const B_vegetableDetails = ({ route }) => {
   const navigation = useNavigation();
   const [isFavorited, setIsFavorited] = useState(false);
   const [modalVisible, setModalVisible] = useState(false); // Popup visibility state
+  const [successVisible, setSuccessVisible] = useState(false); // Order success modal
   const [quantity, setQuantity] = useState(''); // Quantity input state
 
   const toggleFavorite = async () => {
@@ -46,18 +37,42 @@ const B_vegetableDetails = ({ route }) => {
     Linking.openURL(phoneNumber).catch((err) => console.error('Error making call:', err));
   };
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     if (!quantity) {
       Alert.alert('Error', 'Please enter a quantity to order.');
       return;
     }
 
-    setModalVisible(false);
-    Alert.alert(
-      'Order Placed',
-      `You have successfully ordered ${quantity} of ${product.name}.`
-    );
-    setQuantity(''); // Reset quantity input
+    // Save order details to AsyncStorage (order history)
+    const orderDetails = {
+      name: product.name,
+      quantity,
+      price: product.price,
+      date: new Date().toLocaleString(), // Save current date and time
+    };
+
+    try {
+      // Get existing history from AsyncStorage
+      let history = await AsyncStorage.getItem('orderHistory');
+      history = history ? JSON.parse(history) : [];
+
+      // Add new order to the history
+      history.push(orderDetails);
+
+      // Save updated history back to AsyncStorage
+      await AsyncStorage.setItem('orderHistory', JSON.stringify(history));
+
+      setModalVisible(false);
+      setSuccessVisible(true); // Show success modal
+      setQuantity(''); // Reset quantity input
+    } catch (error) {
+      console.error('Error saving order history:', error);
+    }
+  };
+
+  const handleSuccessClose = () => {
+    setSuccessVisible(false);
+    navigation.navigate('BFeedbackScreen', { product, quantity }); // Navigate to Feedback screen
   };
 
   return (
@@ -89,7 +104,7 @@ const B_vegetableDetails = ({ route }) => {
         <Text style={styles.buttonText}>CALL NOW</Text>
       </TouchableOpacity>
 
-      {/* Popup Modal */}
+      {/* Popup Modal for Order */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -126,6 +141,26 @@ const B_vegetableDetails = ({ route }) => {
                 <Text style={styles.modalButtonText}>Order</Text>
               </TouchableOpacity>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Popup Modal for Order Success */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={successVisible}
+        onRequestClose={() => setSuccessVisible(false)} // Handles back button on Android
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Order Placed Successfully</Text>
+            <Text style={styles.modalText}>
+              Your order for {quantity} of {product.name} has been placed successfully!
+            </Text>
+            <TouchableOpacity style={styles.successButton} onPress={handleSuccessClose}>
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -238,6 +273,13 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: '#5cb85c',
+  },
+  successButton: {
+    backgroundColor: '#43B76A',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    marginTop: 20,
   },
   modalButtonText: {
     color: 'white',
