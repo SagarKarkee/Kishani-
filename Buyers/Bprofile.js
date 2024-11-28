@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native'
 
-const Profile = ({ navigation }) => {
+const B_profile = ({ navigation, route }) => {
   const route = useRoute();
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
@@ -50,6 +50,7 @@ const Profile = ({ navigation }) => {
 
 
   const isActive = (screen) => route.name === screen;
+
 
 
   return (
@@ -261,4 +262,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Profile;
+export default B_profile:
