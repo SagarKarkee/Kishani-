@@ -44,9 +44,9 @@ import PrivacyPolicyScreen from './Buyers/BprivacyPolicy.js';
 import BBbcropdiseases from './src/BBbcropDiseases.js';
 import PrivacyPolicyScreens from './src/PrivacyPolicy.js';
 import KhaltiScreen from './Buyers/khalti.js';
-
 import TransferScreen from './Buyers/payment.js';
-
+import BBfav from './Buyers/Bfav.js';
+import BHistory from './Buyers/Bhistory.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -129,24 +129,15 @@ export default function App() {
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreens}/>
         <Stack.Screen name="khalti" component={KhaltiScreen}/>
         <Stack.Screen name="payment" component={TransferScreen}/>
-
-
-
-
-
-
-
-
-
-
-
+        <Stack.Screen name="Bfav" component={BBfav}/>
+        <Stack.Screen name="Bhistory" component={BHistory}/>
 
 
         
 
-
         
 
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

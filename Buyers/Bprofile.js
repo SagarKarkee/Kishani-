@@ -10,6 +10,7 @@ const Profile = ({ navigation }) => {
   const [buyerEmail, setBuyerEmail] = useState('');
   const [profileImage, setProfileImage] = useState(null);
 
+
   useEffect(() => {
     const fetchUserData = async () => {
       const name = await AsyncStorage.getItem('buyerFullName');
@@ -45,7 +46,7 @@ const Profile = ({ navigation }) => {
       ],
       { cancelable: true }
     );
-  };
+
 
 
   const isActive = (screen) => route.name === screen;
@@ -60,39 +61,60 @@ const Profile = ({ navigation }) => {
         ) : (
           <Icon name="person-circle-outline" size={150} color="#43B76A" />
         )}
-        {/* User Info Row */}
         <View style={styles.userInfoRow}>
           <Text style={styles.userName}>{buyerName}</Text>
           <Text style={styles.userEmail}>{buyerEmail}</Text>
         </View>
       </View>
 
-      {/* Profile Information Section */}
-      <TouchableOpacity style={styles.sectionButton}
+      {/* Personal Information Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
         onPress={() => navigation.navigate('BpersonalDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Personal Information</Text>
       </TouchableOpacity>
 
+      {/* Favorites Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('Bfav')}
+      >
+        <Icon name="heart-outline" size={30} color="#FF6347" />
+        <Text style={styles.sectionButtonText}>Favourites</Text>
+      </TouchableOpacity>
+
+      {/* History Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('Bhistory')}
+      >
+        <Icon name="time-outline" size={30} color="#649CB4" />
+        <Text style={styles.sectionButtonText}>History</Text>
+      </TouchableOpacity>
+
       {/* Settings Section */}
-      <TouchableOpacity style={styles.sectionButton}
-        onPress={() => navigation.navigate('Bsetting')}>
-        <Icon name="settings-outline" size={25} color="#43B76A" />
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('Bsetting')}
+      >
+        <Icon name="settings-outline" size={30} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
 
       {/* Privacy Policy Section */}
-      <TouchableOpacity style={styles.sectionButton}
-      onPress={() => navigation.navigate('BprivacyPolicy')}>
-      
-        <Icon name="lock-closed-outline" size={25} color="#43B76A" />
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('BprivacyPolicy')}
+      >
+        <Icon name="lock-closed-outline" size={30} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Privacy Policy</Text>
       </TouchableOpacity>
 
       {/* Logout Section */}
       <TouchableOpacity style={styles.sectionButton} onPress={handleLogout}>
-        <Icon name="log-out-outline" size={25} color="#FF6347" />
+        <Icon name="log-out-outline" size={30} color="#FF6347" />
         <Text style={styles.sectionButtonText}>Logout</Text>
       </TouchableOpacity>
 
@@ -155,13 +177,14 @@ const Profile = ({ navigation }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start', // Align the profile section content to the top
     backgroundColor: '#FFFFFF',
+
     paddingBottom: 70, // Add enough space for the bottom navigation
+
   },
   imageSection: {
     alignItems: 'center',
@@ -175,8 +198,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   userInfoRow: {
+
     flexDirection: 'column',
     justifyContent: 'center',
+
     alignItems: 'center',
     width: '90%',
     marginTop: 10,
@@ -184,7 +209,9 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     color: '#555555',
+
     fontWeight: 'bold',
+
   },
   userEmail: {
     fontSize: 16,
@@ -198,7 +225,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
     paddingVertical: 10,
+
     marginTop: 10, // Adjust margin for spacing
+
   },
   sectionButtonText: {
     marginLeft: 15,
@@ -230,7 +259,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 
 export default Profile;

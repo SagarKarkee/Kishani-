@@ -5,14 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = process.env.API_URL;
 
-
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-
-
+  const [passwordVisible, setPasswordVisible] = useState(false); // state to manage password visibility
 
   const handleLogin = async () => {
     if (email === '' || password === '') {
@@ -21,7 +18,6 @@ const LoginScreen = ({ navigation }) => {
     }
 
     try {
-
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: {
@@ -55,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-
   useEffect(() => {
     const loadCredentials = async () => {
       const storedEmail = await AsyncStorage.getItem('userEmail');
@@ -69,7 +64,6 @@ const LoginScreen = ({ navigation }) => {
     loadCredentials();
   }, []);
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -82,22 +76,21 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setEmail}
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={!passwordVisible}
-        value={password}
-        onChangeText={setPassword}
-      />
-
-      <TouchableOpacity
-        onPress={() => setPasswordVisible(!passwordVisible)}
-        style={styles.eyeButton}
-      >
-        <Text style={styles.eyeText}>{passwordVisible ? '👁' : '🙈'}</Text>
-      </TouchableOpacity>
-
-
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={!passwordVisible}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!passwordVisible)}
+          style={styles.eyeButton}
+        >
+          <Text style={styles.eyeText}>{passwordVisible ? '👁' : '🙈'}</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.rememberForgotContainer}>
         <View style={styles.rememberMeContainer}>
@@ -146,15 +139,17 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 
+  passwordContainer: {
+    position: 'relative', // To position the eye icon
+  },
   eyeButton: {
     position: 'absolute',
     right: 30,
-    top: 373,
+    top: 12, // Adjust according to the height of the input field
   },
   eyeText: {
     fontSize: 18,
   },
-
 
   rememberForgotContainer: {
     flexDirection: 'row',

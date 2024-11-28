@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button, Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
 
 const API_URL = process.env.API_URL;
 
@@ -76,20 +75,21 @@ const BLoginScreen = ({ navigation }) => {
         onChangeText={setEmail}
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={!passwordVisible}
-        value={password}
-        onChangeText={setPassword}
-      />
-       <TouchableOpacity
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={!passwordVisible}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
           onPress={() => setPasswordVisible(!passwordVisible)}
           style={styles.eyeButton}
         >
           <Text style={styles.eyeText}>{passwordVisible ? '👁' : '🙈'}</Text>
         </TouchableOpacity>
-
+      </View>
 
       <View style={styles.rememberForgotContainer}>
         <View style={styles.rememberMeContainer}>
@@ -112,19 +112,20 @@ const BLoginScreen = ({ navigation }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#43B76A'
+    backgroundColor: '#43B76A',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
-    color: 'black'
+    color: 'black',
   },
   input: {
     height: 50,
@@ -134,18 +135,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
     backgroundColor: '#DFDFDF',
-    color: 'black'
+    color: 'black',
   },
-
+  passwordContainer: {
+    position: 'relative',
+  },
   eyeButton: {
     position: 'absolute',
     right: 30,
-    top: 373,
+    top: 12,
+    zIndex: 1,
   },
   eyeText: {
     fontSize: 18,
   },
-
   rememberForgotContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonText: {
     color: 'black',
