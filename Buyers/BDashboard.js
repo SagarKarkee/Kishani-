@@ -1,9 +1,6 @@
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView, SafeAreaView } from 'react-native';
-
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, SafeAreaView, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import images from assets folder
 import cauliflowerImg from './../assets/cauliflower.jpeg';
@@ -61,7 +58,6 @@ const products = [
 ];
 
 // Header Component
-
 const Header = ({ username, navigation }) => (
   <View style={styles.header}>
     <View style={styles.headerText}>
@@ -143,47 +139,6 @@ const BottomNav = ({ navigation }) => (
     </TouchableOpacity>
   </View>
 );
-
-
-// Main Dashboard Screen
-const BDashboard = ({ navigation }) => {
-  const [buyerName, setBuyerName] = useState('User');
-
-  useEffect(() => {
-    const loadUserData = async () => {
-      const storedName = await AsyncStorage.getItem('buyerFullName');
-      const storedEmail = await AsyncStorage.getItem('buyerEmail');
-
-      if (storedName) setBuyerName(storedName);
-      if (!storedName || !storedEmail) {
-        console.error('User data missing in AsyncStorage');
-      }
-    };
-
-    loadUserData();
-  }, []);
-
-  
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header username={buyerName} navigation={navigation} />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.productList}
-        />
-        {/* <InfoSection navigation={navigation} /> */}
-      </ScrollView>
-
-      <BottomNav navigation={navigation} />
-    </SafeAreaView>
-  );
-};
-
 
 // Styles
 const styles = StyleSheet.create({
@@ -277,31 +232,6 @@ const styles = StyleSheet.create({
     color: '#888',
     textAlign: 'center',
   },
-
-  educationBoxes: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  educationBox: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginHorizontal: 5,
-    elevation: 3,
-  },
-  educationImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  educationText: {
-    fontSize: 14,
-    color: 'black',
-  },
-
   fixedNavButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',

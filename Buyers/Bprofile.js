@@ -1,57 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRoute } from '@react-navigation/native'
 
 const B_profile = ({ navigation, route }) => {
-  const route = useRoute();
-  const [buyerName, setBuyerName] = useState('');
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
+  const { profileImage, userName = 'UserName', email = 'user@example.com' } = route.params || {};
 
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const name = await AsyncStorage.getItem('buyerFullName');
-      const email = await AsyncStorage.getItem('buyerEmail');
-      const image = await AsyncStorage.getItem('profileImage'); // Optional
-
-      setBuyerName(name || 'User Name');
-      setBuyerEmail(email || 'user@example.com');
-      setProfileImage(image || null); // Image can be null
-    };
-
-    fetchUserData();
-  }, []);
-
-
-  const handleLogout = async () => {
-    Alert.alert(
-      'Confirm Logout',
-      'Are you sure you want to log out?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel', 
-        },
-        {
-          text: 'Logout',
-          style: 'destructive', 
-          onPress: async () => {
-            await AsyncStorage.clear(); 
-            navigation.replace('GetStarted'); // Redirect to the GetStarted screen
-          },
-        },
-      ],
-      { cancelable: true }
-    );
-
-
-
-  const isActive = (screen) => route.name === screen;
-
-
+  const handleLogout = () => {
+    // Perform any logout logic here, such as clearing tokens or user data
+    navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
+  };
 
   return (
     <View style={styles.container}>
@@ -63,8 +20,8 @@ const B_profile = ({ navigation, route }) => {
           <Icon name="person-circle-outline" size={150} color="#43B76A" />
         )}
         <View style={styles.userInfoRow}>
-          <Text style={styles.userName}>{buyerName}</Text>
-          <Text style={styles.userEmail}>{buyerEmail}</Text>
+          <Text style={styles.userName}>{userName}</Text>
+          <Text style={styles.userEmail}>{email}</Text>
         </View>
       </View>
 
@@ -80,7 +37,7 @@ const B_profile = ({ navigation, route }) => {
       {/* Favorites Section */}
       <TouchableOpacity
         style={styles.sectionButton}
-        onPress={() => navigation.navigate('Bfav')}
+        onPress={() => navigation.navigate('BFavourites')}
       >
         <Icon name="heart-outline" size={30} color="#FF6347" />
         <Text style={styles.sectionButtonText}>Favourites</Text>
@@ -89,7 +46,7 @@ const B_profile = ({ navigation, route }) => {
       {/* History Section */}
       <TouchableOpacity
         style={styles.sectionButton}
-        onPress={() => navigation.navigate('Bhistory')}
+        onPress={() => navigation.navigate('BHistory')}
       >
         <Icon name="time-outline" size={30} color="#649CB4" />
         <Text style={styles.sectionButtonText}>History</Text>
@@ -125,53 +82,29 @@ const B_profile = ({ navigation, route }) => {
           style={styles.navButton}
           onPress={() => navigation.navigate('BDashboard')}
         >
-          <Icon
-            name={isActive('BDashboard') ? 'home' : 'home-outline'}
-            size={25}
-            color={isActive('BDashboard') ? '#43B76A' : '#000'}
-          />
-          <Text style={[styles.navButtonText, isActive('BDashboard') && styles.activeNavText]}>
-            Home
-          </Text>
+          <Icon name="home-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bnotes')}
         >
-          <Icon
-            name={isActive('Bnotes') ? 'document-text' : 'document-text-outline'}
-            size={25}
-            color={isActive('Bnotes') ? '#43B76A' : '#000'}
-          />
-          <Text style={[styles.navButtonText, isActive('Bnotes') && styles.activeNavText]}>
-            Notes
-          </Text>
+          <Icon name="document-text-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Notes</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bmessage')}
         >
-          <Icon
-            name={isActive('Bmessage') ? 'book' : 'book-outline'}
-            size={25}
-            color={isActive('Bmessage') ? '#43B76A' : '#000'}
-          />
-          <Text style={[styles.navButtonText, isActive('Bmessage') && styles.activeNavText]}>
-            Education
-          </Text>
+          <Icon name="book-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Education</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.navigate('Bprofile')}
         >
-          <Icon
-            name={isActive('Bprofile') ? 'person' : 'person-outline'}
-            size={25}
-            color={isActive('Bprofile') ? '#43B76A' : '#000'}
-          />
-          <Text style={[styles.navButtonText, isActive('Bprofile') && styles.activeNavText]}>
-            Profile
-          </Text>
+          <Icon name="person-outline" size={25} color="#43B76A" />
+          <Text style={styles.navButtonText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -181,11 +114,8 @@ const B_profile = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Align the profile section content to the top
+    justifyContent: 'space-between',
     backgroundColor: '#FFFFFF',
-
-    paddingBottom: 70, // Add enough space for the bottom navigation
-
   },
   imageSection: {
     alignItems: 'center',
@@ -199,10 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   userInfoRow: {
-
-    flexDirection: 'column',
-    justifyContent: 'center',
-
     alignItems: 'center',
     width: '90%',
     marginTop: 10,
@@ -210,9 +136,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     color: '#555555',
-
-    fontWeight: 'bold',
-
+    marginTop: -10,
   },
   userEmail: {
     fontSize: 16,
@@ -226,9 +150,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
     paddingVertical: 10,
-
-    marginTop: 10, // Adjust margin for spacing
-
   },
   sectionButtonText: {
     marginLeft: 15,
@@ -236,30 +157,22 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   navButtons: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
-    elevation: 5,
+    paddingVertical: 5,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
   },
   navButton: {
     alignItems: 'center',
   },
   navButtonText: {
     marginTop: 5,
-    color: '#6200EE',
+    color: '#000000',
     fontSize: 14,
-  },
-  activeNavText: {
-    color: '#43B76A',
     fontWeight: 'bold',
   },
 });
 
-
-export default B_profile:
+export default B_profile;
