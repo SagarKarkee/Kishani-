@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Profile = ({ navigation, route }) => {
+const B_profile = ({ navigation, route }) => {
   const { profileImage, userName = 'UserName', email = 'user@example.com' } = route.params || {};
 
   const handleLogout = () => {
@@ -175,4 +175,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default B_profile;
