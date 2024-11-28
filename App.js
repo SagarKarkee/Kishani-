@@ -44,7 +44,6 @@ import PrivacyPolicyScreen from './Buyers/BprivacyPolicy.js';
 import BBbcropdiseases from './src/BBbcropDiseases.js';
 import PrivacyPolicyScreens from './src/PrivacyPolicy.js';
 import KhaltiScreen from './Buyers/khalti.js';
-
 import TransferScreen from './Buyers/payment.js';
 import BBfav from './Buyers/Bfav.js';
 import BHistory from './Buyers/Bhistory.js';
