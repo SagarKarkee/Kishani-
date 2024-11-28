@@ -177,6 +177,7 @@ const B_profile = ({ navigation, route }) => {
     </View>
   );
 };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -262,4 +263,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default B_profile:
+export default B_profile;
