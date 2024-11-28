@@ -5,10 +5,11 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const connectDB = require('./connection');
 const farmersLoginSchema = require('./FarmersLogin'); 
-const buyersLoginSchema = require('./BuyersLogin'); 
 const SecurityQuestionSchema = require('./FarmersSecurityQuestion');
 const productSchema = require('./Product');
 const personalDetailSchema = require('./PersonalDetailsSchema');
+const buyersLoginSchema = require('./BuyersLogin'); 
+const bPersonalDetailSchema = require('./BPersonalDetailsSchema');
 
 
 dotenv.config();
@@ -23,8 +24,10 @@ app.use(express.json()); // Middleware to parse JSON
 let FarmersLogin;
 let SecurityQuestion;
 let AddProduct;
-let BuyersLogin;
 let PersonalDetails;
+
+let BuyersLogin;
+let BPersonalDetails;
 mongoose.connection.on('connected', () => {
 
     //Farmers Database Section
@@ -33,11 +36,12 @@ mongoose.connection.on('connected', () => {
     SecurityQuestion = farmersDb.model('FarmersSecurityQuestion', SecurityQuestionSchema, 'SecurityAnswers');
     AddProduct = farmersDb.model('Product', productSchema, 'AddedProduct');
     PersonalDetails = farmersDb.model('PersonalDetailsSchema', personalDetailSchema, 'PersonalDetails');
-
+    
     // Buyers Database Section
-
+    
     const buyersDb = mongoose.connection.useDb('Buyers');
     BuyersLogin = buyersDb.model('BuyersLogin', buyersLoginSchema, 'BLoginData');
+    BPersonalDetails = farmersDb.model('BPersonalDetailsSchema', bPersonalDetailSchema, 'BPersonalDetails');
     console.log('BuyersLogin model initialized.');
 });
 
@@ -456,6 +460,60 @@ app.post('/blogin', async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+// Buyer's Personal Details Backend
+
+app.post('/bpersonal-details', async (req, res) => {
+  const { email, fullName, userName, address, phoneNumber, citizenshipNumber, profileImage } = req.body;
+
+  // Validate required fields
+  if (!email || !fullName || !userName || !address || !phoneNumber || !citizenshipNumber) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const personalDetails = await BPersonalDetails.findOneAndUpdate(
+      { email }, // Find by email
+      { fullName, userName, address, phoneNumber, citizenshipNumber, profileImage }, // Update or create with these fields
+      { upsert: true, new: true } // Insert new if not found
+    );
+
+    res.status(200).json({
+      message: 'Personal details saved successfully.',
+      data: personalDetails,
+    });
+  } catch (error) {
+    console.error('Error saving personal details:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
+
+
+// Get personal details by email
+app.get('/bpersonal-details/:email', async (req, res) => {
+  const { email } = req.params;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required.' });
+  }
+
+  try {
+    const personalDetails = await BPersonalDetails.findOne({ email });
+
+    if (!personalDetails) {
+      return res.status(404).json({ message: 'Personal details not found.' });
+    }
+
+    res.status(200).json({ data: personalDetails });
+  } catch (error) {
+    console.error('Error fetching personal details:', error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
