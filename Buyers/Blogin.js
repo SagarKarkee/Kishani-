@@ -33,9 +33,12 @@ const BLoginScreen = ({ navigation }) => {
       if (response.ok) {
         Alert.alert('Success', 'Logged in successfully');
         if (rememberMe) {
-          await AsyncStorage.setItem('userEmail', email);
-          await AsyncStorage.setItem('userPassword', password);
+          await AsyncStorage.setItem('buyerEmail', email);
+          await AsyncStorage.setItem('buyerPassword', password);
         }
+        await AsyncStorage.setItem('buyerFullName', data.user.fullName);
+        await AsyncStorage.setItem('buyerEmail', data.user.email);
+
         navigation.navigate('BDashboard', { username: data.user.fullName }); // Pass the username here
       } else {
         Alert.alert('Error', data.message || 'Invalid credentials');

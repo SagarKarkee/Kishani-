@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import images from assets folder
 import cauliflowerImg from './../assets/cauliflower.jpeg';
@@ -80,6 +81,7 @@ const products = [
 
 ];
 // Header Component
+
 const Header = ({ username, navigation }) => (
   <View style={styles.header}>
     <View style={styles.headerText}>
@@ -98,7 +100,6 @@ const Header = ({ username, navigation }) => (
     </View>
   </View>
 );
-
 
 // Product Card Component
 const ProductCard = ({ product, navigation }) => (
@@ -179,15 +180,31 @@ const BottomNav = ({ navigation }) => (
 );
 
 
-// Sandip LA BHANAKO WALA  JUN ERROR AAKO WALA 
+
 
 
 // Main Dashboard Screen
-const BDashboard = ({ navigation, route }) => {
-  const username = route?.params?.username || 'User'; // Fallback to 'User' if not defined
+const BDashboard = ({ navigation }) => {
+  const [buyerName, setBuyerName] = useState('User');
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      const storedName = await AsyncStorage.getItem('buyerFullName');
+      const storedEmail = await AsyncStorage.getItem('buyerEmail');
+
+      if (storedName) setBuyerName(storedName);
+      if (!storedName || !storedEmail) {
+        console.error('User data missing in AsyncStorage');
+      }
+    };
+
+    loadUserData();
+  }, []);
+
+  
   return (
     <SafeAreaView style={styles.container}>
-      <Header username={username} navigation={navigation} />
+      <Header username={buyerName} navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <FlatList
           data={products}
@@ -205,16 +222,6 @@ const BDashboard = ({ navigation, route }) => {
   );
 };
 
-// const BDashboard = ({ navigation }) => (
-//   <SafeAreaView style={styles.container}>
-//     <Header navigation={navigation} />
-//     <ScrollView contentContainerStyle={styles.scrollContent}>
-//       <ProductList navigation={navigation} />
-//       <InfoSection navigation={navigation} />
-//     </ScrollView>
-//     <BottomNav navigation={navigation} />
-//   </SafeAreaView>
-// );
 
 
 // Styles
@@ -332,27 +339,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
   },
-  // infoCard: {
-  //   flexDirection: 'row',
-  //   marginBottom: 20,
-  //   padding: 10,
-  //   backgroundColor: '#fff',
-  //   borderRadius: 10,
-  //   elevation: 3,
-  // },
-  // infoImage: {
-  //   width: 100,
-  //   height: 100,
-  //   borderRadius: 10,
-  //   marginRight: 20,
-  // },
-  // infoTextContainer: {
-  //   justifyContent: 'center',
-  // },
-  // infoTitle: {
-  //   fontSize: 16,
-  //   fontWeight: 'bold',
-  // },
   fixedNavButtons: {
     position: 'absolute',
     bottom: 0,

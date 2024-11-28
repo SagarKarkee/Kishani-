@@ -1,15 +1,49 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Profile = ({ navigation, route }) => {
-  const { profileImage, userName = 'UserName', email = 'user@example.com' } = route.params || {};
+  const [buyerName, setBuyerName] = useState('');
+  const [buyerEmail, setBuyerEmail] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
 
-  const handleLogout = () => {
-    // Perform any logout logic here, such as clearing tokens or user data
-    // For example, AsyncStorage.clear(), if you're using AsyncStorage to store the session
-    // Then navigate to the Login screen
-    navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const name = await AsyncStorage.getItem('buyerFullName');
+      const email = await AsyncStorage.getItem('buyerEmail');
+      const image = await AsyncStorage.getItem('profileImage'); // Optional
+
+      setBuyerName(name || 'User Name');
+      setBuyerEmail(email || 'user@example.com');
+      setProfileImage(image || null); // Image can be null
+    };
+
+    fetchUserData();
+  }, []);
+
+
+  const handleLogout = async () => {
+    Alert.alert(
+      'Confirm Logout',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel', 
+        },
+        {
+          text: 'Logout',
+          style: 'destructive', 
+          onPress: async () => {
+            await AsyncStorage.clear(); 
+            navigation.replace('GetStarted'); // Redirect to the GetStarted screen
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
@@ -23,8 +57,8 @@ const Profile = ({ navigation, route }) => {
         )}
         {/* User Info Row */}
         <View style={styles.userInfoRow}>
-          <Text style={styles.userName}>{userName}</Text>
-          <Text style={styles.userEmail}>{email}</Text>
+          <Text style={styles.userName}>{buyerName}</Text>
+          <Text style={styles.userEmail}>{buyerEmail}</Text>
         </View>
       </View>
 
