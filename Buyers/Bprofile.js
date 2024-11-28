@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
 
-const B_profile = ({ navigation, route }) => {
+const B_profile = ({ navigation}) => {
   const route = useRoute();
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
@@ -46,6 +46,7 @@ const B_profile = ({ navigation, route }) => {
       ],
       { cancelable: true }
     );
+  };
 
 
 
@@ -178,6 +179,7 @@ const B_profile = ({ navigation, route }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -262,4 +264,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default B_profile:
+export default B_profile;

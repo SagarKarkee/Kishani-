@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 
 const API_URL = process.env.API_URL;
-console.log("Api url for BSignup: ", API_URL);
+
 
 const BSignup = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
