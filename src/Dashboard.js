@@ -67,7 +67,7 @@ const Dashboard = ({ navigation }) => {
         <Text style={styles.addProductText}>Add a New Product</Text>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => navigation.navigate('AddProduct')} // Replace 'AddProduct' with the actual screen name
+          onPress={() => navigation.navigate('AddProduct')} 
         >
           <Text style={styles.addButtonText}>+ Add Product</Text>
         </TouchableOpacity>
