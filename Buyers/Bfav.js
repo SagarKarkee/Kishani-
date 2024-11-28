@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 
-const BFavourites = ({ navigation }) => {
+const BBfav = ({ navigation }) => {
   // Sample data for favorites (can be fetched from state, API, or async storage)
   const favourites = [
     { id: '1', name: 'Tomato', details: 'Fresh red tomatoes' },
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BFavourites;
+export default BBfav;
