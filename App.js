@@ -46,7 +46,7 @@ import PrivacyPolicyScreens from './src/PrivacyPolicy.js';
 import KhaltiScreen from './Buyers/khalti.js';
 
 import TransferScreen from './Buyers/payment.js';
-
+import Bfavourites from './Buyers/BFavourites.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -129,6 +129,9 @@ export default function App() {
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreens}/>
         <Stack.Screen name="khalti" component={KhaltiScreen}/>
         <Stack.Screen name="payment" component={TransferScreen}/>
+        <Stack.Screen name="Bfavourites" component={Bfavourites} />
+
+       
 
 
 

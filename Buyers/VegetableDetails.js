@@ -1,10 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const B_vegetableDetails = ({ route }) => {
   const { product } = route.params;
   const navigation = useNavigation();
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const toggleFavorite = async () => {
+    setIsFavorited(!isFavorited);
+
+    try {
+      let favorites = await AsyncStorage.getItem('favorites');
+      favorites = favorites ? JSON.parse(favorites) : [];
+
+      if (!isFavorited) {
+        // Add to favorites
+        favorites.push(product);
+      } else {
+        // Remove from favorites
+        favorites = favorites.filter(item => item.name !== product.name);
+      }
+
+      await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
+      Alert.alert('Success', isFavorited ? 'Removed from favorites' : 'Added to favorites');
+    } catch (error) {
+      console.error('Error managing favorites:', error);
+    }
+  };
 
   const BuyNow = () => {
     navigation.navigate('khalti'); // Update with your actual screen name
@@ -19,6 +44,15 @@ const B_vegetableDetails = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      {/* Favorite Icon */}
+      <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteIcon}>
+        <Icon
+          name={isFavorited ? 'heart' : 'heart-outline'}
+          size={30}
+          color={isFavorited ? 'red' : 'gray'}
+        />
+      </TouchableOpacity>
+
       <Image source={product.imageUrl} style={styles.productImage} />
       <Text style={styles.productName}>{product.name}</Text>
       <Text style={styles.productPrice}>{product.price}</Text>
@@ -27,7 +61,7 @@ const B_vegetableDetails = ({ route }) => {
       <Text style={styles.productInfo}>Phone Number: {product.phoneNumber}</Text>
 
       <TouchableOpacity style={styles.button} onPress={BuyNow}>
-        <Text style={styles.buttonText}>BUY NOW</Text>
+        <Text style={styles.buttonText}>Book NOW</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={callNow}>
@@ -44,6 +78,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f0f0f0',
   },
+  favoriteIcon: {
+    position: 'absolute',
+    top: 80,
+    right: 25,
+    zIndex: 10, // Ensures the icon is on top
+  },
   productImage: {
     width: 150,
     height: 150,
@@ -55,6 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
+    textAlign: 'center',
     marginBottom: 10,
   },
   productPrice: {

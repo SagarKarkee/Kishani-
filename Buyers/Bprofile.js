@@ -7,8 +7,6 @@ const Profile = ({ navigation, route }) => {
 
   const handleLogout = () => {
     // Perform any logout logic here, such as clearing tokens or user data
-    // For example, AsyncStorage.clear(), if you're using AsyncStorage to store the session
-    // Then navigate to the Login screen
     navigation.replace('GetStarted'); // Use replace to prevent going back to the Profile screen
   };
 
@@ -21,39 +19,60 @@ const Profile = ({ navigation, route }) => {
         ) : (
           <Icon name="person-circle-outline" size={150} color="#43B76A" />
         )}
-        {/* User Info Row */}
         <View style={styles.userInfoRow}>
           <Text style={styles.userName}>{userName}</Text>
           <Text style={styles.userEmail}>{email}</Text>
         </View>
       </View>
 
-      {/* Profile Information Section */}
-      <TouchableOpacity style={styles.sectionButton}
+      {/* Personal Information Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
         onPress={() => navigation.navigate('BpersonalDetails')}
       >
         <Icon name="person-circle-outline" size={40} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Personal Information</Text>
       </TouchableOpacity>
 
+      {/* Favorites Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('BFavourites')}
+      >
+        <Icon name="heart-outline" size={30} color="#FF6347" />
+        <Text style={styles.sectionButtonText}>Favourites</Text>
+      </TouchableOpacity>
+
+      {/* History Section */}
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('BHistory')}
+      >
+        <Icon name="time-outline" size={30} color="#649CB4" />
+        <Text style={styles.sectionButtonText}>History</Text>
+      </TouchableOpacity>
+
       {/* Settings Section */}
-      <TouchableOpacity style={styles.sectionButton}
-        onPress={() => navigation.navigate('Bsetting')}>
-        <Icon name="settings-outline" size={25} color="#43B76A" />
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('Bsetting')}
+      >
+        <Icon name="settings-outline" size={30} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Settings</Text>
       </TouchableOpacity>
 
       {/* Privacy Policy Section */}
-      <TouchableOpacity style={styles.sectionButton}
-      onPress={() => navigation.navigate('BprivacyPolicy')}>
-      
-        <Icon name="lock-closed-outline" size={25} color="#43B76A" />
+      <TouchableOpacity
+        style={styles.sectionButton}
+        onPress={() => navigation.navigate('BprivacyPolicy')}
+      >
+        <Icon name="lock-closed-outline" size={30} color="#43B76A" />
         <Text style={styles.sectionButtonText}>Privacy Policy</Text>
       </TouchableOpacity>
 
       {/* Logout Section */}
       <TouchableOpacity style={styles.sectionButton} onPress={handleLogout}>
-        <Icon name="log-out-outline" size={25} color="#FF6347" />
+        <Icon name="log-out-outline" size={30} color="#FF6347" />
         <Text style={styles.sectionButtonText}>Logout</Text>
       </TouchableOpacity>
 
@@ -92,30 +111,24 @@ const Profile = ({ navigation, route }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: '#FFFFFF',
-    paddingBottom: 0,
   },
   imageSection: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     paddingVertical: 10,
     marginTop: 60,
-    // marginBottom: -200,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
   },
-
   userInfoRow: {
-    flexDirection: 'colume',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '90%',
     marginTop: 10,
@@ -123,15 +136,11 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     color: '#555555',
-
     marginTop: -10,
-    alignItems: 'center',
   },
   userEmail: {
     fontSize: 16,
     color: '#555555',
-    // textAlign: 'center',
-    alignItems: 'center',
   },
   sectionButton: {
     flexDirection: 'row',
@@ -141,7 +150,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
     paddingVertical: 10,
-    marginTop: -190,
   },
   sectionButtonText: {
     marginLeft: 15,
@@ -166,6 +174,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 export default Profile;
