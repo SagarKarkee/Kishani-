@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#43B76A',
     marginBottom: 20,
+    marginTop: 50,
+    marginLeft: 100,
   },
   item: {
     padding: 15,
