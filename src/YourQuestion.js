@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 
 const API_URL = process.env.API_URL;
-console.log("Api url for YourQuestion: ", API_URL);
+
 
 const YourSecurityQuestionScreen = ({ navigation, route }) => {
   const { email } = route.params; 
