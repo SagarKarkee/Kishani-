@@ -7,6 +7,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = process.env.API_URL;
+console.log("Api url for AppProduct.js: ", API_URL);
 
 
 const AddProduct = ({ navigation, route }) => {

@@ -4,6 +4,7 @@ import { Button, Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = process.env.API_URL;
+console.log("Api for login: ",API_URL);
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
