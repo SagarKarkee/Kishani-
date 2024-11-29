@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Alert, StyleSheet, ScrollView } from 're
 import axios from 'axios';
 
 const API_URL = process.env.API_URL;
-console.log("Api url for addproduct: ", API_URL);
+
 
 const CropRecommendation = () => {
   // State for form data
